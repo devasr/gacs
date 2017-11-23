@@ -136,9 +136,8 @@ hr{
 }
 
 .close-button{
-  background-image: url('./../../assets/close.png') !important;
-  width: 60px !important;
-  height:  60px !important;
+  width: 42px !important;
+  height:  42px !important;
   margin: auto
 }
 .line-button{

@@ -57,30 +57,31 @@
           <div class=" row">
           <div class="col-md-6">
             <input type="tel " maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57 ' class="form-control"  aria-describedby="emailHelp" placeholder="Enter Mobile Number">
-          <div class="text-center border-bottom margin-top-20">
+          <div *ngIf="displayTimer" class="text-center border-bottom margin-top-20">
             <h6>
-            00:60
+            00:{{secondsDisplay}}
           </h6>
           </div>
           </div>  
         </div>
         <div class="row margin-top-20">
           <div class="col-md-6 display-inline-block">
-              <button type="button" class="btn  login-button hover">LOGIN</button>
+              <button type="button" class="btn  login-button hover" (click)="onLogin()">LOGIN</button>
           </div>
           <div class="col-md-6 display-inline-block">
               If you do not recevie your OTP in 1 Minute.click to
-              <a class="resend-otp hover" >Resend OTP</a>
+              <a class="resend-otp hover" (click)="closeModal()" >Resend OTP</a>
           </div>
         </div>
          </div>
         
       </div>
       <div class="line-button">
-        </div>
-      <div class="line-button ">
       </div>
-      <div class="close-button">
+      <div class="line-button margin-top-5">
+      </div>
+      <div class="close-button" >
+          <img src='./../../assets/close.png' class="hover"  height="42" width="42" (click)="closeModal()">
       </div>
     </div>
   </div>
