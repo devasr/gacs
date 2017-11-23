@@ -122,3 +122,28 @@ hr{
   margin-top: 35px;
 }
 
+.login-button{
+  background: #e28687 !important;
+  color: white !important;
+  width: 100% !important;
+}
+
+.display-inline-block{
+  display: inline-block !important ;
+}
+.resend-otp{
+  color: #77bbc1 !important;
+}
+
+.close-button{
+  background-image: url('./../../assets/close.png') !important;
+  width: 60px !important;
+  height:  60px !important;
+  margin: auto
+}
+.line-button{
+ background: white ;
+  width: 3px !important;
+  height:  5px !important;
+  margin: auto
+}

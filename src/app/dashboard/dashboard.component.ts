@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor() { }
+  signupModal:boolean;
+  constructor() {
+    this.signupModal=false;
+   }
 
   ngOnInit() {
+  }
+
+  public openSignupModal(){
+    this.signupModal=true;
   }
 
 }

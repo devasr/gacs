@@ -8,3 +8,34 @@ body{
   background-size: 100% 100%;
       background-repeat: no-repeat;
 }
+.modal{
+    display: block !important;
+}
+
+.hover:hover{
+    cursor: pointer !important;
+}
+
+@media (min-width: 576px){
+.modal-sm {
+    max-width: 550px !important;
+}
+}
+
+.signupModal{
+    position: absolute  !important;
+    top: 50% !important;
+}
+
+.margin-left-10{
+    margin-left: 10px !important;
+}
+.text-center{
+    text-align: center !important;
+}
+.border-bottom{
+    border-bottom: 1px solid black;
+}
+.margin-top-20{
+    margin-top: 20px;
+}
