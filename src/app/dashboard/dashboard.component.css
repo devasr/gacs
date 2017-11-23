@@ -62,7 +62,7 @@ hr{
   font-family: 'Judson', serif;
 }
 .welcome .mainbody{
-  margin-top: 115px;
+  margin-top: 30px;
 }
 .welcome .mainbody .para2{
   font-size: 32px !important;
@@ -82,6 +82,13 @@ hr{
     border-radius: 22px;
     font-size: 10px;
     margin: auto;
+}
+.enterword a{
+  color: white;
+  text-decoration: none;
+  border-radius: 22px;
+  font-weight: bolder;
+  font-size: 11px;
 }
 .line1{
     position: absolute;
@@ -121,4 +128,5 @@ hr{
 .enterRow{
   margin-top: 35px;
 }
+
 
