@@ -9,9 +9,8 @@ vg-controls{
 vg-player{
   background: transparent;
 }
-.margin{
-  margin-top: 50px;
-}
+
+
 .marginTop{
   margin: auto;
 }
@@ -20,4 +19,7 @@ vg-play-pause{
   border-radius: 50%;
   height: 40px !important;
   width: 40px !important;
+}
+.margin{
+  padding: 0px;
 }
