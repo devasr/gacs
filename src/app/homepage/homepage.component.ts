@@ -3,12 +3,12 @@ import { Observable, Subscription } from 'rxjs/Rx';
 
 import { CarouselComponent } from './../carousel/carousel.component';
 @Component({
-  selector: "app-dashboard",
-  templateUrl: "./dashboard.component.html",
-  styleUrls: ["./dashboard.component.css"],
+  selector: "app-homepage",
+  templateUrl: "./homepage.component.html",
+  styleUrls: ["./homepage.component.css"],
   // directives: [CarouselComponent]
 })
-export class DashboardComponent implements OnInit {
+export class HomepageComponent implements OnInit {
   signupModal: boolean;
   displayTimer: boolean;
   ticks = 0;
