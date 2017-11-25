@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { HomepageComponent } from "./homepage/homepage.component";
+import { HomepageComponent } from './homepage/homepage.component';
 
 export const routes: Route[] = [{
     path: '',

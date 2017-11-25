@@ -44,3 +44,25 @@ body{
     margin-top: 5px !important;
 }
 
+.ajax-loader p{
+    position: absolute;
+    color: transparent; 
+    top: 50%; 
+    left: 45%;
+   } 
+  
+  .ajax-loader{
+    margin: 0px; 
+    padding: 0px; 
+    position: fixed; 
+    right: 0px; 
+    top: 0px; 
+    width: 100%; 
+    height: 100%; 
+    background-color: rgb(102, 102, 102); 
+    z-index: 30001; opacity: 0.8;
+  }
+
+  .margin-top-10{
+      margin-top: 10px !important
+  }

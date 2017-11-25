@@ -1,0 +1,109 @@
+<div *ngIf="showLoader" class="ajax-loader">
+  <section class="">
+    <mat-progress-bar class="example-margin"  mode="indeterminate" value="10" bufferValue="5">
+    </mat-progress-bar>
+  </section>
+</div>
+<div class="row dash">
+  <ul class="width-ul">
+    <li class="hover" (click)="showConcilsView()">
+      <img id="innerImage" src="./../../assets/council.png" alt="">
+      <img src='./../../assets/button.png' alt=''>
+      <p>Councils</p>
+    </li>
+    <li class="hover" (click)="showOfficeBarearsView()">
+      <img id="innerImage" src="./../../assets/bearers.png" alt="">
+      <img src='./../../assets/button.png' alt=''>
+      <p>Office Bearers</p>
+    </li>
+    <li class="hover">
+      <img id="innerImage" src="./../../assets/job.png" alt=""  (click)="showcarriersView()">
+      <img src='./../../assets/button.png' alt=''>
+      <p>Carriers</p>
+    </li>
+    <li class="hover">
+      <img id="innerImage" src="./../../assets/partner.png" alt="">
+      <img src='./../../assets/button.png' alt=''>
+      <p>Partner</p>
+    </li>
+    <li class="hover">
+      <img id="innerImage" src="./../../assets/event.png" alt="">
+      <img src='./../../assets/button.png' alt=''>
+      <p>Events</p>
+    </li>
+    <li class="hover" (click)="showNewsView()">
+      <img id="innerImage" src="./../../assets/news.png" alt="">
+      <img src='./../../assets/button.png' alt=''>
+      <p>news</p>
+    </li>
+    <li class="hover">
+      <img id="innerImage" src="./../../assets/vendors.png" alt="">
+      <img src='./../../assets/button.png' alt=''>
+      <p>Registered Vendors</p>
+    </li>
+  </ul>
+</div>
+<div class="dashboard-content">
+  <div *ngIf="concilsView">
+    <div *ngFor="let data of Councils">
+      <h3>
+        {{data.title}}
+      </h3>
+      <p>
+        {{data.description}}
+      </p>
+    </div>
+  </div>
+  <div *ngIf="officeBearersView">
+    <div *ngFor="let data of Councils">
+      <h3>
+        {{data.title}}
+      </h3>
+      <p>
+        {{data.description}}
+      </p>
+    </div>
+  </div>
+  <div *ngIf="newsView">
+    <div *ngFor="let data of News">
+      <h3>
+        {{data.title}}
+      </h3>
+      <h5>
+        {{data.author}}  on {{data.postedDate | date:'fullDate'}}
+      </h5>
+      <div class="row">
+        <div class="col=md-4">
+            <img src="{{data.image}}" alt="Smiley face" height="62" width="62">
+        </div>
+        <div class="col=md-8">
+          <p>
+            {{data.content}}
+          </p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <div *ngIf="carriersView">
+      <div *ngFor="let data of Jobs">
+        <h3>
+          {{data.title}}
+        </h3>
+        <h5>
+          {{data.author}}  on {{data.postedDate | date:'fullDate'}}
+        </h5>
+        <div class="row">
+          <div class="col=md-4">
+              <img src="{{data.image}}" alt="Smiley face" height="62" width="62">
+          </div>
+          <div class="col=md-8">
+            <p>
+              {{data.content}}
+            </p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+</div>

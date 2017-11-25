@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { VgCoreModule } from 'videogular2/core';
@@ -10,18 +11,21 @@ import { AppComponent } from './app.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { VideoComponent } from './video/video.component';
 import { CarouselComponent } from './carousel/carousel.component';
-
-
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { HttpModule } from '@angular/http';
+import {MatProgressBarModule } from '@angular/material';
 @NgModule({
-  declarations: [AppComponent, HomepageComponent, VideoComponent, CarouselComponent],
+  declarations: [AppComponent, HomepageComponent, VideoComponent, CarouselComponent, DashboardComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes, { useHash: true }),
     VgCoreModule,
     VgControlsModule,
-    FormsModule
+    FormsModule,
+    HttpModule,
+    BrowserAnimationsModule,
+    MatProgressBarModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
