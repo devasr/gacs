@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public closeModal(){
+    console.log("closeModal");
     this.signupModal=false;
     console.log(this.signupModal)
   }
