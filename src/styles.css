@@ -2,24 +2,24 @@
 @import url('https://fonts.googleapis.com/css?family=Judson|Rasa:500');
 
 body{
-    width: 100%;
-  height: 853px;
+  width: 100%;
+  /* height: 686px; */
   background-image: url('./assets/home.png');
   background-size: 100% 100%;
-      background-repeat: no-repeat;
+  background-repeat: no-repeat;
 }
 .modal{
-    display: block !important;
+  display: block !important;
 }
 
 .hover:hover{
-    cursor: pointer !important;
+  cursor: pointer !important;
 }
 
 @media (min-width: 576px){
-.modal-sm {
+  .modal-sm {
     max-width: 550px !important;
-}
+  }
 }
 
 .signupModal{
@@ -43,6 +43,4 @@ body{
 .margin-top-5{
     margin-top: 5px !important;
 }
-.modal-dialog{
-    pointer-events: auto !important
-}
+

@@ -4,23 +4,35 @@
         <div class="container-fluid">
         <ul>
           <li>
-            <a  [routerLink]=" ['Home'] ">Home</a>
+            <a class="dropdown">Home<span class="caret"></span>
+              <div class="dropdown-content">dsfsdf sfdsdfs fs sdfsdfs sdsdfds d</div></a>
+
           </li>
           <li>
-            <a  [routerLink]=" ['About'] ">About Gacs</a>
+            <a  class="dropdown">About Gacs
+              <div class="dropdown-content">dsfsdf sfdsdfs fs sdfsdfs sdsdfds d</div>
+              </a>
           </li>
           <li>
-            <a  [routerLink]=" ['Vision'] ">Vision & Mission</a>
+            <a  class="dropdown">Vision & Mission
+              <div class="dropdown-content">dsfsdf sfdsdfs fs sdfsdfs sdsdfds d</div>
+              </a>
           </li>
           <li>
-            <a  [routerLink]=" ['Upcoming'] ">Upcoming Engagement</a>
+            <a  class="dropdown">Upcoming Engagement
+              <div class="dropdown-content">dsfsdf sfdsdfs fs sdfsdfs sdsdfds d</div>
+              </a>
           </li>
           <li>
-            <a  [routerLink]=" ['Support'] ">Support & Partner</a>
+            <a  class="dropdown">Support & Partner
+              <div class="dropdown-content">dsfsdf sfdsdfs fs sdfsdfs sdsdfds d</div>
+              </a>
           </li>
           <li>
-            <a  [routerLink]=" ['Setting'] "><img src="./../../assets/setting.png"></a>
-          </li>
+            <a  class="dropdown"><img src="./../../assets/setting.png">
+              <div class="dropdown-content">dsfsdf sfdsdfs fs sdfsdfs sdsdfds d</div>
+            </a>
+         </li>
         </ul>
         </div>
       </nav>
@@ -35,20 +47,31 @@
       </div>
     </div>
     <div class="row enterRow">
-        <div class="offset-sm-5 col-sm-2 enterword hover" (click)="openSignupModal()">
-          ENTER GACS WORD
+        <div class="offset-sm-5 col-sm-2 enterword">
+          <a (click)="openSignupModal()">ENTER GACS WORD</a>
+
           <hr class="line1">
           <hr class="line2">
           <hr class="line3">
           <hr class="line4">
-
         </div>
-
     </div>
-  </div>
 
+
+  </div>
+    <div class="row margintop">
+      <div class="col-md-4 widthgallry">
+        <app-css-carousel></app-css-carousel>
+      </div>
+      <div class="col-md-4 widthgallry">
+        <app-video></app-video>
+      </div>
+      <div class="col-md-4 widthgallry">
+        <app-css-carousel></app-css-carousel>
+      </div>
+    </div>
   <div class="modal signupModal" *ngIf="signupModal" role="dialog">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog modal-lg modallogin">
       <div class="modal-content">
         <div class="modal-header">
           <h6 class="modal-title">Verify your mobile number to process further</h6>
@@ -62,26 +85,26 @@
             00:{{secondsDisplay}}
           </h6>
           </div>
-          </div>  
+          </div>
         </div>
         <div class="row margin-top-20">
           <div class="col-md-6 display-inline-block">
               <button type="button" class="btn  login-button hover" (click)="onLogin()">LOGIN</button>
           </div>
-          <div class="col-md-6 display-inline-block">
+          <div class="col-md-6 display-inline-block content">
               If you do not recevie your OTP in 1 Minute.click to
               <a class="resend-otp hover" (click)="closeModal()" >Resend OTP</a>
           </div>
+          <div class="close-button" (click)="closeModal()">
+            <img src='./../../assets/close.png' class="hover" height="42" width="42">
+          </div>
         </div>
+
          </div>
-        
       </div>
       <div class="line-button">
       </div>
       <div class="line-button margin-top-5">
-      </div>
-      <div class="close-button" >
-          <img src='./../../assets/close.png' class="hover"  height="42" width="42" (click)="closeModal()">
       </div>
     </div>
   </div>

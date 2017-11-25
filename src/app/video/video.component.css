@@ -1,0 +1,25 @@
+vg-controls{
+    display: table-row;
+    width: 0%;
+    position: absolute;
+    bottom: 38%;
+    left: 45%;
+}
+
+vg-player{
+  background: transparent;
+}
+
+
+.marginTop{
+  margin: auto;
+}
+vg-play-pause{
+  border: 1px solid white;
+  border-radius: 50%;
+  height: 40px !important;
+  width: 40px !important;
+}
+.margin{
+  padding: 0px;
+}

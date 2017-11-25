@@ -62,7 +62,7 @@ hr{
   font-family: 'Judson', serif;
 }
 .welcome .mainbody{
-  margin-top: 115px;
+  margin-top: 30px;
 }
 .welcome .mainbody .para2{
   font-size: 32px !important;
@@ -70,7 +70,7 @@ hr{
   margin-bottom: -20px
 }
 .welcome .mainbody .para1{
-  font-size: 80px !important;
+  font-size: 65px !important;
 }
 .enterword{
     color: white;
@@ -82,6 +82,15 @@ hr{
     border-radius: 22px;
     font-size: 10px;
     margin: auto;
+}
+.enterword a{
+color: white;
+    text-decoration: none;
+    border-radius: 22px;
+    padding: 5px;
+    font-weight: bolder;
+    cursor: pointer;
+    font-size: 11px;
 }
 .line1{
     position: absolute;
@@ -110,7 +119,7 @@ hr{
     height: 140px;
 }
 .line4{
-     position: absolute;
+    position: absolute;
     top: 125px;
     border-top: 0px;
     border-right: 1px solid #ffa7e0;
@@ -121,15 +130,19 @@ hr{
 .enterRow{
   margin-top: 35px;
 }
-
 .login-button{
   background: #e28687 !important;
   color: white !important;
   width: 100% !important;
+  height: 100%;
 }
 
 .display-inline-block{
   display: inline-block !important ;
+  height: 40px !important;
+}
+.content{
+  font-size: 13px;
 }
 .resend-otp{
   color: #77bbc1 !important;
@@ -140,9 +153,94 @@ hr{
   height:  42px !important;
   margin: auto
 }
+.close-button .hover{
+  position: absolute;
+  bottom: -58px;
+  margin-left: -5px;
+  cursor: pointer;
+}
 .line-button{
  background: white ;
   width: 3px !important;
   height:  5px !important;
   margin: auto
+}
+@media(min-width:767px){
+  .modallogin{
+    max-width: 667px;
+  }
+}
+.modal-header{
+  border-bottom: none;
+}
+.modal-title{
+  margin-left: 15px;
+  margin-top: 25px;
+}
+.signupModal{
+  top: 0 !important;
+  padding-top: 15%;
+  margin-bottom: -15%;
+  background: #0000009a;
+}
+.widthgallry{
+  padding: 0px;
+}
+.margintop{
+  margin-top: 50px;
+  margin-left: 0px;
+  margin-right: 0px;
+
+}
+.dropdown-content {
+  display: none;
+  top: 18px;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 300px;
+    min-height: 150px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    color: black;
+    right: -141px;
+    border-radius: 4px;
+    padding: 15px
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dropdown:hover {
+  cursor: pointer;
+}
+.dropdown{
+  padding-bottom: 10px;
+}
+.dropdown-content::after
+.dropdown-content::before{
+content: "";
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border-width: 7px 8px;
+    border-style: solid;
+    border-color: transparent;
+    z-index: 1001;
+}
+.dropdown-content::after{
+top: -14px;
+    left: 45%;
+    border-bottom-color: #fff;
+}
+ul>li:last-child .dropdown-content{
+  right: 0px !important;
+  min-width: 150px;
+  left: auto;
+  top: 24px;
+}
+ul>li:last-child .dropdown-content::after{
+    top: -12px;
+    right: 0px !important;
+    left: auto;
+    border-bottom-color: #fff;
 }

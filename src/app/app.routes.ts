@@ -1,10 +1,10 @@
 import { Route } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomepageComponent } from "./homepage/homepage.component";
 
 export const routes: Route[] = [{
     path: '',
     pathMatch: 'full',
-    component: DashboardComponent,
+    component: HomepageComponent,
     data : { isHome : true }
 }
 ];
