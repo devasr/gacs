@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  showLoader=false;
+
+  updateshowLoader(showLoader){
+    console.log(this.showLoader);
+  this.showLoader=showLoader;
+ 
+}
 }

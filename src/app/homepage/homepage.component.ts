@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { CarouselComponent } from './../carousel/carousel.component';
 import{HomePageService} from './homepage.service'
+import { AppComponent } from '../app.component';
 declare var bootbox: any;
 @Component({
   selector: "app-homepage",
@@ -23,10 +24,11 @@ export class HomepageComponent implements OnInit {
   otpModal=false
   isLogin=false
   emailPattern=/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/;
-  constructor(public homePageService:HomePageService) {
+  constructor(public homePageService:HomePageService,public appComponent:AppComponent) {
     this.signupModal = false;
     this.displayTimer = false;
     this.isLogin=false
+    //showLoader=false;
     let checkLoginSession=sessionStorage.getItem("is_login");
     if(checkLoginSession=="true"){
       this.isLogin=true
@@ -78,13 +80,15 @@ export class HomepageComponent implements OnInit {
           "type": "manual"
         }
       }
-      
+      this.appComponent.updateshowLoader(true)
       this.homePageService.login(json).subscribe(
         data=>{
+          this.appComponent.updateshowLoader(false)
             let response=data.response
             if(response.code==200){
               this.signupModal=false
               this.otpModal=true
+              this.displayTimer=true
               sessionStorage.setItem("userid",response.userid)
               this.otp=response.otp;
             }
@@ -123,6 +127,7 @@ export class HomepageComponent implements OnInit {
       this.secondsDisplay = this.getSeconds(this.ticks);
       if (this.secondsDisplay === 60) {
         this.sub.unsubscribe();
+        this.displayTimer=false
       }
     });
 
@@ -141,4 +146,6 @@ export class HomepageComponent implements OnInit {
         bootbox.alert("Your enter OTP is wrong please try again later.")
       }
   }
+
+  
 }

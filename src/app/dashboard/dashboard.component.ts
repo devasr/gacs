@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import{DashboardService} from './dashborad.service'
+import { AppComponent } from '../app.component';
 declare var bootbox: any;
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +10,7 @@ declare var bootbox: any;
 
 })
 export class DashboardComponent implements OnInit {
-   showLoader=false;
+   showLoader:boolean;
    concilsView:boolean
    officeBearersView:boolean
    carriersView:boolean
@@ -20,7 +21,7 @@ export class DashboardComponent implements OnInit {
    Councils=[];
    News=[];
    Jobs=[];
-  constructor(public dashboardService:DashboardService) {
+  constructor(public dashboardService:DashboardService,public appComponent:AppComponent) {
     this.concilsView=true;
     this.officeBearersView=false;
     this.carriersView=false;
@@ -28,7 +29,9 @@ export class DashboardComponent implements OnInit {
     this.eventsView=false;
     this.newsView=false;
     this.registeredVendorView=false;
-   
+    
+   //this.showLoader=HomepageComponent.showLoader;
+
     this.getCouncilData();
    }
 
@@ -38,10 +41,10 @@ export class DashboardComponent implements OnInit {
                  "type": "council"
                  }
             }
-            this.showLoader=true
+    this.appComponent.updateshowLoader(true)
     this.dashboardService.getCouncilData(json).subscribe(
       data=>{
-        this.showLoader=false
+        this.appComponent.updateshowLoader(false)
             let response=data.response;
             if(response.code==200){
               this.Councils=response.COUNCIL
@@ -83,10 +86,10 @@ export class DashboardComponent implements OnInit {
                   "type": "council"
                   }
             }
-    this.showLoader=true
+    this.appComponent.updateshowLoader(true)
     this.dashboardService.getOfficeBearer(json).subscribe(
         data=>{
-        this.showLoader=false
+          this.appComponent.updateshowLoader(false)
             let response=data.response;
             if(response.code==200){
               this.Councils=response.COUNCIL
@@ -121,10 +124,10 @@ export class DashboardComponent implements OnInit {
                 }
           }
           
-      this.showLoader=true
+      this.appComponent.updateshowLoader(true)
       this.dashboardService.getNews(json).subscribe(
       data=>{
-      this.showLoader=false
+        this.appComponent.updateshowLoader(false)
           let response=data.response;
           if(response.code==200){
             this.News=response.data
@@ -156,10 +159,10 @@ export class DashboardComponent implements OnInit {
       }
     }
     
-    this.showLoader=true
+    this.appComponent.updateshowLoader(true)
     this.dashboardService.getJobs(json).subscribe(
     data=>{
-    this.showLoader=false
+      this.appComponent.updateshowLoader(false)
         let response=data.response;
         if(response.code==200){
           this.Jobs=response.data
