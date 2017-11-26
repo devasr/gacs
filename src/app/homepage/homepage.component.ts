@@ -34,15 +34,17 @@ export class HomepageComponent implements OnInit {
     this.displayTimer = false;
     this.isLogin = false;
     //showLoader=false;
-    this.checkLoginSession = sessionStorage.getItem("is_login");
-    if (this.checkLoginSession == "true") {
-      this.isLogin = true;
-    } else {
-      this.isLogin = false;
-    }
+
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+     this.checkLoginSession = sessionStorage.getItem("is_login");
+     if (this.checkLoginSession == "true") {
+       this.isLogin = true;
+     } else {
+       this.isLogin = false;
+     }
+  }
 
   public openSignupModal() {
     this.signupModal = true;
