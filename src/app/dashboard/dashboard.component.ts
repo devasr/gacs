@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
 
    //this.showLoader=HomepageComponent.showLoader;
 
-    this.getCouncilData();
+    this.showcarriersView();
    }
 
    getCouncilData(){

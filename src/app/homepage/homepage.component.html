@@ -1,5 +1,5 @@
 
-<div class="body">
+<div class="body" [ngClass]="{'newBody':checkLoginSession}">
 
   <div class="container">
       <nav class="navbar">
@@ -7,7 +7,8 @@
         <ul>
           <li>
             <a class="dropdown">Home<span class="caret"></span>
-              <div class="dropdown-content">dsfsdf sfdsdfs fs sdfsdfs sdsdfds d</div></a>
+              <!-- <div class="dropdown-content">dsfsdf sfdsdfs fs sdfsdfs sdsdfds d</div> -->
+            </a>
 
           </li>
           <li>
@@ -43,13 +44,13 @@
   <div class="container">
     <div class="row welcome">
       <div class="col-md-12 mainbody">
-        <p><img class="profile" src="./../../assets/button.png" alt=""></p>
-       
+        <p *ngIf="checkLoginSession"><img class="profile" src="./../../assets/profile.png" alt=""></p>
+        <p class="userWel" *ngIf="checkLoginSession"> Welcome to GACS </p>
         <!-- fill profile name above -->
-        <p class="para1">WelCome</p>
-        <P class="para2">to</P>
-        <P>Global Associates Corporate Of Service</P>
-        <p>{{userName}}</p>
+        <p *ngIf="!checkLoginSession" class="para1">WelCome</p>
+        <P *ngIf="!checkLoginSession" class="para2">to</P>
+        <P *ngIf="!checkLoginSession"> Global Associates Corporate Of Service</P>
+        <p class="user" *ngIf="checkLoginSession">{{userName}} <span></span></p>
       </div>
     </div>
     <div *ngIf="!isLogin" class="row enterRow">
