@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import{DashboardService} from './dashborad.service'
+import {DashboardService} from './dashborad.service';
 import { AppComponent } from '../app.component';
 declare var bootbox: any;
 @Component({
@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
     this.eventsView=false;
     this.newsView=false;
     this.registeredVendorView=false;
-    
+
    //this.showLoader=HomepageComponent.showLoader;
 
     this.getCouncilData();
@@ -123,7 +123,7 @@ export class DashboardComponent implements OnInit {
                 "userid": "1600"
                 }
           }
-          
+
       this.appComponent.updateshowLoader(true)
       this.dashboardService.getNews(json).subscribe(
       data=>{
@@ -139,7 +139,7 @@ export class DashboardComponent implements OnInit {
       err=>{
         this.showLoader=false
       }
-      )   
+      )
   }
   showcarriersView(){
     this.concilsView=false;
@@ -158,7 +158,7 @@ export class DashboardComponent implements OnInit {
         "type": "job"
       }
     }
-    
+
     this.appComponent.updateshowLoader(true)
     this.dashboardService.getJobs(json).subscribe(
     data=>{
@@ -174,6 +174,6 @@ export class DashboardComponent implements OnInit {
     err=>{
       this.showLoader=false
     }
-    )   
+    )
   }
 }

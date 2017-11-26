@@ -244,3 +244,8 @@ ul>li:last-child .dropdown-content::after{
     left: auto;
     border-bottom-color: #fff;
 }
+.profile{
+  border-radius: 50%;
+  height: 100px;
+
+}

@@ -83,24 +83,33 @@
       </div>
     </div>
   </div>
-  <div *ngIf="carriersView">
-      <div *ngFor="let data of Jobs">
-        <h3>
+  <div class="row" *ngIf="carriersView">
+      <div  class="col-md-12 cardCar" *ngFor="let data of Jobs">
+        <h6 class="carrierHead">
           {{data.postedby}}
-        </h3>
-        <h5>
+        </h6>
+        <p  class="carrierPro">
           {{data.jobProfile}}
-        </h5>
-        <h5>
-          {{data.jobDescription}}
-        </h5>
-        <h5>
-          {{data.website}}
-        </h5>
-        <h5>
-          {{data.job_loc}}
-        </h5>
+        </p>
+        <p  class="carrierDes">
+          Keyskill: {{data.jobDescription}}.
+        </p>
+        <p  class="carrierWeb">
+          Summary: {{data.exp_req}}. Worktime:{{data.work_time}}
+        </p>
 
+        <p class="carrieLoc">
+          <i style="padding: 0px 3px 0px 3px;" class="fa fa-map-marker" aria-hidden="true"></i>
+           {{data.job_loc}}
+        </p>
+        <p class="carrieLoc">
+          <i class="fa fa-suitcase" aria-hidden="true"></i>
+          {{data.exp_req}}
+        <span style="float:right;">
+          <button class="btn btn-default">Share</button>
+          <button class="btn btn-default">Apply</button>
+        </span>
+        </p>
       </div>
     </div>
   </div>
