@@ -81,19 +81,19 @@
         <div class="modal-body margin-left-10">
           <div class=" row">
           <div class="col-md-6">
-              <input type="text "  class="form-control margin-top-10"  aria-describedby="emailHelp" placeholder="Enter Name " [ngModelOptions]="{standalone: true}" [(ngModel)]="name">
-              <input type="text "  class="form-control  margin-top-10"  aria-describedby="emailHelp" placeholder="Enter email" [ngModelOptions]="{standalone: true}" [(ngModel)]="email">
-            <input type="tel " maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57 ' class="form-control  margin-top-10"  aria-describedby="emailHelp" placeholder="Enter Mobile Number" [ngModelOptions]="{standalone: true}" [(ngModel)]="mobileNumber">
+          <input  type="tel " maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57 ' class="form-control  margin-top-10"  aria-describedby="emailHelp" placeholder="Enter Mobile Number" [ngModelOptions]="{standalone: true}" [(ngModel)]="mobileNumber">
           <div *ngIf="displayTimer" class="text-center border-bottom margin-top-20">
             <h6>
             00:{{secondsDisplay}}
           </h6>
           </div>
+          <input  *ngIf="otpModal"  type="tel " maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57 ' class="form-control  margin-top-10"  aria-describedby="emailHelp" placeholder="Enter OTP" [ngModelOptions]="{standalone: true}" [(ngModel)]="inputOtp">
           </div>
         </div>
         <div class="row margin-top-20">
           <div class="col-md-6 display-inline-block">
-              <button type="button" class="btn  login-button hover" (click)="onLogin()">LOGIN</button>
+              <button   *ngIf="!otpModal" type="button" class="btn  login-button hover" (click)="onLogin()">LOGIN</button>
+              <button *ngIf="otpModal" type="button" class="btn  login-button hover" (click)="onOtp()">Verify</button>
           </div>
           <div class="col-md-6 display-inline-block content">
               If you do not recevie your OTP in 1 Minute.click to
@@ -112,39 +112,7 @@
       </div>
     </div>
   </div>
-  <div class="modal signupModal" *ngIf="otpModal" role="dialog">
-      <div class="modal-dialog modal-lg modallogin">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h6 class="modal-title">Verify your OTP</h6>
-          </div>
-          <div class="modal-body margin-left-10">
-            <div class=" row">
-            <div class="col-md-6">
-            <input type="tel " maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57 ' class="form-control  margin-top-10"  aria-describedby="emailHelp" placeholder="Enter OTP" [ngModelOptions]="{standalone: true}" [(ngModel)]="inputOtp">
-            </div>
-          </div>
-          <div class="row margin-top-20">
-            <div class="col-md-6 display-inline-block">
-                <button type="button" class="btn  login-button hover" (click)="onOtp()">Verify</button>
-            </div>
-            <div class="col-md-6 display-inline-block content">
-                If you do not recevie your OTP in 1 Minute.click to
-                <a class="resend-otp hover" (click)="closeModal()" >Resend OTP</a>
-            </div>
-            <div class="close-button" (click)="closeModal()">
-              <img src='./../../assets/close.png' class="hover" height="42" width="42">
-            </div>
-          </div>
-  
-           </div>
-        </div>
-        <div class="line-button">
-        </div>
-        <div class="line-button margin-top-5">
-        </div>
-      </div>
-    </div>
+
   <app-dashboard *ngIf="isLogin"></app-dashboard>
 </div>
 

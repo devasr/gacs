@@ -51,16 +51,7 @@ export class HomepageComponent implements OnInit {
   }
 
   public onLogin() {
-    if(!this.name){
-        bootbox.alert("Please enter name")
-    }
-    else if(!this.email){
-      bootbox.alert("Please enter email")
-    }
-    else if (!(this.email.toLowerCase().match(this.emailPattern))) {
-      bootbox.alert("Please enter valid email")
-    }
-    else if(!this.mobileNumber){
+    if(!this.mobileNumber){
       bootbox.alert("Please enter mobile number")
     }
     else if(this.mobileNumber.toString().length!=10){
@@ -74,8 +65,8 @@ export class HomepageComponent implements OnInit {
         },
         "requestinfo": {
           "userid": "",
-          "name": this.name,
-          "email_id": this.email,
+          "name": "test",
+          "email_id":"test@gmail.com",
           "mobile": this.mobileNumber,
           "type": "manual"
         }
@@ -86,15 +77,16 @@ export class HomepageComponent implements OnInit {
           this.appComponent.updateshowLoader(false)
             let response=data.response
             if(response.code==200){
-              this.signupModal=false
               this.otpModal=true
+              this.startTimer();
               this.displayTimer=true
               sessionStorage.setItem("userid",response.userid)
               this.otp=response.otp;
             }
             else  if(response.code==204){
-              this.signupModal=false
               this.otpModal=true
+              this.startTimer();
+              this.displayTimer=true
               sessionStorage.setItem("userid",response.userid)
               this.otp=response.otp;
             }

@@ -83,23 +83,25 @@
       </div>
     </div>
   </div>
+  <div *ngIf="carriersView">
+      <div *ngFor="let data of Jobs">
+        <h3>
+          {{data.postedby}}
+        </h3>
+        <h5>
+          {{data.jobProfile}}
+        </h5>
+        <h5>
+          {{data.jobDescription}}
+        </h5>
+        <h5>
+          {{data.website}}
+        </h5>
+        <h5>
+          {{data.job_loc}}
+        </h5>
 
-  <div class="row" *ngIf="carriersView">
-    <div class="col-md-12 card" *ngFor="let data of Jobs">
-      <h3>
-        {{data.title}}
-      </h3>
-      <h5>
-        {{data.author}}  on {{data.postedDate | date:'fullDate'}}
-      </h5>
-            <div class="col-md-4">
-              <img src="{{data.image}}" alt="Smiley face" height="60" width="107">
-            </div>
-            <div class="col-md-8">
-              <p>{{data.content}}</p>
-            </div>
       </div>
     </div>
   </div>
 </div>
-<!-- </div> -->
