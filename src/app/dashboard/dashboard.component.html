@@ -11,8 +11,8 @@
       <img src='./../../assets/button.png' alt=''>
       <p>Office Bearers</p>
     </li>
-    <li class="hover">
-      <img id="innerImage" src="./../../assets/job.png" alt=""  (click)="showcarriersView()">
+    <li class="hover"  (click)="showcarriersView()">
+      <img id="innerImage" src="./../../assets/job.png" alt="" >
       <img src='./../../assets/button.png' alt=''>
       <p>Carriers</p>
     </li>
@@ -107,7 +107,7 @@
           {{data.exp_req}}
         <span style="float:right;">
           <button class="btn btn-default">Share</button>
-          <button class="btn btn-default">Apply</button>
+          <button class="btn btn-default apply">Apply</button>
         </span>
         </p>
       </div>

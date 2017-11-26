@@ -8,7 +8,7 @@ declare var bootbox: any;
   selector: "app-homepage",
   templateUrl: "./homepage.component.html",
   styleUrls: ["./homepage.component.css"],
-  providers:[HomePageService]
+  providers: [HomePageService]
 })
 export class HomepageComponent implements OnInit {
   signupModal: boolean;
@@ -25,24 +25,22 @@ export class HomepageComponent implements OnInit {
   isLogin=false
   disableResend=true;
   emailPattern=/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/;
-  constructor(public homePageService:HomePageService,public appComponent:AppComponent) {
+  checkLoginSession:any;
+  constructor(public homePageService: HomePageService,public appComponent: AppComponent) {
     this.signupModal = false;
     this.userName="Madhav Pandey"
     this.displayTimer = false;
-    this.isLogin=false
-    //showLoader=false;
-    let checkLoginSession=sessionStorage.getItem("is_login");
-    if(checkLoginSession=="true"){
+    this.isLogin = false;
+    if(sessionStorage.getItem("is_login")=="true"){
       this.isLogin=true
     }
     else{
       this.isLogin=false
     }
   }
-
-  ngOnInit() {}
-
- 
+  
+  ngOnInit() {
+  }
   public openSignupModal() {
     this.signupModal = true;
   }
@@ -55,58 +53,53 @@ export class HomepageComponent implements OnInit {
     this.otpModal=false
     this.displayTimer=false
     this.disableResend=true;
+    this.otpModal = false;
+    this.inputOtp=""
   }
 
   public onLogin() {
-    if(!this.mobileNumber){
-      bootbox.alert("Please enter mobile number")
-    }
-    else if(this.mobileNumber.toString().length!=10){
+    if (!this.mobileNumber) {
+      bootbox.alert("Please enter mobile number");
+    } else if (this.mobileNumber.toString().length != 10) {
       bootbox.alert("Please enter correct mobile number");
-    }
-    else{
-    
-      let json={
-        "request": {
-          "type": "login"
+    } else {
+      this.userName="Madhav pandey"
+      let json = {
+        request: {
+          type: "login"
         },
-        "requestinfo": {
-          "userid": "",
-          "name": "test",
-          "email_id":"test@gmail.com",
-          "mobile": this.mobileNumber,
-          "type": "manual"
+        requestinfo: {
+          userid: "",
+          name: "test",
+          email_id: "test@gmail.com",
+          mobile: this.mobileNumber,
+          type: "manual"
         }
-      }
-      this.appComponent.updateshowLoader(true)
+      };
+      this.appComponent.updateshowLoader(true);
       this.homePageService.login(json).subscribe(
-        data=>{
-          this.appComponent.updateshowLoader(false)
-            let response=data.response
-            if(response.code==200){
-              this.otpModal=true
-              this.startTimer();
-              this.displayTimer=true
-              sessionStorage.setItem("userid",response.userid)
-              this.otp=response.otp;
-            }
-            else  if(response.code==204){
-              this.otpModal=true
-              this.startTimer();
-              this.displayTimer=true
-              sessionStorage.setItem("userid",response.userid)
-              this.otp=response.otp;
-            }
-            else{
-              bootbox.alert(response.message);
-            }
+        data => {
+          this.appComponent.updateshowLoader(false);
+          let response = data.response;
+          if (response.code == 200) {
+            this.otpModal = true;
+            this.startTimer();
+            this.displayTimer = true;
+            sessionStorage.setItem("userid", response.userid);
+            this.otp = response.otp;
+          } else if (response.code == 204) {
+            this.otpModal = true;
+            this.startTimer();
+            this.displayTimer = true;
+            sessionStorage.setItem("userid", response.userid);
+            this.otp = response.otp;
+          } else {
+            bootbox.alert(response.message);
+          }
         },
-        err=>{
-
-        }
-      )
+        err => {}
+      );
     }
-  
   }
 
   private getSeconds(ticks: number) {
@@ -119,6 +112,7 @@ export class HomepageComponent implements OnInit {
 
   startTimer(){
     this.secondsDisplay=60;
+    this.disableResend=true;
     this.displayTimer = true;
     const timer = Observable.timer(1, 1000);
     this.sub = timer.subscribe(t => {
@@ -129,6 +123,7 @@ export class HomepageComponent implements OnInit {
       if (this.secondsDisplay ==0) {
         this.sub.unsubscribe();
         this.disableResend=false;
+        this.inputOtp=""
         this.otpModal=false
         this.displayTimer=false
       }
@@ -136,22 +131,20 @@ export class HomepageComponent implements OnInit {
 
       }
     });
-
   }
 
-  onOtp(){
-    if(!this.inputOtp){
-      bootbox.alert("Your enter OTP .")
+  onOtp() {
+    if (!this.inputOtp) {
+      bootbox.alert("Your enter OTP .");
+    } else if (this.otp == this.inputOtp) {
+      sessionStorage.setItem("is_login", "true");
+      this.checkLoginSession=true
+      this.isLogin = true;
+      this.closeModal();
+    } else {
+      bootbox.alert("Your enter OTP is wrong please try again later.");
+      this.isLogin=false
+      sessionStorage.setItem("is_login", "false");
     }
-    else  if(this.otp==this.inputOtp){
-        sessionStorage.setItem("is_login","true");
-        this.isLogin=true;
-        this.closeModal()
-      }
-      else{
-        bootbox.alert("Your enter OTP is wrong please try again later.")
-      }
   }
-
-  
 }
