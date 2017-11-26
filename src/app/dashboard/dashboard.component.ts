@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
   showConcilsView(){
-    this.concilsView=true;
+    this.concilsView=false;
     this.officeBearersView=false;
     this.carriersView=false;
     this.partnerView=false;
