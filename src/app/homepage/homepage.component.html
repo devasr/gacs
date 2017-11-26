@@ -1,0 +1,123 @@
+
+<div class="body" [ngClass]="{'newBody':checkLoginSession}">
+
+  <div class="container">
+      <nav class="navbar">
+        <div class="container-fluid">
+        <ul>
+          <li>
+            <a class="dropdown">Home<span class="caret"></span>
+              <!-- <div class="dropdown-content">dsfsdf sfdsdfs fs sdfsdfs sdsdfds d</div> -->
+            </a>
+
+          </li>
+          <li>
+            <a  class="dropdown">About Gacs
+              <div class="dropdown-content">dsfsdf sfdsdfs fs sdfsdfs sdsdfds d</div>
+              </a>
+          </li>
+          <li>
+            <a  class="dropdown">Vision & Mission
+              <div class="dropdown-content">dsfsdf sfdsdfs fs sdfsdfs sdsdfds d</div>
+              </a>
+          </li>
+          <li>
+            <a  class="dropdown">Upcoming Engagement
+              <div class="dropdown-content">dsfsdf sfdsdfs fs sdfsdfs sdsdfds d</div>
+              </a>
+          </li>
+          <li>
+            <a  class="dropdown">Support & Partner
+              <div class="dropdown-content">dsfsdf sfdsdfs fs sdfsdfs sdsdfds d</div>
+              </a>
+          </li>
+          <li>
+            <a  class="dropdown"><img src="./../../assets/setting.png">
+              <div class="dropdown-content">dsfsdf sfdsdfs fs sdfsdfs sdsdfds d</div>
+            </a>
+         </li>
+        </ul>
+        </div>
+      </nav>
+         <hr class="hori">
+  </div>
+  <div class="container">
+    <div class="row welcome">
+      <div class="col-md-12 mainbody">
+        <p *ngIf="checkLoginSession"><img class="profile" src="./../../assets/profile.png" alt=""></p>
+        <p class="userWel" *ngIf="checkLoginSession"> Welcome to GACS </p>
+        <!-- fill profile name above -->
+        <p *ngIf="!checkLoginSession" class="para1">WelCome</p>
+        <P *ngIf="!checkLoginSession" class="para2">to</P>
+        <P *ngIf="!checkLoginSession"> Global Associates Corporate Of Service</P>
+        <p class="user" *ngIf="checkLoginSession">{{userName}} <span></span></p>
+      </div>
+    </div>
+    <div *ngIf="!isLogin" class="row enterRow">
+        <div class="offset-sm-5 col-sm-2 enterword">
+          <a  (click)="openSignupModal()">ENTER GACS WORD</a>
+
+          <hr class="line1">
+          <hr class="line2">
+          <hr class="line3">
+          <hr class="line4">
+        </div>
+    </div>
+
+
+  </div>
+    <div  *ngIf="!isLogin" class="row margintop">
+      <div class="col-md-4 widthgallry">
+        <app-css-carousel></app-css-carousel>
+      </div>
+      <div class="col-md-4 widthgallry">
+        <app-video ></app-video>
+      </div>
+      <div class="col-md-4 widthgallry">
+        <app-css-carousel></app-css-carousel>
+      </div>
+    </div>
+  <div class="modal signupModal" *ngIf="signupModal" role="dialog">
+    <div class="modal-dialog modal-lg modallogin">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title">Verify your mobile number to process further</h6>
+        </div>
+        <div class="modal-body margin-left-10">
+          <div class=" row">
+          <div class="col-md-6">
+          <input  type="tel " maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57 ' class="form-control  margin-top-10"  aria-describedby="emailHelp" placeholder="Enter Mobile Number" [ngModelOptions]="{standalone: true}" [(ngModel)]="mobileNumber">
+          <div *ngIf="displayTimer" class="text-center border-bottom margin-top-20">
+            <h6>
+            00:{{secondsDisplay}}
+          </h6>
+          </div>
+          <input  *ngIf="otpModal"  type="tel " maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57 ' class="form-control  margin-top-10"  aria-describedby="emailHelp" placeholder="Enter OTP" [ngModelOptions]="{standalone: true}" [(ngModel)]="inputOtp">
+          </div>
+        </div>
+        <div class="row margin-top-20">
+          <div class="col-md-6 display-inline-block">
+              <button   *ngIf="!otpModal" type="button" class="btn  login-button hover" (click)="onLogin()">LOGIN</button>
+              <button *ngIf="otpModal" type="button" class="btn  login-button hover" (click)="onOtp()">Verify</button>
+          </div>
+          <div class="col-md-6 display-inline-block content">
+              If you do not recevie your OTP in 1 Minute.click to
+              <a class="resend-otp hover" (click)="onLogin()" >Resend OTP</a>
+          </div>
+          <div class="close-button" (click)="closeModal()">
+            <img src='./../../assets/close.png' class="hover" height="42" width="42">
+          </div>
+        </div>
+
+         </div>
+      </div>
+      <div class="line-button">
+      </div>
+      <div class="line-button margin-top-5">
+      </div>
+    </div>
+  </div>
+
+  <app-dashboard *ngIf="isLogin"></app-dashboard>
+</div>
+

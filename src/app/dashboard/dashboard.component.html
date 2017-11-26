@@ -1,0 +1,116 @@
+
+<div class="row dash">
+  <ul class="width-ul">
+    <li class="hover" (click)="showConcilsView()">
+      <img id="innerImage" src="./../../assets/council.png" alt="">
+      <img src='./../../assets/button.png' alt=''>
+      <p>Councils</p>
+    </li>
+    <li class="hover" (click)="showOfficeBarearsView()">
+      <img id="innerImage" src="./../../assets/bearers.png" alt="">
+      <img src='./../../assets/button.png' alt=''>
+      <p>Office Bearers</p>
+    </li>
+    <li class="hover"  (click)="showcarriersView()">
+      <img id="innerImage" src="./../../assets/job.png" alt="" >
+      <img src='./../../assets/button.png' alt=''>
+      <p>Carriers</p>
+    </li>
+    <li class="hover">
+      <img id="innerImage" src="./../../assets/partner.png" alt="">
+      <img src='./../../assets/button.png' alt=''>
+      <p>Partner</p>
+    </li>
+    <li class="hover">
+      <img id="innerImage" src="./../../assets/event.png" alt="">
+      <img src='./../../assets/button.png' alt=''>
+      <p>Events</p>
+    </li>
+    <li class="hover" (click)="showNewsView()">
+      <img id="innerImage" src="./../../assets/news.png" alt="">
+      <img src='./../../assets/button.png' alt=''>
+      <p>news</p>
+    </li>
+    <li class="hover">
+      <img id="innerImage" src="./../../assets/vendors.png" alt="">
+      <img src='./../../assets/button.png' alt=''>
+      <p>Registered Vendors</p>
+    </li>
+  </ul>
+</div>
+
+<div class="dashboard-content">
+<div class="container">
+  <div class="row" *ngIf="concilsView">
+    <div *ngFor="let data of Councils">
+      <h3>
+        {{data.title}}
+      </h3>
+      <p>
+        {{data.description}}
+      </p>
+    </div>
+  </div>
+
+  <div  class="row" *ngIf="officeBearersView">
+    <div *ngFor="let data of Councils">
+      <h3>
+        {{data.title}}
+      </h3>
+      <p>
+        {{data.description}}
+      </p>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="newsView">
+    <div class="col-md-12 card" *ngFor="let data of News">
+      <h6 class="head">
+        {{data.title}}
+      </h6>
+      <p class="sec-head">
+        {{data.author}}  on {{data.postedDate | date:'fullDate'}}
+      </p>
+      <div class="row">
+        <div class="col-md-12 content-inner">
+            <img id="left-image" src="{{data.image}}" alt="Smiley face" height="60" width="107">
+          <p>
+        <!-- </div> -->
+        <!-- <div class="col-md-11 content-inner"> -->
+            {{data.content}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="carriersView">
+      <div  class="col-md-12 cardCar" *ngFor="let data of Jobs">
+        <h6 class="carrierHead">
+          {{data.postedby}}
+        </h6>
+        <p  class="carrierPro">
+          {{data.jobProfile}}
+        </p>
+        <p  class="carrierDes">
+          Keyskill: {{data.jobDescription}}.
+        </p>
+        <p  class="carrierWeb">
+          Summary: {{data.exp_req}}. Worktime:{{data.work_time}}
+        </p>
+
+        <p class="carrieLoc">
+          <i style="padding: 0px 3px 0px 3px;" class="fa fa-map-marker" aria-hidden="true"></i>
+           {{data.job_loc}}
+        </p>
+        <p class="carrieLoc">
+          <i class="fa fa-suitcase" aria-hidden="true"></i>
+          {{data.exp_req}}
+        <span style="float:right;">
+          <button class="btn btn-default">Share</button>
+          <button class="btn btn-default apply">Apply</button>
+        </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
