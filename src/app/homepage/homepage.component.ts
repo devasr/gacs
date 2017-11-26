@@ -54,6 +54,7 @@ export class HomepageComponent implements OnInit {
     this.disableResend=false;
     this.otpModal=false
     this.displayTimer=false
+    this.disableResend=true;
   }
 
   public onLogin() {
