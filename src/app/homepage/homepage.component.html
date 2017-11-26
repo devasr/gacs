@@ -101,7 +101,8 @@
           </div>
           <div class="col-md-6 display-inline-block content">
               If you do not recevie your OTP in 1 Minute.click to
-              <a class="resend-otp hover" (click)="onLogin()" >Resend OTP</a>
+              <a  *ngIf="disableResend" class="resend-otp hover"  class="disabled">Resend OTP</a>
+              <a  *ngIf="!disableResend" class="resend-otp hover" (click)="onLogin()">Resend OTP</a>
           </div>
           <div class="close-button" (click)="closeModal()">
             <img src='./../../assets/close.png' class="hover" height="42" width="42">

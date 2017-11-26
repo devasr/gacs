@@ -23,6 +23,7 @@ export class HomepageComponent implements OnInit {
   inputOtp:any
   otpModal=false
   isLogin=false
+  disableResend=true;
   emailPattern=/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/;
   constructor(public homePageService:HomePageService,public appComponent:AppComponent) {
     this.signupModal = false;
@@ -49,6 +50,10 @@ export class HomepageComponent implements OnInit {
   public closeModal() {
     this.signupModal = false;
     this.otpModal=false
+    this.sub.unsubscribe();
+    this.disableResend=false;
+    this.otpModal=false
+    this.displayTimer=false
   }
 
   public onLogin() {
@@ -112,15 +117,22 @@ export class HomepageComponent implements OnInit {
   }
 
   startTimer(){
+    this.secondsDisplay=60;
     this.displayTimer = true;
     const timer = Observable.timer(1, 1000);
     this.sub = timer.subscribe(t => {
       this.ticks = t;
 
-      this.secondsDisplay = this.getSeconds(this.ticks);
-      if (this.secondsDisplay === 60) {
+      let second = this.getSeconds(this.ticks);
+      this.secondsDisplay--;
+      if (this.secondsDisplay ==0) {
         this.sub.unsubscribe();
+        this.disableResend=false;
+        this.otpModal=false
         this.displayTimer=false
+      }
+      else{
+
       }
     });
 
