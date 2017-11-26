@@ -16,7 +16,7 @@ export class HomepageComponent implements OnInit {
   ticks = 0;
   secondsDisplay = 0;
   sub: Subscription;
-  name:any;
+  userName:any;
   email:any;
   mobileNumber:any
   otp:any;
@@ -26,6 +26,7 @@ export class HomepageComponent implements OnInit {
   emailPattern=/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/;
   constructor(public homePageService:HomePageService,public appComponent:AppComponent) {
     this.signupModal = false;
+    this.userName="Madhav Pandey"
     this.displayTimer = false;
     this.isLogin=false
     //showLoader=false;
@@ -58,7 +59,7 @@ export class HomepageComponent implements OnInit {
       bootbox.alert("Please enter correct mobile number");
     }
     else{
-
+    
       let json={
         "request": {
           "type": "login"
