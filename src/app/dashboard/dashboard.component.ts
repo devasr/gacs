@@ -68,17 +68,17 @@ export class DashboardComponent implements OnInit {
     this.eventsView=false;
     this.newsView=false;
     this.registeredVendorView=false;
-    this.getCouncilData();
+   // this.getCouncilData();
   }
   showOfficeBarearsView(){
     this.concilsView=false;
-    this.officeBearersView=true;
+    this.officeBearersView=false;
     this.carriersView=false;
     this.partnerView=false;
     this.eventsView=false;
     this.newsView=false;
     this.registeredVendorView=false;
-    this.getOfficeBearer();
+  //  this.getOfficeBearer();
   }
   getOfficeBearer(){
     let json={
