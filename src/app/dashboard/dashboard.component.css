@@ -31,5 +31,37 @@ text-transform: uppercase;
 }
 .dashboard-content{
   background: white;
-  padding: 20px
+  padding: 20px;
+}
+.card{
+  padding: 5px;
+  margin-top: 5px;
+  border:1px solid #80808014;
+}
+.content-inner{
+  display: inline-block;
+}
+.content-inner p{
+      font-size: 14px;
+    color: #868e96;
+}
+.content-inner #left-image{
+  float: left;
+    border: 1px solid #80808014;
+    padding: 5px;
+    border-radius: 2px;
+    margin: 5px 15px 5px 0px;
+}
+.head{
+    margin-bottom: 0px;
+    color:#007196;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+}
+.sec-head{
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 2px;
+    color: #868e96cc;
 }
