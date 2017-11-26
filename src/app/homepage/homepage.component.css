@@ -256,6 +256,11 @@ ul>li:last-child .dropdown-content::after{
   height: 100px;
 
 }
+.disabled {
+  color: gray;
+  cursor: not-allowed;
+  text-decoration: underline;
+}
 .userWel{
   font-size: 38px !important;
 }

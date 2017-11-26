@@ -16,43 +16,45 @@ export class HomepageComponent implements OnInit {
   ticks = 0;
   secondsDisplay = 0;
   sub: Subscription;
-  userName: any;
+  userName:any;
+  email:any;
+  mobileNumber:any
+  otp:any;
+  inputOtp:any
+  otpModal=false
+  isLogin=false
+  disableResend=true;
+  emailPattern=/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/;
   checkLoginSession:any;
-  email: any;
-  mobileNumber: any;
-  otp: any;
-  inputOtp: any;
-  otpModal = false;
-  isLogin = false;
-  emailPattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/;
-  constructor(
-    public homePageService: HomePageService,
-    public appComponent: AppComponent
-  ) {
+  constructor(public homePageService: HomePageService,public appComponent: AppComponent) {
     this.signupModal = false;
     this.userName="Madhav Pandey"
     this.displayTimer = false;
     this.isLogin = false;
-    //showLoader=false;
-
+    if(sessionStorage.getItem("is_login")=="true"){
+      this.isLogin=true
+    }
+    else{
+      this.isLogin=false
+    }
   }
-
+  
   ngOnInit() {
-     this.checkLoginSession = sessionStorage.getItem("is_login");
-     if (this.checkLoginSession == "true") {
-       this.isLogin = true;
-     } else {
-       this.isLogin = false;
-     }
   }
-
   public openSignupModal() {
     this.signupModal = true;
   }
 
   public closeModal() {
     this.signupModal = false;
+    this.otpModal=false
+    this.sub.unsubscribe();
+    this.disableResend=false;
+    this.otpModal=false
+    this.displayTimer=false
+    this.disableResend=true;
     this.otpModal = false;
+    this.inputOtp=""
   }
 
   public onLogin() {
@@ -61,6 +63,7 @@ export class HomepageComponent implements OnInit {
     } else if (this.mobileNumber.toString().length != 10) {
       bootbox.alert("Please enter correct mobile number");
     } else {
+      this.userName="Madhav pandey"
       let json = {
         request: {
           type: "login"
@@ -107,16 +110,25 @@ export class HomepageComponent implements OnInit {
     return digit <= 9 ? "0" + digit : digit;
   }
 
-  startTimer() {
+  startTimer(){
+    this.secondsDisplay=60;
+    this.disableResend=true;
     this.displayTimer = true;
     const timer = Observable.timer(1, 1000);
     this.sub = timer.subscribe(t => {
       this.ticks = t;
 
-      this.secondsDisplay = this.getSeconds(this.ticks);
-      if (this.secondsDisplay === 60) {
+      let second = this.getSeconds(this.ticks);
+      this.secondsDisplay--;
+      if (this.secondsDisplay ==0) {
         this.sub.unsubscribe();
-        this.displayTimer = false;
+        this.disableResend=false;
+        this.inputOtp=""
+        this.otpModal=false
+        this.displayTimer=false
+      }
+      else{
+
       }
     });
   }
@@ -126,10 +138,13 @@ export class HomepageComponent implements OnInit {
       bootbox.alert("Your enter OTP .");
     } else if (this.otp == this.inputOtp) {
       sessionStorage.setItem("is_login", "true");
+      this.checkLoginSession=true
       this.isLogin = true;
       this.closeModal();
     } else {
       bootbox.alert("Your enter OTP is wrong please try again later.");
+      this.isLogin=false
+      sessionStorage.setItem("is_login", "false");
     }
   }
 }

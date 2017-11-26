@@ -44,16 +44,16 @@
   <div class="container">
     <div class="row welcome">
       <div class="col-md-12 mainbody">
-        <p *ngIf="checkLoginSession"><img class="profile" src="./../../assets/profile.png" alt=""></p>
-        <p class="userWel" *ngIf="checkLoginSession"> Welcome to GACS </p>
+        <p *ngIf="isLogin"><img class="profile" src="./../../assets/profile.png" alt=""></p>
+        <p class="userWel" *ngIf="isLogin"> Welcome to GACS </p>
         <!-- fill profile name above -->
-        <p *ngIf="!checkLoginSession" class="para1">WelCome</p>
-        <P *ngIf="!checkLoginSession" class="para2">to</P>
-        <P *ngIf="!checkLoginSession"> Global Associates Corporate Of Service</P>
-        <p class="user" *ngIf="checkLoginSession">{{userName}} <span></span></p>
+        <p *ngIf="!isLogin" class="para1">WelCome</p>
+        <P *ngIf="!isLogin" class="para2">to</P>
+        <P *ngIf="!isLogin"> Global Associates Corporate Of Service</P>
+        <p class="user" *ngIf="isLogin">{{userName}} <span></span></p>
       </div>
     </div>
-    <div *ngIf="!isLogin" class="row enterRow">
+    <div  *ngIf="!isLogin"class="row enterRow">
         <div class="offset-sm-5 col-sm-2 enterword">
           <a  (click)="openSignupModal()">ENTER GACS WORD</a>
 
@@ -102,7 +102,8 @@
           </div>
           <div class="col-md-6 display-inline-block content">
               If you do not recevie your OTP in 1 Minute.click to
-              <a class="resend-otp hover" (click)="onLogin()" >Resend OTP</a>
+              <a  *ngIf="disableResend" class="resend-otp hover"  class="disabled">Resend OTP</a>
+              <a  *ngIf="!disableResend" class="resend-otp hover" (click)="onLogin()">Resend OTP</a>
           </div>
           <div class="close-button" (click)="closeModal()">
             <img src='./../../assets/close.png' class="hover" height="42" width="42">
