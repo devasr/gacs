@@ -253,8 +253,8 @@ ul>li:last-child .dropdown-content::after{
 }
 .profile{
   border-radius: 50%;
-  height: 100px;
-
+    height: 80px;
+    width: 80px;  
 }
 .disabled {
   color: gray;

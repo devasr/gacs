@@ -44,13 +44,13 @@
   <div class="container">
     <div class="row welcome">
       <div class="col-md-12 mainbody">
-        <p *ngIf="isLogin"><img class="profile" src="./../../assets/profile.png" alt=""></p>
+        <p *ngIf="isLogin"><img class="profile" src="{{userImg}}" alt=""></p>
         <p class="userWel" *ngIf="isLogin"> Welcome to GACS </p>
         <!-- fill profile name above -->
         <p *ngIf="!isLogin" class="para1">WelCome</p>
         <P *ngIf="!isLogin" class="para2">to</P>
         <P *ngIf="!isLogin"> Global Associates Corporate Of Service</P>
-        <p class="user" *ngIf="isLogin">{{userName}} <span></span></p>
+        <p class="user" *ngIf="isLogin"> <span></span>{{userName}}</p>
       </div>
     </div>
     <div  *ngIf="!isLogin"class="row enterRow">
@@ -119,6 +119,6 @@
     </div>
   </div>
 
-  <app-dashboard *ngIf="isLogin"></app-dashboard>
+  <app-dashboard *ngIf="isLogin"  (user)="userlogged($event)"></app-dashboard>
 </div>
 

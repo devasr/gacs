@@ -17,6 +17,7 @@ export class HomepageComponent implements OnInit {
   secondsDisplay = 0;
   sub: Subscription;
   userName:any;
+  userImg:any;
   email:any;
   mobileNumber:any
   otp:any;
@@ -28,7 +29,6 @@ export class HomepageComponent implements OnInit {
   checkLoginSession:any;
   constructor(public homePageService: HomePageService,public appComponent: AppComponent) {
     this.signupModal = false;
-    this.userName="Madhav Pandey"
     this.displayTimer = false;
     this.isLogin = false;
     if(sessionStorage.getItem("is_login")=="true"){
@@ -40,6 +40,13 @@ export class HomepageComponent implements OnInit {
   }
   
   ngOnInit() {
+	  
+  }
+  
+  userlogged(user){
+	  console.log(user)
+	  this.userName=user.name;
+	  this.userImg=user.image;
   }
   public openSignupModal() {
     this.signupModal = true;
@@ -63,7 +70,6 @@ export class HomepageComponent implements OnInit {
     } else if (this.mobileNumber.toString().length != 10) {
       bootbox.alert("Please enter correct mobile number");
     } else {
-      this.userName="Madhav pandey"
       let json = {
         request: {
           type: "login"

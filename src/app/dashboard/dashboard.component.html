@@ -4,22 +4,22 @@
     <li class="hover" (click)="showConcilsView()">
       <img id="innerImage" src="./../../assets/council.png" alt="">
       <img src='./../../assets/button.png' alt=''>
-      <p>Councils</p>
+      <p>Council</p>
     </li>
     <li class="hover" (click)="showOfficeBarearsView()">
       <img id="innerImage" src="./../../assets/bearers.png" alt="">
       <img src='./../../assets/button.png' alt=''>
-      <p>Office Bearers</p>
+      <p>Office Bearer</p>
     </li>
     <li class="hover"  (click)="showcarriersView()">
       <img id="innerImage" src="./../../assets/job.png" alt="" >
       <img src='./../../assets/button.png' alt=''>
-      <p>Carriers</p>
+      <p>Career</p>
     </li>
     <li class="hover">
       <img id="innerImage" src="./../../assets/partner.png" alt="">
       <img src='./../../assets/button.png' alt=''>
-      <p>Partner</p>
+      <p>Partners</p>
     </li>
     <li class="hover">
       <img id="innerImage" src="./../../assets/event.png" alt="">
@@ -29,12 +29,12 @@
     <li class="hover" (click)="showNewsView()">
       <img id="innerImage" src="./../../assets/news.png" alt="">
       <img src='./../../assets/button.png' alt=''>
-      <p>news</p>
+      <p>News</p>
     </li>
-    <li class="hover">
+    <li class="hover" (click)="showprofile()">
       <img id="innerImage" src="./../../assets/vendors.png" alt="">
       <img src='./../../assets/button.png' alt=''>
-      <p>Registered Vendors</p>
+      <p>Vendors</p>
     </li>
   </ul>
 </div>
@@ -42,18 +42,20 @@
 <div class="dashboard-content">
 <div class="container">
   <div class="row" *ngIf="concilsView">
-    <div *ngFor="let data of Councils">
-      <h3>
+    <div class="col-md-12 card" *ngFor="let data of Councils">
+      <h6 class="head1">
         {{data.title}}
-      </h3>
-      <p>
-        {{data.description}}
-      </p>
+      </h6>
+      <div class="col-md-12 content-inner">
+		  <p>
+			{{data.description}}
+		  </p>
+	</div>
     </div>
   </div>
 
   <div  class="row" *ngIf="officeBearersView">
-    <div *ngFor="let data of Councils">
+    <div *ngFor="let data of Bearers">
       <h3>
         {{data.title}}
       </h3>
@@ -112,5 +114,28 @@
         </p>
       </div>
     </div>
+	
+	 <div  class="row" *ngIf="profileView">
+    <div *ngFor="let data of profile">
+      <h3>
+        {{data.name}}
+      </h3>
+      <p>
+        {{data.mobile}}
+      </p>
+	  <p>
+        {{data.personal_email}}
+      </p>
+      <p>
+        <img src="{{data.image}}"/>
+      </p>
+      <p>
+	  <img src="{{data.visiting_image}}"/>
+ 
+      </p>
+      
+    </div>
+  </div>
+	
   </div>
 </div>

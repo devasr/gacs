@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  Output, EventEmitter } from '@angular/core';
 import {DashboardService} from './dashborad.service';
 import { AppComponent } from '../app.component';
 declare var bootbox: any;
@@ -15,12 +15,16 @@ export class DashboardComponent implements OnInit {
    officeBearersView:boolean
    carriersView:boolean
    partnerView:boolean
+   profileView:boolean
    eventsView:boolean
    newsView:boolean
    registeredVendorView:boolean
    Councils=[];
    News=[];
    Jobs=[];
+   profile=[];
+   @Output() user: EventEmitter<any> = new EventEmitter<any>();
+   
   constructor(public dashboardService:DashboardService,public appComponent:AppComponent) {
     this.concilsView=true;
     this.officeBearersView=false;
@@ -28,11 +32,13 @@ export class DashboardComponent implements OnInit {
     this.partnerView=false;
     this.eventsView=false;
     this.newsView=false;
+	this.profileView=false;
     this.registeredVendorView=false;
 
    //this.showLoader=HomepageComponent.showLoader;
 
-    this.showcarriersView();
+    this.showConcilsView();
+	this.getShowprofile();
    }
 
    getCouncilData(){
@@ -61,14 +67,15 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
   showConcilsView(){
-    this.concilsView=false;
+    this.concilsView=true;
     this.officeBearersView=false;
     this.carriersView=false;
     this.partnerView=false;
     this.eventsView=false;
     this.newsView=false;
+	this.profileView=false;
     this.registeredVendorView=false;
-   // this.getCouncilData();
+   this.getCouncilData();
   }
   showOfficeBarearsView(){
     this.concilsView=false;
@@ -76,6 +83,7 @@ export class DashboardComponent implements OnInit {
     this.carriersView=false;
     this.partnerView=false;
     this.eventsView=false;
+	this.profileView=false;
     this.newsView=false;
     this.registeredVendorView=false;
   //  this.getOfficeBearer();
@@ -110,6 +118,7 @@ export class DashboardComponent implements OnInit {
     this.partnerView=false;
     this.eventsView=false;
     this.newsView=true;
+	this.profileView=false;
     this.registeredVendorView=false;
     this.getNews();
   }
@@ -149,6 +158,7 @@ export class DashboardComponent implements OnInit {
     this.eventsView=false;
     this.newsView=false;
     this.registeredVendorView=false;
+	this.profileView=false;
     this.getJobs();
   }
 
@@ -175,5 +185,45 @@ export class DashboardComponent implements OnInit {
       this.showLoader=false
     }
     )
+  }
+  
+  showprofile(){
+    this.concilsView=false;
+    this.officeBearersView=false;
+    this.carriersView=false;
+    this.partnerView=false;
+    this.eventsView=false;
+    this.newsView=false;
+    this.registeredVendorView=false;
+	this.profileView=true;
+    this.getShowprofile();
+  }
+  getShowprofile(){
+    let json={
+		"request": {
+			"type": "profile_data"
+		},
+		"requestinfo": {
+			"userid": sessionStorage.getItem("userid")
+		}
+	}
+    this.appComponent.updateshowLoader(true)
+    this.dashboardService.getOfficeBearer(json).subscribe(
+        data=>{
+          this.appComponent.updateshowLoader(false)
+            let response=data.response;
+            if(response.code==200){
+              this.profile=[response.data];
+			  this.user.emit(response.data);
+            }
+            else{
+				this.user.emit({name:"New User";image:"./../../assets/profile.png"});
+                bootbox.alert(response.message);
+            }
+        },
+        err=>{
+          this.showLoader=false
+        }
+        )
   }
 }
