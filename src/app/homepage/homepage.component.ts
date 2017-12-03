@@ -31,7 +31,7 @@ export class HomepageComponent implements OnInit {
     this.signupModal = false;
     this.displayTimer = false;
     this.isLogin = false;
-    if(sessionStorage.getItem("is_login")=="true"){
+    if(localStorage.getItem("is_login")=="true"){
       this.isLogin=true
     }
     else{
@@ -91,13 +91,13 @@ export class HomepageComponent implements OnInit {
             this.otpModal = true;
             this.startTimer();
             this.displayTimer = true;
-            sessionStorage.setItem("userid", response.userid);
+            localStorage.setItem("userid", response.userid);
             this.otp = response.otp;
           } else if (response.code == 204) {
             this.otpModal = true;
             this.startTimer();
             this.displayTimer = true;
-            sessionStorage.setItem("userid", response.userid);
+            localStorage.setItem("userid", response.userid);
             this.otp = response.otp;
           } else {
             bootbox.alert(response.message);
@@ -143,14 +143,14 @@ export class HomepageComponent implements OnInit {
     if (!this.inputOtp) {
       bootbox.alert("Your enter OTP .");
     } else if (this.otp == this.inputOtp) {
-      sessionStorage.setItem("is_login", "true");
+      localStorage.setItem("is_login", "true");
       this.checkLoginSession=true
       this.isLogin = true;
       this.closeModal();
     } else {
       bootbox.alert("Your enter OTP is wrong please try again later.");
       this.isLogin=false
-      sessionStorage.setItem("is_login", "false");
+      localStorage.setItem("is_login", "false");
     }
   }
 }

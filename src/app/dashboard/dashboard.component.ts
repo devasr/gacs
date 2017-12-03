@@ -204,7 +204,7 @@ export class DashboardComponent implements OnInit {
 			"type": "profile_data"
 		},
 		"requestinfo": {
-			"userid": sessionStorage.getItem("userid")
+			"userid": localStorage.getItem("userid")
 		}
 	}
     this.appComponent.updateshowLoader(true)
@@ -217,7 +217,7 @@ export class DashboardComponent implements OnInit {
 			  this.user.emit(response.data);
             }
             else{
-				this.user.emit({name:"New User";image:"./../../assets/profile.png"});
+				this.user.emit({name:"New User",image:"./../../assets/profile.png"});
                 bootbox.alert(response.message);
             }
         },
