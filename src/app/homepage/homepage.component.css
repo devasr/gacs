@@ -286,3 +286,21 @@ ul>li:last-child .dropdown-content::after{
     border-radius: 50%;
     margin-top: 45px;
 }
+
+.center{
+  margin-left:40% ;
+  margin-right:40% 
+}
+
+.save-button{
+  width:450px !important ;
+  margin: auto !important;
+}
+
+.margin-bootom-20{
+  margin-bottom: 20px !important;
+}
+
+.margin-top-20{
+  margin-top: 20px !important;
+}

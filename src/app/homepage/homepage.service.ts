@@ -17,6 +17,12 @@ export class HomePageService {
     login(jasonData) {
         return this.http.post(this.baseUrl, jasonData, this.options).map((res: Response) => res.json());
     }
+
+    getProfile(jasonData) {
+        return this.http.post(this.baseUrl, jasonData, this.options).map((res: Response) => res.json());
+    }
    
-   
+    updateProfile(jasonData) {
+        return this.http.post(this.baseUrl, jasonData, this.options).map((res: Response) => res.json());
+    }
 }
