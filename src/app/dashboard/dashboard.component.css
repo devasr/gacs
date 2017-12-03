@@ -122,3 +122,7 @@ text-transform: uppercase;
 .apply{
   background: blueviolet;
 }
+.alert{
+	margin: auto;
+    margin-top: 50px;
+}

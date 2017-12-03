@@ -16,7 +16,7 @@
       <img src='./../../assets/button.png' alt=''>
       <p>Career</p>
     </li>
-    <li class="hover">
+    <li class="hover" (click)="showpartner()">
       <img id="innerImage" src="./../../assets/partner.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Partners</p>
@@ -31,10 +31,15 @@
       <img src='./../../assets/button.png' alt=''>
       <p>News</p>
     </li>
-    <li class="hover" (click)="showprofile()">
+    <li class="hover">
       <img id="innerImage" src="./../../assets/vendors.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Vendors</p>
+    </li>
+	<li class="hover" (click)="knowBank()">
+      <img id="innerImage" src="./../../assets/IQ.png" alt="">
+      <img src='./../../assets/button.png' alt=''>
+      <p>Knowledge Bank</p>
     </li>
   </ul>
 </div>
@@ -43,6 +48,20 @@
 <div class="container">
   <div class="row" *ngIf="concilsView">
     <div class="col-md-12 card" *ngFor="let data of Councils">
+      <h6 class="head1">
+        {{data.title}}
+      </h6>
+      <div class="col-md-12 content-inner">
+		  <p>
+			{{data.description}}
+		  </p>
+	</div>
+    </div>
+  </div>
+  
+  <div class="row" *ngIf="knowlegeView">
+	<div class="alert alert-danger" *ngIf="error">{{error}}</div>
+    <div class="col-md-12 card" *ngFor="let data of Knowledge">
       <h6 class="head1">
         {{data.title}}
       </h6>
@@ -62,6 +81,23 @@
       <p>
         {{data.description}}
       </p>
+    </div>
+  </div>
+  
+    <div  class="row" *ngIf="partnerView">
+        <div class="col-md-12 card" *ngFor="let data of partner">
+      <h6 class="head">
+        {{data.name}}
+      </h6>
+ 
+      <div class="row">
+        <div class="col-md-12 content-inner">
+            <a href="{{data.web_url}}" target="_blank" ><img id="left-image" src="{{data.logo_url}}" alt="Smiley face" height="60" width="107"></a>
+          <p>
+            <a href="{{data.web_url}}" target="_blank" >{{data.web_url}}</a>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 

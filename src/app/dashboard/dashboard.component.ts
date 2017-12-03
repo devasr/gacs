@@ -18,10 +18,14 @@ export class DashboardComponent implements OnInit {
    profileView:boolean
    eventsView:boolean
    newsView:boolean
+   knowlegeView:boolean
    registeredVendorView:boolean
    Councils=[];
+   error:any;
    News=[];
+   Knowledge=[];
    Jobs=[];
+   partner=[];
    profile=[];
    @Output() user: EventEmitter<any> = new EventEmitter<any>();
    
@@ -30,23 +34,22 @@ export class DashboardComponent implements OnInit {
     this.officeBearersView=false;
     this.carriersView=false;
     this.partnerView=false;
+	this.knowlegeView=false;
     this.eventsView=false;
     this.newsView=false;
 	this.profileView=false;
     this.registeredVendorView=false;
-
-   //this.showLoader=HomepageComponent.showLoader;
 
     this.showConcilsView();
 	this.getShowprofile();
    }
 
    getCouncilData(){
-     let json={
-             "request": {
-                 "type": "council"
-                 }
-            }
+	let json={
+		"request": {
+			"type": "council"
+		}
+	}
     this.appComponent.updateshowLoader(true)
     this.dashboardService.getCouncilData(json).subscribe(
       data=>{
@@ -58,30 +61,33 @@ export class DashboardComponent implements OnInit {
             else{
                 bootbox.alert(response.message);
             }
-      },
-      err=>{
-          this.showLoader=false
-      }
-    )
-    }
+		},
+		err=>{
+		  this.showLoader=false
+		}
+	)}
+	
   ngOnInit() {
   }
   showConcilsView(){
     this.concilsView=true;
     this.officeBearersView=false;
     this.carriersView=false;
+	this.knowlegeView=false;
     this.partnerView=false;
     this.eventsView=false;
     this.newsView=false;
 	this.profileView=false;
     this.registeredVendorView=false;
-   this.getCouncilData();
+
+    this.getCouncilData();
   }
   showOfficeBarearsView(){
     this.concilsView=false;
     this.officeBearersView=false;
     this.carriersView=false;
     this.partnerView=false;
+	this.knowlegeView=false;
     this.eventsView=false;
 	this.profileView=false;
     this.newsView=false;
@@ -116,6 +122,7 @@ export class DashboardComponent implements OnInit {
     this.officeBearersView=false;
     this.carriersView=false;
     this.partnerView=false;
+	this.knowlegeView=false;
     this.eventsView=false;
     this.newsView=true;
 	this.profileView=false;
@@ -156,6 +163,7 @@ export class DashboardComponent implements OnInit {
     this.carriersView=true;
     this.partnerView=false;
     this.eventsView=false;
+	this.knowlegeView=false;
     this.newsView=false;
     this.registeredVendorView=false;
 	this.profileView=false;
@@ -191,6 +199,7 @@ export class DashboardComponent implements OnInit {
     this.concilsView=false;
     this.officeBearersView=false;
     this.carriersView=false;
+	this.knowlegeView=false;
     this.partnerView=false;
     this.eventsView=false;
     this.newsView=false;
@@ -223,6 +232,83 @@ export class DashboardComponent implements OnInit {
         },
         err=>{
           this.showLoader=false
+        }
+        )
+  }
+  
+   showpartner(){
+    this.concilsView=false;
+    this.officeBearersView=false;
+    this.carriersView=false;
+    this.partnerView=true;
+    this.eventsView=false;
+    this.newsView=false;
+	this.knowlegeView=false;
+	this.registeredVendorView=false;
+    this.getShowpartner();
+  }
+  getShowpartner(){
+    let json={
+		"request": {
+			"type": "partners_list"
+		}
+	}
+
+    this.appComponent.updateshowLoader(true)
+    this.dashboardService.getOfficeBearer(json).subscribe(
+        data=>{
+          this.appComponent.updateshowLoader(false)
+            let response=data.response;
+            if(response.code==200){
+              this.partner=response.message;
+            }
+            else{
+                bootbox.alert(response.message);
+            }
+        },
+        err=>{
+          this.showLoader=false
+        }
+        )
+  }
+  
+	knowBank(){
+		this.concilsView=false;
+		this.officeBearersView=false;
+		this.carriersView=false;
+		this.partnerView=false;
+		this.eventsView=false;
+		this.newsView=false;
+		this.registeredVendorView=false;
+		this.knowlegeView=true;
+		this.getknowBank();
+	}
+  getknowBank(){
+    let json={
+		"request": {
+			"type": "question"
+		}
+	}
+
+    this.appComponent.updateshowLoader(true)
+    this.dashboardService.getOfficeBearer(json).subscribe(
+        data=>{
+          this.appComponent.updateshowLoader(false)
+            let response=data.response;
+            if(response.code==204){
+			if(response.data){
+              this.Knowledge=response.data;
+			}
+			  if(response.data===undefined){
+				this.error=response.message;
+			  }
+            }
+            else{				
+                bootbox.alert(response.message);
+            }
+        },
+        err=>{
+          this.showLoader=false;
         }
         )
   }

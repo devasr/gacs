@@ -2,8 +2,15 @@
 <div class="body" [ngClass]="{'newBody':checkLoginSession}">
 
   <div class="container">
-      <nav class="navbar">
+  
+      <nav class="navbar navbar-inverse ">
         <div class="container-fluid">
+		<div class="navbar-header">
+      <a  class="navbar-toggle menu" data-toggle="collapse" data-target="#myNavbar">
+        <i class="fa fa-bars" aria-hidden="true"></i> Menu                     
+      </a>
+    </div>
+	<div class="collapse navbar-collapse" id="myNavbar">
         <ul>
           <li>
             <a class="dropdown">Home<span class="caret"></span>
@@ -33,10 +40,10 @@
           </li>
           <li>
             <a  class="dropdown"><img src="./../../assets/setting.png">
-              <div class="dropdown-content">dsfsdf sfdsdfs fs sdfsdfs sdsdfds d</div>
+              <div ng-if="isLogin" class="dropdown-content" (click)="getMyProfile()">MY Profile</div>
             </a>
          </li>
-        </ul>
+        </ul></div>
         </div>
       </nav>
          <hr class="hori">
@@ -44,7 +51,7 @@
   <div class="container">
     <div class="row welcome">
       <div class="col-md-12 mainbody">
-        <p *ngIf="isLogin"><img class="profile" src="{{userImg}}" alt=""></p>
+        <p *ngIf="isLogin"><img class="profile" [attr.src]="userImg" alt=""></p>
         <p class="userWel" *ngIf="isLogin"> Welcome to GACS </p>
         <!-- fill profile name above -->
         <p *ngIf="!isLogin" class="para1">WelCome</p>
@@ -54,7 +61,7 @@
       </div>
     </div>
     <div  *ngIf="!isLogin"class="row enterRow">
-        <div class="offset-sm-5 col-sm-2 enterword">
+        <div class="offset-sm-6 col-sm-2 enterword">
           <a  (click)="openSignupModal()">ENTER GACS WORD</a>
 
           <hr class="line1">
@@ -119,6 +126,30 @@
     </div>
   </div>
 
-  <app-dashboard *ngIf="isLogin"  (user)="userlogged($event)"></app-dashboard>
+
+  <div class="modal signupModal" *ngIf="profileModal" role="dialog">
+    <div class="modal-dialog modal-lg modallogin">
+      <div class="modal-content">
+        <div class="modal-body margin-left-10">
+          <div class="center">
+            <p ><img class="profile"[attr.src]="userImg" alt=""></p>
+            <input type="file" accept="image/*" capture id="filePicker" name="uploader" (change)="handleFileSelect($event)"><br>
+          </div>
+            <input type="text " class="form-control  margin-top-10"  aria-describedby="emailHelp" placeholder="Enter name"  readonly [ngModelOptions]="{standalone: true}" [(ngModel)]="userName">
+          <input type="text" class="form-control  margin-top-10"  aria-describedby="emailHelp" placeholder="Enter email"  [ngModelOptions]="{standalone: true}" [(ngModel)]="userEmail">
+          <input type="tel "  maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57 ' class="form-control  margin-top-10"  aria-describedby="emailHelp" placeholder="Enter mobile number"   [ngModelOptions]="{standalone: true}" [(ngModel)]="userMobileNumber">
+          <button   type="button" class="btn margin-bootom-20 margin-top-20  login-button hover " (click)="upDateProfile()">Save</button>
+          <div class="close-button" (click)="closeProfileModal()">
+              <img src='./../../assets/close.png' class="hover" height="42" width="42">
+            </div>
+        </div>
+      </div>
+      <div class="line-button">
+      </div>
+      <div class="line-button margin-top-5">
+      </div>
+    </div>
+  </div>
+  <app-dashboard *ngIf="isLogin" (user)="userlogged($event)" ></app-dashboard>
 </div>
 

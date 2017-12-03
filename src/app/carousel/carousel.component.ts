@@ -12,6 +12,11 @@ import { Image } from './image.interface';
     height:243px;
     width:100%;
 }
+@media(max-width:576px){
+	.carousel{
+		height:100% !important;
+	}
+}
 .slides{
     list-style:none;
     position:relative;

@@ -91,7 +91,7 @@ hr{
     margin: auto;
 }
 .enterword a{
-color: white;
+	color: white;
     text-decoration: none;
     border-radius: 22px;
     padding: 5px;
@@ -285,4 +285,77 @@ ul>li:last-child .dropdown-content::after{
     background:white;
     border-radius: 50%;
     margin-top: 45px;
+}
+
+.center{
+  margin-left:40% ;
+  margin-right:40% 
+}
+
+.save-button{
+  width:450px !important ;
+  margin: auto !important;
+}
+
+.margin-bootom-20{
+  margin-bottom: 20px !important;
+}
+
+.margin-top-20{
+  margin-top: 20px !important;
+}
+.menu{
+	color:white !important;
+	display:none;
+	font-size:24px !important;
+}
+@media(max-width:767px){
+	.menu{
+		display:block;
+	}	
+	.navbar ul>li{
+		width:100% ;
+	}
+	.enterword hr{
+		display:none;
+	}
+	.enterword{
+		flex: none;
+	}
+	.enterRow{
+		margin:0px;
+		padding:15px;	
+	}
+}
+@media(min-width:768px){
+	#myNavbar{
+		display:block !important;
+	}
+
+
+}
+@media(max-width:576px){
+	.welcome .mainbody .para2{
+		font-size: 28px !important;
+		margin-top: 0px;
+		margin-bottom: 0px
+	}
+	.welcome .mainbody .para1{
+		font-size: 30px !important;
+	}
+	.mainbody p{
+		font-size: 30px !important;
+	}
+	.welcome{
+		margin: 0px !important;
+		padding-left:15px;
+		padding-right:15px;
+	}
+	.container {
+	  padding-left: 15px;
+	  padding-right: 15px;
+	}
+	.carousel{
+		height:100% !important;
+	}
 }
