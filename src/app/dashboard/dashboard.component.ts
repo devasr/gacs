@@ -1,6 +1,7 @@
 import { Component, OnInit,  Output, EventEmitter } from '@angular/core';
 import {DashboardService} from './dashborad.service';
 import { AppComponent } from '../app.component';
+import * as pro from './../profile.json';
 declare var bootbox: any;
 @Component({
   selector: 'app-dashboard',
@@ -216,7 +217,10 @@ export class DashboardComponent implements OnInit {
 			"userid": localStorage.getItem("userid")
 		}
 	}
+	console.log(localStorage.getItem("profile_status"))
+	if(localStorage.getItem("profile_status")){
     this.appComponent.updateshowLoader(true)
+	
     this.dashboardService.getOfficeBearer(json).subscribe(
         data=>{
           this.appComponent.updateshowLoader(false)
@@ -226,7 +230,7 @@ export class DashboardComponent implements OnInit {
 			  this.user.emit(response.data);
             }
             else{
-				this.user.emit({name:"New User",image:"./../../assets/profile.png"});
+				
                 bootbox.alert(response.message);
             }
         },
@@ -234,6 +238,10 @@ export class DashboardComponent implements OnInit {
           this.showLoader=false
         }
         )
+	}else{
+		console.log(pro.name)
+		this.user.emit(pro.name);
+	}
   }
   
    showpartner(){

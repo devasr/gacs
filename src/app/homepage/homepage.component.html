@@ -40,7 +40,11 @@
           </li>
           <li>
             <a  class="dropdown"><img src="./../../assets/setting.png">
-              <div ng-if="isLogin" class="dropdown-content" (click)="getMyProfile()">MY Profile</div>
+              <div  class="dropdown-content" >
+				  <ul>
+					<li *ngIf="isLogin" (click)="getMyProfile()">MY Profile</li>
+				  </ul>
+			  </div>
             </a>
          </li>
         </ul></div>

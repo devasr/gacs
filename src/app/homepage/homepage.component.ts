@@ -39,7 +39,6 @@ export class HomepageComponent implements OnInit {
     this.isLogin = false;
     if(localStorage.getItem("is_login")=="true"){
       this.isLogin=true
-      this.getProfile()
     }
     else{
       this.isLogin=false
@@ -125,12 +124,22 @@ export class HomepageComponent implements OnInit {
             localStorage.setItem("userName", "test");
             localStorage.setItem("userEmail", "test@gmail.com");
             localStorage.setItem("userMobileNumber",this.mobileNumber);
+			console.log(response.profile_status==1)
+			if(response.profile_status==1){
+				localStorage.setItem("profile_status","true");
+			}
+            
             this.otp = response.otp;
           } else if (response.code == 204) {
+			  			console.log(response.profile_status==1)
+
             localStorage.setItem("userid", response.userid);
             localStorage.setItem("userName", "test");
             localStorage.setItem("userEmail", "test@gmail.com");
             localStorage.setItem("userMobileNumber",this.mobileNumber);
+            if(response.profile_status==1){
+				localStorage.setItem("profile_status","true");
+			}
             this.otpModal = true;
             this.startTimer();
             this.displayTimer = true;
@@ -183,7 +192,7 @@ export class HomepageComponent implements OnInit {
       this.checkLoginSession=true
       this.isLogin = true;
       this.closeModal();
-      this.getProfile();
+ 
     } else {
       bootbox.alert("Your enter OTP is wrong please try again later.");
       this.isLogin=false
@@ -191,7 +200,7 @@ export class HomepageComponent implements OnInit {
     }
   }
 
-  getProfile(){
+getProfile(){
     let json = {
       "request": {
         "type": "get_profile"
@@ -225,35 +234,7 @@ export class HomepageComponent implements OnInit {
 
   getMyProfile(){
     this.profileModal=true
-    let json = {
-      "request": {
-        "type": "get_profile"
-      },
-      "requestinfo": {
-        "name":  localStorage.getItem("userName"),
-        "email_id":localStorage.getItem("userEmail"),
-        "mobile": localStorage.getItem("userMobileNumber")
-      }
-    }
-    console.log(sessionStorage.getItem("userid"))
-    this.appComponent.updateshowLoader(true);
-    this.homePageService.getProfile(json).subscribe(
-      data => {
-        this.appComponent.updateshowLoader(false);
-        let response = data.response;
-        if (response.code == 200) {
-         this.userName=response.name;
-         if(response.image!=""){
-          this.userImg =response.image
-         }
-
-        } else {
-          bootbox.alert(response.message);
-        }
-      },
-      err => {}
-
-    )
+    
   }
 
   upDateProfile(){
@@ -275,7 +256,7 @@ export class HomepageComponent implements OnInit {
         },
         "requestinfo": {
           "devicetoken": "dxk1gs-EIe0:APA91bGPwGrfMSzx_HgImyio2V7pNPvYJhZqNNLQW9m1Op7DGHnxUpfJFWgYpbgbzf_vy75xBqJNLAReIpJvplAXvZMYPebhCB31FDq4caEQ6pbdoPBGFaoqYxkfPty7ROodaBiJ8AKR",
-          "userid":"",
+          "userid":localStorage.getItem("userid"),
           "name": this.userName,
           "image": this.base64textString,
           "comp_name": "",
@@ -286,7 +267,7 @@ export class HomepageComponent implements OnInit {
           "dob": "",
           "gender": "",
           "mobile":  localStorage.getItem("userMobileNumber"),
-          "personal_email": this.userName,
+          "personal_email": this.userEmail,
           "official_email": "",
           "present_exp": "",
           "past_exp": "",
