@@ -234,7 +234,7 @@ getProfile(){
 
   getMyProfile(){
     this.profileModal=true
-    
+
   }
 
   upDateProfile(){

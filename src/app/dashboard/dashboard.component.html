@@ -41,6 +41,11 @@
       <img src='./../../assets/button.png' alt=''>
       <p>Knowledge Bank</p>
     </li>
+    <li class="hover" (click)="questionAnswer()">
+      <img id="innerImage" src="./../../assets/IQ.png" alt="">
+      <img src='./../../assets/button.png' alt=''>
+      <p>Question/Answerk</p>
+    </li>
   </ul>
 </div>
 
@@ -61,7 +66,7 @@
   
   <div class="row" *ngIf="knowlegeView">
 	<div class="alert alert-danger" *ngIf="error">{{error}}</div>
-    <div class="col-md-12 card" *ngFor="let data of Knowledge">
+    <div class="col-md-10 card" *ngFor="let data of Knowledge">
       <h6 class="head1">
         {{data.title}}
       </h6>
@@ -71,8 +76,27 @@
 		  </p>
 	</div>
     </div>
+    <div class="col-md-2">
+      <button class="btn btn-default apply" (click)="openPdfModal()">Add</button>
+    </div>
   </div>
 
+  <div class="row" *ngIf="questionAnswerView">
+    <div class="alert alert-danger" *ngIf="error">{{error}}</div>
+      <div class="col-md-10 card" *ngFor="let data of Questions">
+        <h6 class="head1">
+          {{data.title}}
+        </h6>
+        <div class="col-md-12 content-inner">
+        <p>
+        {{data.description}}
+        </p>
+    </div>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-default apply" (click)="openQuestionAnswerModal()">Add</button>
+      </div>
+    </div>
   <div  class="row" *ngIf="officeBearersView">
     <div *ngFor="let data of Bearers">
       <h3>
@@ -173,5 +197,66 @@
     </div>
   </div>
 	
+  </div>
+  <div class="modal signupModal" *ngIf="pdfModal" role="dialog">
+    <div class="modal-dialog modal-lg modallogin">
+      <div class="modal-content">
+        <div class="modal-body margin-left-10">
+          <input type="text " class="form-control  margin-top-10"  aria-describedby="emailHelp" placeholder="Enter paper name"[ngModelOptions]="{standalone: true}" [(ngModel)]="pdfName">
+          <input type="file" class="form-control  margin-top-10" accept=".pdf" capture id="filePicker" name="uploader" (change)="handlePdfFileSelect($event)"><br>
+          <div class="form-group form-control  margin-top-10 ">
+            <select class="form-control" [(ngModel)]="categoryId" [ngModelOptions]="{standalone: true}">
+              <option  selected="selected"    [value]=data.id *ngFor="let data of Category">{{data.name}}</option>
+            </select>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+            <button   type="button" class="btn margin-bootom-20 margin-top-20  login-button hover " (click)="closePdfModal()">Cancel</button>
+          </div>
+          <div class="col-md-6">
+            <button   type="button" class="btn margin-bootom-20 margin-top-20  login-button hover " (click)="upLoadPdfData()">Save</button>
+          </div>
+         </div>
+       
+         
+        </div>
+      </div>
+      <div class="line-button">
+      </div>
+      <div class="line-button margin-top-5">
+      </div>
+    </div>
+  </div>
+
+  <div class="modal signupModal" *ngIf="questionModal" role="dialog">
+    <div class="modal-dialog modal-lg modallogin">
+      <div class="modal-content">
+        <div class="modal-body margin-left-10">
+        
+          <input type="file" class="form-control  margin-top-10" accept="image/*" capture id="filePicker" name="uploader" (change)="handleFileSelect($event)"><br>
+          <div class="form-group form-control  margin-top-10 ">
+            <select class="form-control" [(ngModel)]="categoryId" [ngModelOptions]="{standalone: true}">
+              <option  selected="selected"    [value]=data.id *ngFor="let data of Category">{{data.name}}</option>
+            </select>
+          </div>
+          <textarea type="text" class="form-control  margin-top-10"  aria-describedby="emailHelp" placeholder="Enter question detail"[ngModelOptions]="{standalone: true}" [(ngModel)]="questionDetail">
+            </textarea>
+          <div class="row">
+          <div class="col-md-6">
+            <button   type="button" class="btn margin-bootom-20 margin-top-20  login-button hover " (click)="closePdfModal()">Cancel</button>
+          </div>
+          <div class="col-md-6">
+            <button   type="button" class="btn margin-bootom-20 margin-top-20  login-button hover " (click)="upLoadQuestion()">Save</button>
+          </div>
+         </div>
+       
+         
+        </div>
+      </div>
+      <div class="line-button">
+      </div>
+      <div class="line-button margin-top-5">
+      </div>
+    </div>
   </div>
 </div>

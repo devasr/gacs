@@ -28,6 +28,16 @@ export class DashboardComponent implements OnInit {
    Jobs=[];
    partner=[];
    profile=[];
+   pdfModal=false;
+   categoryId:any;
+   Category:any;
+   pdfName:any;
+   base64PdftextString:any;
+   questionAnswerView=false;
+   questionModal=false;
+   questionDetail:any;
+   base64textString:any;
+   Questions=[];
    @Output() user: EventEmitter<any> = new EventEmitter<any>();
    
   constructor(public dashboardService:DashboardService,public appComponent:AppComponent) {
@@ -78,6 +88,7 @@ export class DashboardComponent implements OnInit {
     this.partnerView=false;
     this.eventsView=false;
     this.newsView=false;
+    this.questionAnswerView=false;
 	this.profileView=false;
     this.registeredVendorView=false;
 
@@ -90,7 +101,8 @@ export class DashboardComponent implements OnInit {
     this.partnerView=false;
 	this.knowlegeView=false;
     this.eventsView=false;
-	this.profileView=false;
+  this.profileView=false;
+  this.questionAnswerView=false;
     this.newsView=false;
     this.registeredVendorView=false;
   //  this.getOfficeBearer();
@@ -123,7 +135,8 @@ export class DashboardComponent implements OnInit {
     this.officeBearersView=false;
     this.carriersView=false;
     this.partnerView=false;
-	this.knowlegeView=false;
+  this.knowlegeView=false;
+  this.questionAnswerView=false;
     this.eventsView=false;
     this.newsView=true;
 	this.profileView=false;
@@ -166,6 +179,7 @@ export class DashboardComponent implements OnInit {
     this.eventsView=false;
 	this.knowlegeView=false;
     this.newsView=false;
+    this.questionAnswerView=false;
     this.registeredVendorView=false;
 	this.profileView=false;
     this.getJobs();
@@ -203,6 +217,7 @@ export class DashboardComponent implements OnInit {
 	this.knowlegeView=false;
     this.partnerView=false;
     this.eventsView=false;
+    this.questionAnswerView=false;
     this.newsView=false;
     this.registeredVendorView=false;
 	this.profileView=true;
@@ -250,6 +265,7 @@ export class DashboardComponent implements OnInit {
     this.carriersView=false;
     this.partnerView=true;
     this.eventsView=false;
+    this.questionAnswerView=false;
     this.newsView=false;
 	this.knowlegeView=false;
 	this.registeredVendorView=false;
@@ -285,7 +301,8 @@ export class DashboardComponent implements OnInit {
 		this.officeBearersView=false;
 		this.carriersView=false;
 		this.partnerView=false;
-		this.eventsView=false;
+    this.eventsView=false;
+    this.questionAnswerView=false;
 		this.newsView=false;
 		this.registeredVendorView=false;
 		this.knowlegeView=true;
@@ -319,5 +336,153 @@ export class DashboardComponent implements OnInit {
           this.showLoader=false;
         }
         )
+  }
+
+  openPdfModal(){
+    this.pdfModal=true;
+    this.getCateogory(); 
+  }
+
+  getCateogory(){
+    this.categoryId="0"
+    let json={
+      "request": {
+        "type": "qna_cat"
+      },
+      "requestinfo": {
+        "userid": localStorage.getItem("userid")
+      }
+    }
+    this.appComponent.updateshowLoader(true)
+    this.dashboardService.getOfficeBearer(json).subscribe(
+        data=>{
+          this.appComponent.updateshowLoader(false)
+            let response=data.response;
+            if(response.code==200){
+              this.Category=response.qna_cat;
+			      }
+            else{
+
+                bootbox.alert(response.message);
+            }
+        },
+        err=>{
+          this.showLoader=false;
+        }
+        )
+  }
+  closePdfModal(){
+    this.pdfModal=false
+    this.questionModal=false
+  }
+
+  handlePdfFileSelect(evt){
+    var files = evt.target.files;
+    var file = files[0];
+
+    if (files && file) {
+      var reader = new FileReader();
+
+      reader.onload = this._handlePdfReaderLoaded.bind(this);
+
+      reader.readAsBinaryString(file);
+    }
+  }
+
+  _handlePdfReaderLoaded(readerEvt) {
+    var binaryString = readerEvt.target.result;
+   this.base64PdftextString = btoa(binaryString);
+ 
+
+  }
+
+  handleFileSelect(evt) {
+    
+      var files = evt.target.files;
+      var file = files[0];
+  
+      if (files && file) {
+        var reader = new FileReader();
+  
+        reader.onload = this._handleReaderLoaded.bind(this);
+  
+        reader.readAsBinaryString(file);
+      }
+    }
+    _handleReaderLoaded(readerEvt) {
+      var binaryString = readerEvt.target.result;
+     this.base64textString = btoa(binaryString);
+  
+    }
+  upLoadPdfData(){
+    if(!this.pdfName){
+      bootbox.alert("Please enter paper name")
+    }
+    else if(this.categoryId=="0") {
+      bootbox.alert("Please select category")
+    }
+    else if(!this.base64PdftextString) {
+      bootbox.alert("Please upload Pdf file")
+    }
+    else{
+
+    }
+  }
+
+
+  getQuestions(){
+    let json={
+      "request": {
+        "type": "question"
+      }
+    }
+    
+    
+    this.appComponent.updateshowLoader(true)
+    this.dashboardService.getOfficeBearer(json).subscribe(
+        data=>{
+          this.appComponent.updateshowLoader(false)
+            let response=data.response;
+            if(response.code==200){
+              this.Questions=response.qna_cat;
+			      }
+            else{
+                this.error=true
+                bootbox.alert(response.message);
+            }
+        },
+        err=>{
+          this.showLoader=false;
+        }
+        )
+  }
+  questionAnswer(){
+    this.concilsView=false;
+		this.officeBearersView=false;
+		this.carriersView=false;
+		this.partnerView=false;
+    this.eventsView=false;
+    this.questionAnswerView=true;
+		this.newsView=false;
+		this.registeredVendorView=false;
+    this.knowlegeView=false;
+    this.getQuestions();
+  }
+
+  openQuestionAnswerModal(){
+    this.questionModal=true
+    this.getCateogory(); 
+  }
+
+  upLoadQuestion(){
+    if(this.categoryId=="0") {
+      bootbox.alert("Please select category")
+    }
+    else if(!this.questionDetail) {
+      bootbox.alert("Please enter question detail")
+    }
+    else{
+
+    }
   }
 }
