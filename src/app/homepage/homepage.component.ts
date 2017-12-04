@@ -235,7 +235,7 @@ export class HomepageComponent implements OnInit {
         "mobile": localStorage.getItem("userMobileNumber")
       }
     }
-    console.log(sessionStorage.getItem("userid"))
+    console.log(localStorage.getItem("userid"))
     this.appComponent.updateshowLoader(true);
     this.homePageService.getProfile(json).subscribe(
       data => {
