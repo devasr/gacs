@@ -36,7 +36,7 @@ text-transform: uppercase;
 .card{
   padding: 5px;
   margin-top: 5px;
-  border:1px solid #80808014;
+  border:1px solid #80808045;
 }
 .content-inner{
   display: inline-block;
@@ -47,7 +47,7 @@ text-transform: uppercase;
 }
 .content-inner #left-image{
   float: left;
-    border: 1px solid #80808014;
+    border: 1px solid #80808045;
     padding: 5px;
     border-radius: 2px;
     margin: 5px 15px 5px 0px;
@@ -55,6 +55,14 @@ text-transform: uppercase;
 .head{
     margin-bottom: 0px;
     color:#007196;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+}
+.head1{
+    margin-bottom: 0px;
+    color:#007196;
+	padding:0px 15px 0px 15px;
     font-family: sans-serif;
     font-weight: bold;
     font-size: 15px;
@@ -69,7 +77,7 @@ text-transform: uppercase;
   padding: 15px 15px 5px 15px;
   margin-top: 5px;
   border-radius: 5px;
-  border:1px solid #80808014;
+  border:1px solid #80808045;
 }
 .carrierPro{
     font-size: 12px;
@@ -113,4 +121,8 @@ text-transform: uppercase;
 }
 .apply{
   background: blueviolet;
+}
+.alert{
+	margin: auto;
+    margin-top: 50px;
 }
