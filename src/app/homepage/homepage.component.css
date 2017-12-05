@@ -359,3 +359,14 @@ ul>li:last-child .dropdown-content::after{
 		height:100% !important;
 	}
 }
+.ulWidth{
+	width:100%;
+	margin:0px !important;
+}
+.width{
+	min-width:130px !important;
+	padding:0px;
+}
+.ulWidth:hover{
+	background:#ddd;
+}

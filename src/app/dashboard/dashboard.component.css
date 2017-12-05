@@ -126,3 +126,23 @@ text-transform: uppercase;
 	margin: auto;
     margin-top: 50px;
 }
+.create{
+	margin-top:40px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+	border-color: #c35413;
+	color:#c35413;
+}
+.create i{
+	font-size:30px;
+}
+.modal{
+  background: #0000009a;
+}
+.padding-bottom-100{
+	padding-bottom:20px;
+}
+.margin-top-20{
+	display:inline-block;
+}

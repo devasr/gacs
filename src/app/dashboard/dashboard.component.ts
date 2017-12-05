@@ -1,7 +1,6 @@
 import { Component, OnInit,  Output, EventEmitter } from '@angular/core';
 import {DashboardService} from './dashborad.service';
 import { AppComponent } from '../app.component';
-import * as pro from './../profile.json';
 declare var bootbox: any;
 @Component({
   selector: 'app-dashboard',
@@ -30,6 +29,7 @@ export class DashboardComponent implements OnInit {
    profile=[];
    pdfModal=false;
    categoryId:any;
+   hide=true;
    Category:any;
    pdfName:any;
    base64PdftextString:any;
@@ -254,8 +254,7 @@ export class DashboardComponent implements OnInit {
         }
         )
 	}else{
-		console.log(pro.name)
-		this.user.emit(pro.name);
+		this.user.emit({"name":"New User","image":"./../../assets/profile.png"});
 	}
   }
   
