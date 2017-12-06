@@ -63,21 +63,27 @@
 	</div>
     </div>
   </div>
-  
+
   <div class="row" *ngIf="knowlegeView">
 	<div class="alert alert-danger" *ngIf="error">{{error}}</div>
     <div class="col-md-12 card" *ngFor="let data of Knowledge">
-      <h6 class="head1">
-        {{data.title}}
+      <h6 class="head">
+        {{data.description}}
       </h6>
-      <div class="col-md-12 content-inner">
-		  <p>
-			{{data.description}}
-		  </p>
-	</div>
+      <p class="sec-head">
+        {{data.postedby}} on {{data.datetime | date:'fullDate'}}
+      </p>
+        <div class="row">
+          <div class="col-md-12 content-inner">
+            <img id="left-image" src="{{data.image}}" alt="Smiley face" height="60" width="107">
+            <p>
+              {{data.title}}
+            </p>
+          </div>
+        </div>
     </div>
      <button  *ngIf="hide" class="btn btn-default create" (click)="openPdfModal();hide=false"><i class="fa fa-plus" aria-hidden="true"></i></button>
-  
+
   </div>
 
   <div class="row" *ngIf="questionAnswerView">
@@ -93,7 +99,7 @@
     </div>
       </div>
         <button *ngIf="hide" class="btn btn-default create" (click)="openQuestionAnswerModal();hide=false"><i class="fa fa-plus" aria-hidden="true"></i></button>
-      
+
     </div>
   <div  class="row" *ngIf="officeBearersView">
     <div *ngFor="let data of Bearers">
@@ -105,13 +111,13 @@
       </p>
     </div>
   </div>
-  
+
     <div  class="row" *ngIf="partnerView">
         <div class="col-md-12 card" *ngFor="let data of partner">
       <h6 class="head">
         {{data.name}}
       </h6>
- 
+
       <div class="row">
         <div class="col-md-12 content-inner">
             <a href="{{data.web_url}}" target="_blank" ><img id="left-image" src="{{data.logo_url}}" alt="Smiley face" height="60" width="107"></a>
@@ -172,7 +178,7 @@
         </p>
       </div>
     </div>
-	
+
 	 <div  class="row" *ngIf="profileView">
     <div *ngFor="let data of profile">
       <h3>
@@ -189,16 +195,16 @@
       </p>
       <p>
 	  <img src="{{data.visiting_image}}"/>
- 
+
       </p>
-      
+
     </div>
   </div>
-	
+
   </div>
   <div class="modal signupModal" *ngIf="pdfModal" role="dialog">
     <div class="modal-dialog modal-lg modallogin">
-	
+
       <div class="modal-content">
 	  <div class="modal-header"> <h5 class="modal-title">Create New</h5></div>
         <div class="modal-body margin-left-10">
@@ -213,7 +219,7 @@
             <button  type="button" class="btn margin-bootom-20 margin-top-20 login-button hover " (click)="closePdfModal();hide=true">Cancel</button>
             <button   type="button" class="btn btn-primary margin-bootom-20 margin-top-20 login-button hover " (click)="upLoadPdfData();hide=true">Save</button>
           </div>
-       
+
         </div>
       </div>
       <div class="line-button">
@@ -228,7 +234,7 @@
       <div class="modal-content">
 	   <div class="modal-header"> <h5 class="modal-title">Create New</h5></div>
         <div class="modal-body margin-left-10">
-        
+
           <input type="file" class="form-control  margin-top-10" accept="image/*" capture id="filePicker" name="uploader" (change)="handleFileSelect($event)"><br>
           <div class="form-group form-control  margin-top-10 ">
             <select class="form-control" [(ngModel)]="categoryId" [ngModelOptions]="{standalone: true}">
@@ -239,10 +245,10 @@
             </textarea>
           <div class="modal-footer">
             <button   type="button" class="btn margin-bootom-20 margin-top-20  login-button hover " (click)="closePdfModal();hide=true">Cancel</button>
-      
+
             <button   type="button" class="btn btn-primary margin-bootom-20 margin-top-20  login-button hover " (click)="upLoadQuestion();hide=true">Save</button>
           </div>
-         
+
         </div>
       </div>
       <div class="line-button">

@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
    base64textString:any;
    Questions=[];
    @Output() user: EventEmitter<any> = new EventEmitter<any>();
-   
+
   constructor(public dashboardService:DashboardService,public appComponent:AppComponent) {
     this.concilsView=true;
     this.officeBearersView=false;
@@ -77,7 +77,7 @@ export class DashboardComponent implements OnInit {
 		  this.showLoader=false
 		}
 	)}
-	
+
   ngOnInit() {
   }
   showConcilsView(){
@@ -209,7 +209,7 @@ export class DashboardComponent implements OnInit {
     }
     )
   }
-  
+
   showprofile(){
     this.concilsView=false;
     this.officeBearersView=false;
@@ -235,7 +235,7 @@ export class DashboardComponent implements OnInit {
 	console.log(localStorage.getItem("profile_status"))
 	if(localStorage.getItem("profile_status")){
     this.appComponent.updateshowLoader(true)
-	
+
     this.dashboardService.getOfficeBearer(json).subscribe(
         data=>{
           this.appComponent.updateshowLoader(false)
@@ -245,7 +245,7 @@ export class DashboardComponent implements OnInit {
 			  this.user.emit(response.data);
             }
             else{
-				
+
                 bootbox.alert(response.message);
             }
         },
@@ -257,7 +257,7 @@ export class DashboardComponent implements OnInit {
 		this.user.emit({"name":"New User","image":"./../../assets/profile.png"});
 	}
   }
-  
+
    showpartner(){
     this.concilsView=false;
     this.officeBearersView=false;
@@ -294,19 +294,19 @@ export class DashboardComponent implements OnInit {
         }
         )
   }
-  
-	knowBank(){
-		this.concilsView=false;
-		this.officeBearersView=false;
-		this.carriersView=false;
-		this.partnerView=false;
+
+  knowBank() {
+    this.concilsView=false;
+    this.officeBearersView=false;
+    this.carriersView=false;
+    this.partnerView=false;
     this.eventsView=false;
     this.questionAnswerView=false;
-		this.newsView=false;
-		this.registeredVendorView=false;
-		this.knowlegeView=true;
-		this.getknowBank();
-	}
+    this.newsView=false;
+    this.registeredVendorView=false;
+    this.knowlegeView=true;
+    this.getknowBank();
+  }
   getknowBank(){
     let json={
 		"request": {
@@ -319,16 +319,17 @@ export class DashboardComponent implements OnInit {
         data=>{
           this.appComponent.updateshowLoader(false)
             let response=data.response;
-            if(response.code==204){
-			if(response.data){
-              this.Knowledge=response.data;
-			}
-			  if(response.data===undefined){
-				this.error=response.message;
-			  }
-            }
-            else{				
-                bootbox.alert(response.message);
+            if (response.code == 204 || response.code == 200) {
+              if (response.data) {
+                this.Knowledge = response.data;
+              }
+              if (response.data === undefined) {
+                this.error = response.message;
+              }
+              console.log(response);
+            } else {
+              bootbox.alert(response.message);
+              console.log(response);
             }
         },
         err=>{
@@ -339,7 +340,7 @@ export class DashboardComponent implements OnInit {
 
   openPdfModal(){
     this.pdfModal=true;
-    this.getCateogory(); 
+    this.getCateogory();
   }
 
   getCateogory(){
@@ -391,27 +392,27 @@ export class DashboardComponent implements OnInit {
   _handlePdfReaderLoaded(readerEvt) {
     var binaryString = readerEvt.target.result;
    this.base64PdftextString = btoa(binaryString);
- 
+
 
   }
 
   handleFileSelect(evt) {
-    
+
       var files = evt.target.files;
       var file = files[0];
-  
+
       if (files && file) {
         var reader = new FileReader();
-  
+
         reader.onload = this._handleReaderLoaded.bind(this);
-  
+
         reader.readAsBinaryString(file);
       }
     }
     _handleReaderLoaded(readerEvt) {
       var binaryString = readerEvt.target.result;
      this.base64textString = btoa(binaryString);
-  
+
     }
   upLoadPdfData(){
     if(!this.pdfName){
@@ -435,8 +436,8 @@ export class DashboardComponent implements OnInit {
         "type": "question"
       }
     }
-    
-    
+
+
     this.appComponent.updateshowLoader(true)
     this.dashboardService.getOfficeBearer(json).subscribe(
         data=>{
@@ -470,7 +471,7 @@ export class DashboardComponent implements OnInit {
 
   openQuestionAnswerModal(){
     this.questionModal=true
-    this.getCateogory(); 
+    this.getCateogory();
   }
 
   upLoadQuestion(){
