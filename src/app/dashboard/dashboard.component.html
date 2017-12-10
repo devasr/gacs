@@ -4,7 +4,7 @@
     <li class="hover" (click)="showConcilsView()">
       <img id="innerImage" src="./../../assets/council.png" alt="">
       <img src='./../../assets/button.png' alt=''>
-      <p>Council</p>
+      <p>Councils</p>
     </li>
     <li class="hover" (click)="showOfficeBarearsView()">
       <img id="innerImage" src="./../../assets/bearers.png" alt="">
@@ -14,7 +14,7 @@
     <li class="hover"  (click)="showcarriersView()">
       <img id="innerImage" src="./../../assets/job.png" alt="" >
       <img src='./../../assets/button.png' alt=''>
-      <p>Career</p>
+      <p>Careers</p>
     </li>
     <li class="hover" (click)="showpartner()">
       <img id="innerImage" src="./../../assets/partner.png" alt="">
@@ -31,7 +31,7 @@
       <img src='./../../assets/button.png' alt=''>
       <p>News</p>
     </li>
-    <li class="hover">
+    <li class="hover"  (click)="vendors()">
       <img id="innerImage" src="./../../assets/vendors.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Vendors</p>
@@ -87,20 +87,26 @@
   </div>
 
   <div class="row" *ngIf="questionAnswerView">
-    <div class="alert alert-danger" *ngIf="error">{{error}}</div>
-      <div class="col-md-12 card" *ngFor="let data of Questions">
-        <h6 class="head1">
-          {{data.title}}
-        </h6>
-        <div class="col-md-12 content-inner">
-        <p>
+    <div class="alert alert-danger" *ngIf="errorQue">{{errorQue}}</div>
+    <div class="col-md-12 card" *ngFor="let data of Questions">
+      <h6 class="head">
         {{data.description}}
-        </p>
-    </div>
+      </h6>
+      <p class="sec-head">
+        {{data.postedby}} on {{data.datetime | date:'fullDate'}}
+      </p>
+      <div class="row">
+        <div class="col-md-12 content-inner">
+          <img id="left-image" src="{{data.image}}" alt="Smiley face" height="60" width="107">
+          <p>
+            {{data.title}}
+          </p>
+        </div>
       </div>
-        <button *ngIf="hide" class="btn btn-default create" (click)="openQuestionAnswerModal();hide=false"><i class="fa fa-plus" aria-hidden="true"></i></button>
-
     </div>
+        <button *ngIf="hide" class="btn btn-default create" (click)="openQuestionAnswerModal();hide=false"><i class="fa fa-plus" aria-hidden="true"></i></button>
+    </div>
+
   <div  class="row" *ngIf="officeBearersView">
     <div *ngFor="let data of Bearers">
       <h3>
@@ -127,6 +133,12 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="row" *ngIf="registeredVendorView">
+
+    <div class="alert alert-primary" *ngIf="!vendorsdata">Comming Soon</div>
+
   </div>
 
   <div class="row" *ngIf="newsView">
@@ -237,11 +249,11 @@
 
           <input type="file" class="form-control  margin-top-10" accept="image/*" capture id="filePicker" name="uploader" (change)="handleFileSelect($event)"><br>
           <div class="form-group form-control  margin-top-10 ">
-            <select class="form-control" [(ngModel)]="categoryId" [ngModelOptions]="{standalone: true}">
-              <option  selected="selected"    [value]=data.id *ngFor="let data of Category">{{data.name}}</option>
+            <select class="form-control" (change)="valueChange(categoryId)" [(ngModel)]="categoryId" [ngModelOptions]="{standalone: true}">
+              <option  selected="selected"    [value]=data.name *ngFor="let data of Category">{{data.name}}</option>
             </select>
           </div>
-          <textarea type="text" class="form-control  margin-top-10"  aria-describedby="emailHelp" placeholder="Enter question detail"[ngModelOptions]="{standalone: true}" [(ngModel)]="questionDetail">
+          <textarea type="text" class="form-control  margin-top-10"  aria-describedby="emailHelp" placeholder="Enter question detail" [ngModelOptions]="{standalone: true}" [(ngModel)]="questionDetail">
             </textarea>
           <div class="modal-footer">
             <button   type="button" class="btn margin-bootom-20 margin-top-20  login-button hover " (click)="closePdfModal();hide=true">Cancel</button>

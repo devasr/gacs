@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit {
    registeredVendorView:boolean
    Councils=[];
    error:any;
+   errorQue:any;
    News=[];
    Knowledge=[];
    Jobs=[];
@@ -36,6 +37,7 @@ export class DashboardComponent implements OnInit {
    questionAnswerView=false;
    questionModal=false;
    questionDetail:any;
+   uploadedImgeQA:any;
    base64textString:any;
    Questions=[];
    @Output() user: EventEmitter<any> = new EventEmitter<any>();
@@ -57,8 +59,8 @@ export class DashboardComponent implements OnInit {
 
    getCouncilData(){
 	let json={
-		"request": {
-			"type": "council"
+		'request': {
+			'type': 'council'
 		}
 	}
     this.appComponent.updateshowLoader(true)
@@ -109,8 +111,8 @@ export class DashboardComponent implements OnInit {
   }
   getOfficeBearer(){
     let json={
-              "request": {
-                  "type": "council"
+              'request': {
+                  'type': 'council'
                   }
             }
     this.appComponent.updateshowLoader(true)
@@ -146,11 +148,11 @@ export class DashboardComponent implements OnInit {
 
   getNews(){
           let json={
-                  "request": {
-                   "type": "news"
+                  'request': {
+                   'type': 'news'
                  },
-                "requestinfo": {
-                "userid": "1600"
+                'requestinfo': {
+                'userid': '1600'
                 }
           }
 
@@ -187,8 +189,8 @@ export class DashboardComponent implements OnInit {
 
   getJobs(){
     let json={
-      "request": {
-        "type": "job"
+      'request': {
+        'type': 'job'
       }
     }
 
@@ -225,15 +227,15 @@ export class DashboardComponent implements OnInit {
   }
   getShowprofile(){
     let json={
-		"request": {
-			"type": "profile_data"
+		'request': {
+			'type': 'profile_data'
 		},
-		"requestinfo": {
-			"userid": localStorage.getItem("userid")
+		'requestinfo': {
+			'userid': localStorage.getItem('userid')
 		}
 	}
-	console.log(localStorage.getItem("profile_status"))
-	if(localStorage.getItem("profile_status")){
+	console.log(localStorage.getItem('profile_status'))
+	if(localStorage.getItem('profile_status')){
     this.appComponent.updateshowLoader(true)
 
     this.dashboardService.getOfficeBearer(json).subscribe(
@@ -254,7 +256,7 @@ export class DashboardComponent implements OnInit {
         }
         )
 	}else{
-		this.user.emit({"name":"New User","image":"./../../assets/profile.png"});
+		this.user.emit({'name':'New User','image':'./../../assets/profile.png'});
 	}
   }
 
@@ -272,8 +274,8 @@ export class DashboardComponent implements OnInit {
   }
   getShowpartner(){
     let json={
-		"request": {
-			"type": "partners_list"
+		'request': {
+			'type': 'partners_list'
 		}
 	}
 
@@ -307,12 +309,16 @@ export class DashboardComponent implements OnInit {
     this.knowlegeView=true;
     this.getknowBank();
   }
-  getknowBank(){
-    let json={
-		"request": {
-			"type": "question"
-		}
-	}
+  getknowBank() {
+    let json = {
+      'request': {
+        'type': 'paper_bank_list'
+      },
+      'requestinfo': {
+        'userid': '1605'
+      }
+    };
+
 
     this.appComponent.updateshowLoader(true)
     this.dashboardService.getOfficeBearer(json).subscribe(
@@ -344,13 +350,13 @@ export class DashboardComponent implements OnInit {
   }
 
   getCateogory(){
-    this.categoryId="0"
+    this.categoryId='0'
     let json={
-      "request": {
-        "type": "qna_cat"
+      'request': {
+        'type': 'qna_cat'
       },
-      "requestinfo": {
-        "userid": localStorage.getItem("userid")
+      'requestinfo': {
+        'userid': localStorage.getItem('userid')
       }
     }
     this.appComponent.updateshowLoader(true)
@@ -394,6 +400,7 @@ export class DashboardComponent implements OnInit {
    this.base64PdftextString = btoa(binaryString);
 
 
+
   }
 
   handleFileSelect(evt) {
@@ -408,6 +415,8 @@ export class DashboardComponent implements OnInit {
 
         reader.readAsBinaryString(file);
       }
+    console.log(file);
+
     }
     _handleReaderLoaded(readerEvt) {
       var binaryString = readerEvt.target.result;
@@ -416,13 +425,13 @@ export class DashboardComponent implements OnInit {
     }
   upLoadPdfData(){
     if(!this.pdfName){
-      bootbox.alert("Please enter paper name")
+      bootbox.alert('Please enter paper name')
     }
-    else if(this.categoryId=="0") {
-      bootbox.alert("Please select category")
+    else if(this.categoryId=='0') {
+      bootbox.alert('Please select category')
     }
     else if(!this.base64PdftextString) {
-      bootbox.alert("Please upload Pdf file")
+      bootbox.alert('Please upload Pdf file')
     }
     else{
 
@@ -432,8 +441,8 @@ export class DashboardComponent implements OnInit {
 
   getQuestions(){
     let json={
-      "request": {
-        "type": "question"
+      'request': {
+        'type': 'question'
       }
     }
 
@@ -444,10 +453,10 @@ export class DashboardComponent implements OnInit {
           this.appComponent.updateshowLoader(false)
             let response=data.response;
             if(response.code==200){
-              this.Questions=response.qna_cat;
+              this.Questions=response.data;
 			      }
             else{
-                this.error=true
+                this.errorQue = response.message;
                 bootbox.alert(response.message);
             }
         },
@@ -475,14 +484,66 @@ export class DashboardComponent implements OnInit {
   }
 
   upLoadQuestion(){
-    if(this.categoryId=="0") {
-      bootbox.alert("Please select category")
+    if(this.categoryId=='0') {
+      bootbox.alert('Please select category')
     }
     else if(!this.questionDetail) {
-      bootbox.alert("Please enter question detail")
+      bootbox.alert('Please enter question detail')
     }
     else{
-
+      console.log(this.categoryId);
+      this.createQuestion()
     }
+  };
+
+  valueChange(event){
+    console.log(event);
+    this.uploadedImgeQA=event;
+
+  }
+
+  createQuestion() {
+          console.log(this.base64textString);
+
+    let json = {
+      'request': {
+        'type': 'save_menu_data'
+      },
+      'requestinfo': {
+        'key': 'question',
+        'userid': localStorage.getItem('userid'),
+        'title': this.questionDetail,
+        'description': this.uploadedImgeQA,
+        'image': '',
+        'question_image': this.base64textString,
+      }
+    };
+
+    this.appComponent.updateshowLoader(true);
+    this.dashboardService.getOfficeBearer(json).subscribe(data => {
+        this.appComponent.updateshowLoader(false);
+        let response = data.response;
+        if (response.code == 200) {
+           this.questionModal = false;
+
+          bootbox.alert(response.message);
+        } else {
+          bootbox.alert(response.message);
+        }
+      }, err => {
+        this.showLoader = false;
+      });
+  }
+
+  vendors() {
+    this.concilsView = false;
+    this.officeBearersView = false;
+    this.carriersView = false;
+    this.partnerView = false;
+    this.eventsView = false;
+    this.questionAnswerView = false;
+    this.newsView = false;
+    this.registeredVendorView = true;
+    this.knowlegeView = false;
   }
 }

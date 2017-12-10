@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { CarouselComponent } from './../carousel/carousel.component';
-import{HomePageService} from './homepage.service'
+import { HomePageService } from './homepage.service';
 import { AppComponent } from '../app.component';
 import { DomSanitizer } from '@angular/platform-browser';
 declare var bootbox: any;
@@ -11,25 +11,23 @@ declare var bootbox: any;
   styleUrls: ["./homepage.component.css"],
   providers: [HomePageService]
 })
-export class HomepageComponent implements OnInit {
+export class HomepageComponent implements OnInit, OnDestroy {
   signupModal: boolean;
   displayTimer: boolean;
   ticks = 0;
   secondsDisplay = 0;
   sub: Subscription;
-  userName:any;
-  userImg:any;
+  user:any;
   email:any;
-  mobileNumber:any
+  mobileNumber:any;
   otp:any;
-  inputOtp:any
-  otpModal=false
-  isLogin=false
+  inputOtp:any;
+  otpModal=false;
+  isLogin=false;
   disableResend=true;
+  profiledata=false;
   profileModal=false;
-  userEmail:any;
   base64textString:any;
-  userMobileNumber:any;
   emailPattern=/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/;
   checkLoginSession:any;
 
@@ -44,9 +42,9 @@ export class HomepageComponent implements OnInit {
       this.isLogin=false
     }
   }
-  
+
   handleFileSelect(evt) {
-  
+
     var files = evt.target.files;
     var file = files[0];
 
@@ -62,19 +60,23 @@ export class HomepageComponent implements OnInit {
     var binaryString = readerEvt.target.result;
    this.base64textString = btoa(binaryString);
     var image = 'data:image/png;base64,' + this.base64textString;
-    this.userImg = this.domSanitizer.bypassSecurityTrustUrl(image);
+    this.user.image = this.domSanitizer.bypassSecurityTrustUrl(image);
 
   }
   ngOnInit() {
-	  
+
   }
-  
+  ngOnDestroy() {
+
+  }
+
   userlogged(user){
-	  console.log(user)
-	  this.userName=user.name;
-	  this.userImg=user.image;
-	  this.userMobileNumber=user.mobile;
-	  this.userEmail=user.personal_email;
+    console.log(user)
+    this.user = user;
+	  // this.user.name=user.name;
+	  // this.user.image=user.image;
+	  // this.user.mobile=user.mobile;
+	  // this.user.personal_email=user.personal_email;
   }
   public openSignupModal() {
     this.signupModal = true;
@@ -121,22 +123,22 @@ export class HomepageComponent implements OnInit {
             this.startTimer();
             this.displayTimer = true;
             localStorage.setItem("userid", response.userid);
-            localStorage.setItem("userName", "test");
-            localStorage.setItem("userEmail", "test@gmail.com");
-            localStorage.setItem("userMobileNumber",this.mobileNumber);
+            localStorage.setItem("user.name", "test");
+            localStorage.setItem("user.personal_email", "test@gmail.com");
+            localStorage.setItem("user.mobile",this.mobileNumber);
 			console.log(response.profile_status==1)
 			if(response.profile_status==1){
 				localStorage.setItem("profile_status","true");
 			}
-            
+
             this.otp = response.otp;
           } else if (response.code == 204) {
 			  			console.log(response.profile_status==1)
 
             localStorage.setItem("userid", response.userid);
-            localStorage.setItem("userName", "test");
-            localStorage.setItem("userEmail", "test@gmail.com");
-            localStorage.setItem("userMobileNumber",this.mobileNumber);
+            localStorage.setItem("user.name", "test");
+            localStorage.setItem("user.personal_email", "test@gmail.com");
+            localStorage.setItem("user.mobile",this.mobileNumber);
             if(response.profile_status==1){
 				localStorage.setItem("profile_status","true");
 			}
@@ -192,7 +194,7 @@ export class HomepageComponent implements OnInit {
       this.checkLoginSession=true
       this.isLogin = true;
       this.closeModal();
- 
+
     } else {
       bootbox.alert("Your enter OTP is wrong please try again later.");
       this.isLogin=false
@@ -206,9 +208,9 @@ getProfile(){
         "type": "get_profile"
       },
       "requestinfo": {
-        "name":  localStorage.getItem("userName"),
-        "email_id":localStorage.getItem("userEmail"),
-        "mobile": localStorage.getItem("userMobileNumber")
+        "name":  localStorage.getItem("user.name"),
+        "email_id":localStorage.getItem("user.personal_email"),
+        "mobile": localStorage.getItem("user.mobile")
       }
     }
     console.log(localStorage.getItem("userid"))
@@ -218,11 +220,11 @@ getProfile(){
         this.appComponent.updateshowLoader(false);
         let response = data.response;
         if (response.code == 200) {
-         this.userName=response.name;
+         this.user.name=response.name;
          if(response.image!=""){
-          this.userImg =response.image
+          this.user.image =response.image
          }
-        
+
         } else {
           bootbox.alert(response.message);
         }
@@ -232,23 +234,25 @@ getProfile(){
     )
   }
 
-  getMyProfile(){
-    this.profileModal=true
+  getMyProfile() {
+    // this.profileModal = true;
+    this.profiledata = true;
 
   }
 
+
   upDateProfile(){
-    if(!this.userEmail){
+    if(!this.user.personal_email){
       bootbox.alert("Please enter email")
     }
-    else if (!(this.userEmail.toLowerCase().match(this.emailPattern))) {
+    else if (!(this.user.personal_email.toLowerCase().match(this.emailPattern))) {
       bootbox.alert("Please enter valid email")
     }
-    else  if (!this.userMobileNumber) {
+    else  if (!this.user.mobile) {
       bootbox.alert("Please enter mobile number");
-    } else if (this.userMobileNumber.toString().length != 10) {
+    } else if (this.user.mobile.toString().length != 10) {
       bootbox.alert("Please enter correct mobile number");
-    } 
+    }
     else{
       let json={
         "request": {
@@ -257,29 +261,29 @@ getProfile(){
         "requestinfo": {
           "devicetoken": "dxk1gs-EIe0:APA91bGPwGrfMSzx_HgImyio2V7pNPvYJhZqNNLQW9m1Op7DGHnxUpfJFWgYpbgbzf_vy75xBqJNLAReIpJvplAXvZMYPebhCB31FDq4caEQ6pbdoPBGFaoqYxkfPty7ROodaBiJ8AKR",
           "userid":localStorage.getItem("userid"),
-          "name": this.userName,
+          "name": this.user.name,
           "image": this.base64textString,
-          "comp_name": "",
-          "address": "",
-          "city": "",
-          "state": "",
-          "designation": "",
-          "dob": "",
-          "gender": "",
-          "mobile":  localStorage.getItem("userMobileNumber"),
-          "personal_email": this.userEmail,
-          "official_email": "",
-          "present_exp": "",
-          "past_exp": "",
-          "brief_past": "",
-          "refer_by": "",
-          "referer_mobile": "",
-          "remark": "",
-          "status": "",
-          "emergency_name": "",
-          "emergency_number": "",
+          "comp_name": this.user.comp_name,
+          "address": this.user.address,
+          "city": this.user.city,
+          "state": this.user.state,
+          "designation": this.user.designation,
+          "dob": this.user.dob,
+          "gender": this.user.gender,
+          "mobile":  this.user.mobile,
+          "personal_email": this.user.personal_email,
+          "official_email": this.user.official_email,
+          "present_exp": this.user.present_exp,
+          "past_exp": this.user.past_exp,
+          "brief_past": this.user.brief_past,
+          "refer_by": this.user.refer_by,
+          "referer_mobile": this.user.referer_mobile,
+          "remark": this.user.remark,
+          "status": this.user.status,
+          "emergency_name": this.user.emergency_name,
+          "emergency_number": this.user.emergency_number,
           "is_update": "1",
-          "country": "",
+          "country": this.user.country,
           "is_change": "0"
         }
       }
@@ -295,14 +299,14 @@ getProfile(){
         },
         err => {}
       )
-      
+
     }
   }
   closeProfileModal(){
     this.profileModal=false;
-    //this.userImg="";
-    //this.userMobileNumber="";
-    //this.userEmail="";
-    //this.userImg="./../../assets/profile.png";
+    //this.user.image="";
+    //this.user.mobile="";
+    //this.user.personal_email="";
+    //this.user.image="./../../assets/profile.png";
   }
 }
