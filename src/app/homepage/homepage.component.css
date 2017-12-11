@@ -382,3 +382,10 @@ ul>li:last-child .dropdown-content::after{
 .ulWidth{
   margin:0px !important;
 }
+.profileUpadte{
+  margin: auto;
+    padding-top: 15px;
+    text-align: center;
+    color: black;
+    text-decoration: underline;
+}
