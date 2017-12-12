@@ -17,6 +17,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
   ticks = 0;
   secondsDisplay = 0;
   sub: Subscription;
+  mobileNumber: any;
   user:any;
   email:any;
   otp:any;
@@ -165,9 +166,9 @@ export class HomepageComponent implements OnInit, OnDestroy {
   }
 
   public onLogin() {
-    if (!this.mobile) {
+    if (!this.mobileNumber) {
       bootbox.alert('Please enter mobile number');
-    } else if (this.mobile.toString().length != 10) {
+    } else if (this.mobileNumber.toString().length != 10) {
       bootbox.alert('Please enter correct mobile number');
     } else {
       let json = {
@@ -178,7 +179,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
           userid: '',
           name: 'test',
           email_id: 'test@gmail.com',
-          mobile: this.mobile,
+          mobile: this.mobileNumber,
           type: 'manual'
         }
       };
@@ -194,7 +195,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
             localStorage.setItem('userid', response.userid);
             localStorage.setItem('user.name', 'test');
             localStorage.setItem('user.personal_email', 'test@gmail.com');
-            localStorage.setItem('user.mobile',this.mobile);
+            localStorage.setItem('user.mobile', this.mobileNumber);
 			console.log(response.profile_status == 1);
 			if(response.profile_status == 1){
 				localStorage.setItem('profile_status','true');
@@ -207,7 +208,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
             localStorage.setItem('userid', response.userid);
             localStorage.setItem('user.name', 'test');
             localStorage.setItem('user.personal_email', 'test@gmail.com');
-            localStorage.setItem('user.mobile',this.mobile);
+            localStorage.setItem('user.mobile', this.mobileNumber);
             if(response.profile_status == 1){
 				localStorage.setItem('profile_status','true');
 			}

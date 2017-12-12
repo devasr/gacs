@@ -330,7 +330,7 @@ export class DashboardComponent implements OnInit {
                 this.Knowledge = response.data;
               }
               if (response.data === undefined) {
-                this.error = response.message;
+                this.Knowledge = response.message;
               }
               console.log(response);
             } else {
