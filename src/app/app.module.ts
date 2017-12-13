@@ -14,9 +14,8 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpModule } from '@angular/http';
 import {MatProgressBarModule } from '@angular/material';
-import { UpdateprofileComponent } from './updateprofile/updateprofile.component';
 @NgModule({
-  declarations: [AppComponent, HomepageComponent, VideoComponent, CarouselComponent, DashboardComponent, UpdateprofileComponent],
+  declarations: [AppComponent, HomepageComponent, VideoComponent, CarouselComponent, DashboardComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes, { useHash: true }),

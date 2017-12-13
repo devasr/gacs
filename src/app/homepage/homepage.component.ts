@@ -224,6 +224,12 @@ export class HomepageComponent implements OnInit, OnDestroy {
       );
     }
   }
+  logout() {
+    if (this.isLogin === true) {
+      localStorage.clear();
+      location.reload();
+    }
+  }
 
   private getSeconds(ticks: number) {
     return this.pad(ticks % 60);
