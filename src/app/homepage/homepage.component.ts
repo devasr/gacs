@@ -50,7 +50,12 @@ export class HomepageComponent implements OnInit, OnDestroy {
   isLogin=false;
   disableResend=true;
   profiledata=false;
+  pro = false;
   profileModal=false;
+  proName:any;
+  proEmail: any;
+  proMobile: any;
+  proCompany: any;
   base64textString:any;
   base64textStringVisit:any;
   emailPattern=/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/;
@@ -224,7 +229,8 @@ export class HomepageComponent implements OnInit, OnDestroy {
       );
     }
   }
-  logout() {
+
+  logOut() {
     if (this.isLogin === true) {
       localStorage.clear();
       location.reload();
@@ -311,9 +317,12 @@ getProfile(){
   }
 
   getMyProfile() {
-    // this.profileModal = true;
     this.profiledata = true;
-
+    this.pro = false;
+  }
+  profession(){
+    this.profiledata = false;
+    this.pro = true;
   }
 
 
@@ -382,9 +391,47 @@ getProfile(){
   }
   closeProfileModal(){
     this.profileModal = false;
-    // this.user.image='';
-    //this.user.mobile='';
-    // this.user.personal_email='';
-    // this.user.image='./../../assets/profile.png';
+  }
+  saveProffesioanl(){
+    if (!this.proMobile) {
+      bootbox.alert('Please enter mobile number');
+    } else if (this.proMobile.toString().length !== 10) {
+      bootbox.alert('Please enter correct mobile number');
+    } if (!this.proEmail) {
+      bootbox.alert('Please enter mobile number');
+    } if (!this.proName) {
+      bootbox.alert('Please enter Name');
+    } if (!this.proCompany) {
+      bootbox.alert('Please enter Company name');
+    } else {
+      let json = {
+        'request': {
+          'type': 'save_professional'
+        },
+        'requestinfo': {
+          'userid': '1600',
+          'name': 'gury',
+          'prof_email': 'guru@gmail.com',
+          'mobile': '9845644646',
+          'comp_name': 'trinity'
+        }
+      };
+
+      this.appComponent.updateshowLoader(true);
+      this.homePageService.updateProfile(json).subscribe(
+        data => {
+          this.appComponent.updateshowLoader(false);
+          let response = data.response;
+          if (response.code === 200) {
+            bootbox.alert(response.message);
+          } else if (response.code === 204) {
+            bootbox.alert(response.message);
+          } else {
+            bootbox.alert(response.message);
+          }
+        },
+        err => { }
+      );
+    }
   }
 }

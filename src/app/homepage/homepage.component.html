@@ -52,9 +52,9 @@
                 <ul class="ulWidth">
                   <li (click)="getMyProfile()">MY Profile</li>
                   <li>My activity</li>
-                  <li>Refer a partner</li>
+                  <li (click)="profession()">Refer a partner</li>
                   <li>Referred By</li>
-                  <li (click)="logout()">Log Out</li>
+                  <li (click)="logOut()">Log Out</li>
                 </ul>
             </div>
             </a>
@@ -179,10 +179,10 @@
       </div>
     </div>
   </div>
-  <app-dashboard *ngIf="isLogin && !profiledata" (user)="userlogged($event)" ></app-dashboard>
+  <app-dashboard *ngIf="isLogin && !profiledata && !pro" (user)="userlogged($event)" ></app-dashboard>
 
 </div>
-<div *ngIf="profiledata" class="col-md-12" style="background:white;">
+<div *ngIf="profiledata && !pro" class="col-md-12" style="background:white;">
       <div class="col-md-3 profileUpadte">
         <h6>
           Update Profile Details
@@ -190,16 +190,16 @@
           <img class="profile" [attr.src]="image" alt=""/>
         </p>
       </div>
-  <div class="form-group row">
-    <label for="example-Designation-input" class="col-md-2 col-form-label">Full Name</label>
-    <div class="col-md-4">
-      <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter Name" readonly [ngModelOptions]="{standalone: true}" [(ngModel)]="user.name">
-    </div>
-    <label for="example-Gender-input" class="col-md-2 col-form-label">Mobile</label>
-    <div class="col-md-4">
-      <input type="tel"  maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <=57' class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter mobile"  [ngModelOptions]="{standalone: true}"
+      <div class="form-group row">
+        <label for="example-Designation-input" class="col-md-2 col-form-label">Full Name</label>
+          <div class="col-md-4">
+            <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter Name" readonly [ngModelOptions]="{standalone: true}" [(ngModel)]="user.name">
+          </div>
+        <label for="example-Gender-input" class="col-md-2 col-form-label">Mobile</label>
+        <div class="col-md-4">
+        <input type="tel"  maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <=57' class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter mobile"  [ngModelOptions]="{standalone: true}"
         [(ngModel)]="user.mobile">
-    </div>
+      </div>
   </div>
     <div class="form-group row">
       <label for="example-Designation-input" class="col-md-2 col-form-label">Status</label>
@@ -234,7 +234,7 @@
   [(ngModel)]="user.city">          </div>
         </div>
         <div class="form-group row">
-        <label for="example-Designation-input" class="col-md-2 col-form-label">State</label>
+        <label for="example-Designation-input" proclass="col-md-2 col-form-label">State</label>
         <div class="col-md-4">
 <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter state"  [ngModelOptions]="{standalone: true}"
   [(ngModel)]="user.state">        </div>
@@ -292,48 +292,40 @@
         <div class="col-md-12" style="margin:auto; width:200px">
     <button type="button"  style="margin:auto; width:200px" class="btn btn-primary margin-bootom-20 margin-top-20 hover " (click)="upDateProfile()">Save</button>
 </div>
+</div>
 
-
-
-
-  <!-- <div class="margin-left-10"> -->
-<!--
-    <div class="center">
-      <p>
-        <img class="profile" [attr.src]="user.image" alt="">
-      </p>
-      <input type="file" accept="image/*" capture id="filePicker" name="uploader" (change)="handleFileSelect($event)">
-      <br>
+<div *ngIf="!profiledata && pro" class="col-md-12" style="background:white;">
+  <div class="col-md-3 profileUpadte">
+    <h6>
+      Refer a Professional
+    </h6>
+  </div>
+  <div class="form-group row">
+    <label for="example-Designation-input" class="col-md-2 col-form-label">Name</label>
+    <div class="col-md-4">
+      <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter Name" [ngModelOptions]="{standalone: true}"
+        [(ngModel)]="proName">
     </div>
-    <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter Name" readonly [ngModelOptions]="{standalone: true}"
-      [(ngModel)]="user.name">
+    <label for="example-Gender-input" class="col-md-2 col-form-label">Mobile</label>
+    <div class="col-md-4">
+      <input type="tel" maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <=57' class="form-control  margin-top-10"
+        aria-describedby="emailHelp" placeholder="Enter mobile" [ngModelOptions]="{standalone: true}" [(ngModel)]="proMobile">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="example-Designation-input" class="col-md-2 col-form-label">Email</label>
+    <div class="col-md-4">
     <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter Email" [ngModelOptions]="{standalone: true}"
-      [(ngModel)]="user.personal_email">
-    <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter Address" [ngModelOptions]="{standalone: true}"
-      [(ngModel)]="user.address">
-    <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter City" [ngModelOptions]="{standalone: true}"
-      [(ngModel)]="user.city">
-    <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter Country" [ngModelOptions]="{standalone: true}"
-      [(ngModel)]="user.country">
-    <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter Company" [ngModelOptions]="{standalone: true}"
-      [(ngModel)]="user.comp_name">
-    <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter Designation" [ngModelOptions]="{standalone: true}"
-      [(ngModel)]="user.designation">
-    <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter Gender" [ngModelOptions]="{standalone: true}"
-      [(ngModel)]="user.gender">
-    <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter Office email" [ngModelOptions]="{standalone: true}"
-      [(ngModel)]="user.official_email">
-    <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter Emergency Name" [ngModelOptions]="{standalone: true}"
-      [(ngModel)]="user.emergency_name">
-    <input type="tel" maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <=57 ' class="form-control  margin-top-10"
-      aria-describedby="emailHelp" placeholder="Enter Emergency number" [ngModelOptions]="{standalone: true}" [(ngModel)]="user.emergency_number">
-    <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter email" [ngModelOptions]="{standalone: true}"
-      [(ngModel)]="user.personal_email">
-    <input type="tel " maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57 ' class="form-control  margin-top-10"
-      aria-describedby="emailHelp" placeholder="Enter mobile number" [ngModelOptions]="{standalone: true}" [(ngModel)]="user.mobile">
-    <button type="button" class="btn margin-bootom-20 margin-top-20  login-button hover " (click)="upDateProfile()">Save</button>
-    <div class="close-button" (click)="closeProfileModal()">
-      <img src='./../../assets/close.png' class="hover" height="42" width="42">
+      [(ngModel)]="proEmail">
     </div>
-  </div> -->
+    <label for="example-Gender-input" class="col-md-2 col-form-label">Company</label>
+    <div class="col-md-4">
+      <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter Company" [ngModelOptions]="{standalone: true}"
+        [(ngModel)]="proCompany">
+  </div>
+  </div>
+  <div class="col-md-12" style="margin:auto; width:200px">
+    <button type="button" style="margin:auto; width:200px" class="btn btn-primary margin-bootom-20 margin-top-20 hover " (click)="saveProffesioanl()">Save</button>
+  </div>
+
 </div>

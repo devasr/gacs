@@ -1,47 +1,47 @@
 
 <div class="row dash">
   <ul class="width-ul">
-    <li class="hover" (click)="showConcilsView()">
+    <li class="hover" (click)="showConcilsView(); selectedTab = '1'" [ngClass]="{'active':selectedTab == '1'}">
       <img id="innerImage" src="./../../assets/council.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Councils</p>
     </li>
-    <li class="hover" (click)="showOfficeBarearsView()">
+    <li class="hover" (click)="showOfficeBarearsView(); selectedTab = '2'" [ngClass]="{'active':selectedTab == '2'}">
       <img id="innerImage" src="./../../assets/bearers.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Office Bearer</p>
     </li>
-    <li class="hover"  (click)="showcarriersView()">
+    <li class="hover"  (click)="showcarriersView(); selectedTab = '3'" [ngClass]="{'active':selectedTab == '3'}">
       <img id="innerImage" src="./../../assets/job.png" alt="" >
       <img src='./../../assets/button.png' alt=''>
       <p>Careers</p>
     </li>
-    <li class="hover" (click)="showpartner()">
+    <li class="hover" (click)="showpartner(); selectedTab = '4'" [ngClass]="{'active':selectedTab == '4'}">
       <img id="innerImage" src="./../../assets/partner.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Partners</p>
     </li>
-    <li class="hover">
+    <li class="hover" (click)="selectedTab = '5'" [ngClass]="{'active':selectedTab == '5'}">
       <img id="innerImage" src="./../../assets/event.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Events</p>
     </li>
-    <li class="hover" (click)="showNewsView()">
+    <li class="hover" (click)="showNewsView(); selectedTab = '6'" [ngClass]="{'active':selectedTab == '6'}">
       <img id="innerImage" src="./../../assets/news.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>News</p>
     </li>
-    <li class="hover"  (click)="vendors()">
+    <li class="hover"  (click)="vendors(); selectedTab = '7'" [ngClass]="{'active':selectedTab == '7'}">
       <img id="innerImage" src="./../../assets/vendors.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Vendors</p>
     </li>
-	<li class="hover" (click)="knowBank()">
+	<li class="hover" (click)="knowBank(); selectedTab = '8'" [ngClass]="{'active':selectedTab == '8'}">
       <img id="innerImage" src="./../../assets/knowledge.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Knowledge Bank</p>
     </li>
-    <li class="hover" (click)="questionAnswer()">
+    <li class="hover" (click)="questionAnswer(); selectedTab = '9'" [ngClass]="{'active':selectedTab == '9'}">
       <img id="innerImage" src="./../../assets/QA.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Question/Answer</p>

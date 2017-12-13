@@ -150,3 +150,15 @@ text-transform: uppercase;
     color: #ce1313;
     font-size: 48px;
 }
+.dash .width-ul .active::before{
+    content: '';
+    position: absolute;
+    width: 20px;
+    margin-top: -40px;
+    padding: 5px;
+    background-image: url('./../../assets/active.png');
+    height: 40px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin-left: 32px;
+}
