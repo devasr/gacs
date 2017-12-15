@@ -568,7 +568,7 @@ export class DashboardComponent implements OnInit {
         'type': 'event'
       },
       'requestinfo': {
-        'userid': localStorage.getItem('userid');
+        'userid': localStorage.getItem('userid')
       }
     };
 

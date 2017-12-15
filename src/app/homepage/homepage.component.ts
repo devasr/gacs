@@ -216,7 +216,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
             localStorage.setItem('user.name', 'test');
             localStorage.setItem('user.personal_email', 'test@gmail.com');
             localStorage.setItem('user.mobile', this.mobileNumber);
-            if(response.profile_status == 1){
+            if(response.profile_status === 1){
 				localStorage.setItem('profile_status','true');
 			}
             this.otpModal = true;
@@ -255,7 +255,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
     this.sub = timer.subscribe(t => {
       this.ticks = t;
 
-      let second = this.getSeconds(this.ticks);
+      const second = this.getSeconds(this.ticks);
       this.secondsDisplay--;
       if (this.secondsDisplay == 0) {
         this.sub.unsubscribe();
@@ -302,7 +302,7 @@ getProfile(){
     this.homePageService.apicall(json).subscribe(
       data => {
         this.appComponent.updateshowLoader(false);
-        let response = data.response;
+        const response = data.response;
         if (response.code == 200) {
          this.user.name = response.name;
          if(response.image != ''){
@@ -386,7 +386,7 @@ getProfile(){
       this.homePageService.apicall(json).subscribe(
         data => {
           this.appComponent.updateshowLoader(false);
-          let response = data.response;
+          const response = data.response;
           if (response.code == 200) {
             bootbox.alert(response.message);
             location.reload();
@@ -431,7 +431,7 @@ getProfile(){
       this.homePageService.apicall(json).subscribe(
         data => {
           this.appComponent.updateshowLoader(false);
-          let response = data.response;
+          const response = data.response;
           if (response.code === 200) {
             bootbox.alert(response.message);
           } else if (response.code === 204) {
@@ -458,7 +458,7 @@ getProfile(){
   this.homePageService.apicall(json).subscribe(
     data => {
       this.appComponent.updateshowLoader(false);
-      let response = data.response;
+      const response = data.response;
       if (response.code === 200 || response.code === 204) {
         this.activityData = response.data;
       } else {
@@ -468,4 +468,5 @@ getProfile(){
     err => { }
   );
 
+}
 }
