@@ -12,17 +12,17 @@ export class HomePageService {
     constructor(private http: Http) {
     this.headers = new Headers({ 'Content-Type': 'text/plain'});
      this.options = new RequestOptions({ headers: this.headers });
-        
+
     }
-    login(jasonData) {
+    // login(jasonData) {
+    //     return this.http.post(this.baseUrl, jasonData, this.options).map((res: Response) => res.json());
+    // }
+
+    apicall(jasonData) {
         return this.http.post(this.baseUrl, jasonData, this.options).map((res: Response) => res.json());
     }
 
-    getProfile(jasonData) {
-        return this.http.post(this.baseUrl, jasonData, this.options).map((res: Response) => res.json());
-    }
-   
-    updateProfile(jasonData) {
-        return this.http.post(this.baseUrl, jasonData, this.options).map((res: Response) => res.json());
-    }
+    // updateProfile(jasonData) {
+    //     return this.http.post(this.baseUrl, jasonData, this.options).map((res: Response) => res.json());
+    // }
 }

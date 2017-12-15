@@ -21,7 +21,7 @@
       <img src='./../../assets/button.png' alt=''>
       <p>Partners</p>
     </li>
-    <li class="hover" (click)="selectedTab = '5'" [ngClass]="{'active':selectedTab == '5'}">
+    <li class="hover" (click)="eventView(); selectedTab = '5'" [ngClass]="{'active':selectedTab == '5'}">
       <img id="innerImage" src="./../../assets/event.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Events</p>
@@ -120,6 +120,30 @@
       </p>
     </div>
   </div>
+
+    <div class="row" *ngIf="eventsView">
+      <div class="col-md-12 card" *ngFor="let data of eventdata">
+        <h6 class="head">
+          {{data.eventCreatedBy}}
+        </h6>
+        <p class="sec-head">
+          Start on: {{data.starttime | date:'fullDate'}}  Ends On:{{data.endtime | date:'fullDate'}}
+        </p>
+        <div class="row">
+          <div class="col-md-12 content-inner">
+            <img style="height:100%;" id="left-image" src="{{data.image}}" alt="Smiley face" height="60" width="107">
+            <h6>{{data.title}}</h6>
+            <p>Date:&nbsp;{{data.eventdate | date:'fullDate'}} <br>Venue:&nbsp;{{data.venue}}</p>
+            <p>
+
+              <!-- </div> -->
+              <!-- <div class="col-md-11 content-inner"> -->
+              {{data.content}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div  class="row" *ngIf="partnerView">
         <div class="col-md-12 card" *ngFor="let data of partner">

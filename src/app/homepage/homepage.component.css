@@ -389,3 +389,17 @@ ul>li:last-child .dropdown-content::after{
     color: black;
     text-decoration: underline;
 }
+.activity{
+    background: white;
+    margin: 0px;
+    padding: 0px;
+}
+.inline-block{
+  display: inline-block;
+}
+.color{
+  border: 1px solid darkgrey;
+}
+.color .col-md-4{
+  border-right: 1px solid darkgrey;
+}

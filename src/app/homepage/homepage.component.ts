@@ -51,9 +51,11 @@ export class HomepageComponent implements OnInit, OnDestroy {
   disableResend=true;
   profiledata=false;
   pro = false;
+  activity = false;
   profileModal=false;
   proName:any;
   proEmail: any;
+  activityData:any
   proMobile: any;
   proCompany: any;
   base64textString:any;
@@ -189,7 +191,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
         }
       };
       this.appComponent.updateshowLoader(true);
-      this.homePageService.login(json).subscribe(
+      this.homePageService.apicall(json).subscribe(
         data => {
           this.appComponent.updateshowLoader(false);
           let response = data.response;
@@ -297,7 +299,7 @@ getProfile(){
     };
     console.log(localStorage.getItem('userid'));
     this.appComponent.updateshowLoader(true);
-    this.homePageService.getProfile(json).subscribe(
+    this.homePageService.apicall(json).subscribe(
       data => {
         this.appComponent.updateshowLoader(false);
         let response = data.response;
@@ -318,11 +320,19 @@ getProfile(){
 
   getMyProfile() {
     this.profiledata = true;
+    this.activity = false;
     this.pro = false;
   }
   profession(){
     this.profiledata = false;
+    this.activity = false;
     this.pro = true;
+  }
+  actiivtyView(){
+    this.profiledata = false;
+    this.pro = false;
+    this.activity = true;
+    this.activityget();
   }
 
 
@@ -373,7 +383,7 @@ getProfile(){
           'is_change': '0'
         }
       };
-      this.homePageService.updateProfile(json).subscribe(
+      this.homePageService.apicall(json).subscribe(
         data => {
           this.appComponent.updateshowLoader(false);
           let response = data.response;
@@ -418,7 +428,7 @@ getProfile(){
       };
 
       this.appComponent.updateshowLoader(true);
-      this.homePageService.updateProfile(json).subscribe(
+      this.homePageService.apicall(json).subscribe(
         data => {
           this.appComponent.updateshowLoader(false);
           let response = data.response;
@@ -434,4 +444,28 @@ getProfile(){
       );
     }
   }
+
+  activityget(){
+    const json = {
+      "request": {
+        "type": "user_log"
+      },
+      "requestinfo": {
+        "userid": "1600"
+      }
+    }
+  this.appComponent.updateshowLoader(true);
+  this.homePageService.apicall(json).subscribe(
+    data => {
+      this.appComponent.updateshowLoader(false);
+      let response = data.response;
+      if (response.code === 200 || response.code === 204) {
+        this.activityData = response.data;
+      } else {
+        bootbox.alert(response.message);
+      }
+    },
+    err => { }
+  );
+
 }

@@ -30,8 +30,11 @@ export class DashboardComponent implements OnInit {
    profile=[];
    pdfModal=false;
    categoryId:any;
+   selectedTab:any;
+   Bearers:any;
    hide=true;
    Category:any;
+   eventdata:any;
    pdfName:any;
    base64PdftextString:any;
    questionAnswerView=false;
@@ -64,7 +67,7 @@ export class DashboardComponent implements OnInit {
 		}
 	}
     this.appComponent.updateshowLoader(true)
-    this.dashboardService.getCouncilData(json).subscribe(
+    this.dashboardService.apicall(json).subscribe(
       data=>{
         this.appComponent.updateshowLoader(false)
             let response=data.response;
@@ -76,11 +79,12 @@ export class DashboardComponent implements OnInit {
             }
 		},
 		err=>{
-		  this.showLoader=false
+		  this.showLoader=false;
 		}
 	)}
 
   ngOnInit() {
+    this.selectedTab = '1';
   }
   showConcilsView(){
     this.concilsView=true;
@@ -96,34 +100,33 @@ export class DashboardComponent implements OnInit {
 
     this.getCouncilData();
   }
-  showOfficeBarearsView(){
+  showOfficeBarearsView() {
     this.concilsView=false;
     this.officeBearersView=false;
     this.carriersView=false;
     this.partnerView=false;
-	this.knowlegeView=false;
+	  this.knowlegeView=false;
     this.eventsView=false;
-  this.profileView=false;
-  this.questionAnswerView=false;
+    this.profileView=false;
+    this.questionAnswerView=false;
     this.newsView=false;
     this.registeredVendorView=false;
-  //  this.getOfficeBearer();
+    this.getOfficeBearer();
   }
-  getOfficeBearer(){
+  getOfficeBearer() {
     let json={
               'request': {
-                  'type': 'council'
+                'type': 'advisory'
                   }
             }
     this.appComponent.updateshowLoader(true)
-    this.dashboardService.getOfficeBearer(json).subscribe(
+    this.dashboardService.apicall(json).subscribe(
         data=>{
           this.appComponent.updateshowLoader(false)
             let response=data.response;
-            if(response.code==200){
-              this.Councils=response.COUNCIL
-            }
-            else{
+            if (response.code == 200 || response.code == 204){
+              this.Bearers=response.message;
+            } else {
                 bootbox.alert(response.message);
             }
         },
@@ -157,7 +160,7 @@ export class DashboardComponent implements OnInit {
           }
 
       this.appComponent.updateshowLoader(true)
-      this.dashboardService.getNews(json).subscribe(
+      this.dashboardService.apicall(json).subscribe(
       data=>{
         this.appComponent.updateshowLoader(false)
           let response=data.response;
@@ -195,7 +198,7 @@ export class DashboardComponent implements OnInit {
     }
 
     this.appComponent.updateshowLoader(true)
-    this.dashboardService.getJobs(json).subscribe(
+    this.dashboardService.apicall(json).subscribe(
     data=>{
       this.appComponent.updateshowLoader(false)
         let response=data.response;
@@ -238,7 +241,7 @@ export class DashboardComponent implements OnInit {
 	if(localStorage.getItem('profile_status')){
     this.appComponent.updateshowLoader(true)
 
-    this.dashboardService.getOfficeBearer(json).subscribe(
+    this.dashboardService.apicall(json).subscribe(
         data=>{
           this.appComponent.updateshowLoader(false)
             let response=data.response;
@@ -280,7 +283,7 @@ export class DashboardComponent implements OnInit {
 	}
 
     this.appComponent.updateshowLoader(true)
-    this.dashboardService.getOfficeBearer(json).subscribe(
+    this.dashboardService.apicall(json).subscribe(
         data=>{
           this.appComponent.updateshowLoader(false)
             let response=data.response;
@@ -321,7 +324,7 @@ export class DashboardComponent implements OnInit {
 
 
     this.appComponent.updateshowLoader(true)
-    this.dashboardService.getOfficeBearer(json).subscribe(
+    this.dashboardService.apicall(json).subscribe(
         data=>{
           this.appComponent.updateshowLoader(false)
             let response=data.response;
@@ -360,7 +363,7 @@ export class DashboardComponent implements OnInit {
       }
     }
     this.appComponent.updateshowLoader(true)
-    this.dashboardService.getOfficeBearer(json).subscribe(
+    this.dashboardService.apicall(json).subscribe(
         data=>{
           this.appComponent.updateshowLoader(false)
             let response=data.response;
@@ -448,7 +451,7 @@ export class DashboardComponent implements OnInit {
 
 
     this.appComponent.updateshowLoader(true)
-    this.dashboardService.getOfficeBearer(json).subscribe(
+    this.dashboardService.apicall(json).subscribe(
         data=>{
           this.appComponent.updateshowLoader(false)
             let response=data.response;
@@ -503,8 +506,6 @@ export class DashboardComponent implements OnInit {
   }
 
   createQuestion() {
-          console.log(this.base64textString);
-
     let json = {
       'request': {
         'type': 'save_menu_data'
@@ -520,7 +521,7 @@ export class DashboardComponent implements OnInit {
     };
 
     this.appComponent.updateshowLoader(true);
-    this.dashboardService.getOfficeBearer(json).subscribe(data => {
+    this.dashboardService.apicall(json).subscribe(data => {
         this.appComponent.updateshowLoader(false);
         let response = data.response;
         if (response.code == 200) {
@@ -546,4 +547,44 @@ export class DashboardComponent implements OnInit {
     this.registeredVendorView = true;
     this.knowlegeView = false;
   }
+
+  eventView() {
+    this.concilsView = false;
+    this.officeBearersView = false;
+    this.carriersView = false;
+    this.partnerView = false;
+    this.knowlegeView = false;
+    this.eventsView = true;
+    this.profileView = false;
+    this.questionAnswerView = false;
+    this.newsView = false;
+    this.registeredVendorView = false;
+    this.event();
+  }
+
+  event() {
+    let json = {
+      'request': {
+        'type': 'event'
+      },
+      'requestinfo': {
+        'userid': localStorage.getItem('userid');
+      }
+    };
+
+    this.appComponent.updateshowLoader(true);
+    this.dashboardService.apicall(json).subscribe(data => {
+      this.appComponent.updateshowLoader(false);
+      let response = data.response;
+      if (response.code == 200 || response.code == 204) {
+        this.eventdata = response.data;
+      } else {
+        bootbox.alert(response.message);
+      }
+    }, err => {
+      this.showLoader = false;
+    });
+
+  }
+
 }

@@ -51,7 +51,7 @@
               <div  class="dropdown-content width" >
                 <ul class="ulWidth">
                   <li (click)="getMyProfile()">MY Profile</li>
-                  <li>My activity</li>
+                  <li (click)="actiivtyView()">My activity</li>
                   <li (click)="profession()">Refer a partner</li>
                   <li>Referred By</li>
                   <li (click)="logOut()">Log Out</li>
@@ -179,10 +179,10 @@
       </div>
     </div>
   </div>
-  <app-dashboard *ngIf="isLogin && !profiledata && !pro" (user)="userlogged($event)" ></app-dashboard>
+  <app-dashboard *ngIf="isLogin && !profiledata && !pro && !activity" (user)="userlogged($event)" ></app-dashboard>
 
 </div>
-<div *ngIf="profiledata && !pro" class="col-md-12" style="background:white;">
+<div *ngIf="profiledata && !pro && !activity" class="col-md-12" style="background:white;">
       <div class="col-md-3 profileUpadte">
         <h6>
           Update Profile Details
@@ -234,7 +234,7 @@
   [(ngModel)]="user.city">          </div>
         </div>
         <div class="form-group row">
-        <label for="example-Designation-input" proclass="col-md-2 col-form-label">State</label>
+        <label for="example-Designation-input" class="col-md-2 col-form-label">State</label>
         <div class="col-md-4">
 <input type="text" class="form-control  margin-top-10" aria-describedby="emailHelp" placeholder="Enter state"  [ngModelOptions]="{standalone: true}"
   [(ngModel)]="user.state">        </div>
@@ -294,7 +294,7 @@
 </div>
 </div>
 
-<div *ngIf="!profiledata && pro" class="col-md-12" style="background:white;">
+<div *ngIf="!profiledata && pro && !activity" class="col-md-12" style="background:white;">
   <div class="col-md-3 profileUpadte">
     <h6>
       Refer a Professional
@@ -326,6 +326,20 @@
   </div>
   <div class="col-md-12" style="margin:auto; width:200px">
     <button type="button" style="margin:auto; width:200px" class="btn btn-primary margin-bootom-20 margin-top-20 hover " (click)="saveProffesioanl()">Save</button>
+  </div>
+
+</div>
+
+<div *ngIf="!profiledata && !pro && activity" class="activity" >
+  <div style="padding:0% 15% 0% 15%;padding-top: 20px;padding-bottom: 20px;">
+    <div *ngFor="let data of activityData" class="color">
+      <div class="col-md-4 inline-block" style="width:25%;">
+        {{data.value}}
+      </div>
+      <div class="col-md-8 inline-block" style="width:70%;">
+        {{data.label}}
+      </div>
+    </div>
   </div>
 
 </div>
