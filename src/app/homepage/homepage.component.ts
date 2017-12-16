@@ -195,7 +195,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
         data => {
           this.appComponent.updateshowLoader(false);
           let response = data.response;
-          if (response.code == 200) {
+          if (response.code == 200 || response.code == 204) {
             this.otpModal = true;
             this.startTimer();
             this.displayTimer = true;
@@ -203,27 +203,12 @@ export class HomepageComponent implements OnInit, OnDestroy {
             localStorage.setItem('user.name', 'test');
             localStorage.setItem('user.personal_email', 'test@gmail.com');
             localStorage.setItem('user.mobile', this.mobileNumber);
-			console.log(response.profile_status == 1);
-			if(response.profile_status == 1){
-				localStorage.setItem('profile_status','true');
-			}
-
+            console.log(response.profile_status == 1);
+            if(response.profile_status == 1){
+              localStorage.setItem('profile_status','true');
+            }
             this.otp = response.otp;
-          } else if (response.code == 204) {
-			  			console.log(response.profile_status == 1);
-
-            localStorage.setItem('userid', response.userid);
-            localStorage.setItem('user.name', 'test');
-            localStorage.setItem('user.personal_email', 'test@gmail.com');
-            localStorage.setItem('user.mobile', this.mobileNumber);
-            if(response.profile_status === 1){
-				localStorage.setItem('profile_status','true');
-			}
-            this.otpModal = true;
-            this.startTimer();
-            this.displayTimer = true;
-            this.otp = response.otp;
-          } else {
+             } else {
             bootbox.alert(response.message);
           }
         },
