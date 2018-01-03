@@ -319,10 +319,12 @@ ul>li:last-child .dropdown-content::after{
 }
 @media(max-width:767px){
 	.menu{
-		display:block;
+    display:block;
 	}
 	.navbar ul>li{
-		width:100% ;
+    width:100% ;
+    padding: 3px !important;
+
 	}
 	.enterword hr{
 		display:none;
@@ -333,7 +335,7 @@ ul>li:last-child .dropdown-content::after{
 	.enterRow{
 		margin:0px;
 		padding:15px;
-	}
+  }
 }
 @media(min-width:768px){
 	#myNavbar{

@@ -7,6 +7,108 @@
   display: inline-block;
       margin: 0px 15px 0px 15px;
 }
+@media(min-width:768px){
+  .width-ul.navbar-collapse{
+      flex-grow: 0 !important;
+      flex-basis: auto !important;
+  }
+}
+@media(min-width:992px) and (max-width:1200px){
+  .dash>ul>li{
+    display: inline-block;
+    margin: 0px 5px 0px 5px;
+  }
+
+}
+@media (min-width:768px) and (max-width:991px){
+  .dash>ul>li{
+    margin: 0px 0px 0px 0px;
+    float: left;
+    width: 11% !important;
+  }
+  .width-ul{
+    width: 100% !important;
+    padding-left: 0px !important;
+    height: 100px !important;
+    margin: auto 25px !important;
+  }
+  .dash #innerImage{
+    width: 30px !important;
+    margin-top: 25px !important;
+    margin-left: 25px !important;
+  }
+  .dash>ul>li>img{
+    width: 82px !important;
+  }
+  .dash .hover p{
+    word-break: break-word;
+  }
+  .dash .width-ul .active::before{
+    width: 12px !important;
+    margin-top: -30px !important;
+    padding: 5px !important;
+    margin-left: 32px !important;
+    height: 25px !important;
+  }
+}
+.menu2{
+  display: none;
+}
+@media (max-width:767px){
+
+  .menu2{
+    display: block;
+    height: 28px;
+  }
+  .menu2 .fa-bars{
+    font-size: 26px;
+    margin-left: 20px;
+  }
+  .dash>ul>li{
+    margin: 0px 0px 0px 0px;
+    display: block;
+    width: auto;
+  }
+  .width-ul{
+    width:auto!important;
+    padding-left: 0px !important;
+    margin: auto 20px !important;
+     border-bottom: 1px solid lightgrey !important;
+     border-top: 1px solid lightgrey !important;
+
+  }
+  .dash #innerImage{
+    width: 30px !important;
+    margin-top: 25px !important;
+    margin-left: 25px !important;
+  }
+  .dash .navbar-header{
+        width: 100%;
+  }
+  .dash>ul>li>img{
+    display: none;
+  }
+  .dash .hover p{
+    word-break: break-word;
+  }
+  .dash .width-ul .active::before{
+    display: none;
+  }
+  .dash .width-ul .active{
+  background: #e6e6e6;
+  border-radius: 2px;
+  padding-left: 0px;
+  }
+  .dash .width-ul li:hover{
+  background: #e6e6e6;
+  }
+  .dash .hover p{
+    font-size: 12px !important;
+    text-align: left !important;
+    padding-top: 5px !important;
+    margin-top: 0px !important;
+}
+}
 .dash>ul>li>img{
   width: 95px;
 }
@@ -22,7 +124,7 @@ position: absolute;
     width: 43px;
 }
 .dash .hover p{
-text-transform: uppercase;
+    text-transform: uppercase;
     font-size: 10px;
     text-align: center;
     margin-bottom: 0px;

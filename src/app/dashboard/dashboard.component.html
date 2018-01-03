@@ -1,6 +1,12 @@
 
 <div class="row dash">
-  <ul class="width-ul">
+    <div class="navbar-header">
+      <a class="navbar-toggle menu2" data-toggle="collapse" data-target="#myNavbar1">
+        <i class="fa fa-bars" aria-hidden="true"></i> Menu
+      </a>
+    </div>
+
+  <ul class="width-ul navbar-collapse"  id="myNavbar1">
     <li class="hover" (click)="showConcilsView(); selectedTab = '1'" [ngClass]="{'active':selectedTab == '1'}">
       <img id="innerImage" src="./../../assets/council.png" alt="">
       <img src='./../../assets/button.png' alt=''>
