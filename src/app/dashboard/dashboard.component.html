@@ -1,47 +1,53 @@
 
 <div class="row dash">
-  <ul class="width-ul">
-    <li class="hover" (click)="showConcilsView()">
+    <div class="navbar-header">
+      <a class="navbar-toggle menu2" data-toggle="collapse" data-target="#myNavbar1">
+        <i class="fa fa-bars" aria-hidden="true"></i> Menu
+      </a>
+    </div>
+
+  <ul class="width-ul navbar-collapse"  id="myNavbar1">
+    <li class="hover" (click)="showConcilsView(); selectedTab = '1'" [ngClass]="{'active':selectedTab == '1'}">
       <img id="innerImage" src="./../../assets/council.png" alt="">
       <img src='./../../assets/button.png' alt=''>
-      <p>Council</p>
+      <p>Councils</p>
     </li>
-    <li class="hover" (click)="showOfficeBarearsView()">
+    <li class="hover" (click)="showOfficeBarearsView(); selectedTab = '2'" [ngClass]="{'active':selectedTab == '2'}">
       <img id="innerImage" src="./../../assets/bearers.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Office Bearer</p>
     </li>
-    <li class="hover"  (click)="showcarriersView()">
+    <li class="hover"  (click)="showcarriersView(); selectedTab = '3'" [ngClass]="{'active':selectedTab == '3'}">
       <img id="innerImage" src="./../../assets/job.png" alt="" >
       <img src='./../../assets/button.png' alt=''>
-      <p>Career</p>
+      <p>Careers</p>
     </li>
-    <li class="hover" (click)="showpartner()">
+    <li class="hover" (click)="showpartner(); selectedTab = '4'" [ngClass]="{'active':selectedTab == '4'}">
       <img id="innerImage" src="./../../assets/partner.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Partners</p>
     </li>
-    <li class="hover">
+    <li class="hover" (click)="eventView(); selectedTab = '5'" [ngClass]="{'active':selectedTab == '5'}">
       <img id="innerImage" src="./../../assets/event.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Events</p>
     </li>
-    <li class="hover" (click)="showNewsView()">
+    <li class="hover" (click)="showNewsView(); selectedTab = '6'" [ngClass]="{'active':selectedTab == '6'}">
       <img id="innerImage" src="./../../assets/news.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>News</p>
     </li>
-    <li class="hover">
+    <li class="hover"  (click)="vendors(); selectedTab = '7'" [ngClass]="{'active':selectedTab == '7'}">
       <img id="innerImage" src="./../../assets/vendors.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Vendors</p>
     </li>
-	<li class="hover" (click)="knowBank()">
+	<li class="hover" (click)="knowBank(); selectedTab = '8'" [ngClass]="{'active':selectedTab == '8'}">
       <img id="innerImage" src="./../../assets/knowledge.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Knowledge Bank</p>
     </li>
-    <li class="hover" (click)="questionAnswer()">
+    <li class="hover" (click)="questionAnswer(); selectedTab = '9'" [ngClass]="{'active':selectedTab == '9'}">
       <img id="innerImage" src="./../../assets/QA.png" alt="">
       <img src='./../../assets/button.png' alt=''>
       <p>Question/Answer</p>
@@ -63,38 +69,53 @@
 	</div>
     </div>
   </div>
-  
+
   <div class="row" *ngIf="knowlegeView">
 	<div class="alert alert-danger" *ngIf="error">{{error}}</div>
     <div class="col-md-12 card" *ngFor="let data of Knowledge">
-      <h6 class="head1">
-        {{data.title}}
+      <h6 class="head">
+        {{data.label}}
       </h6>
-      <div class="col-md-12 content-inner">
-		  <p>
-			{{data.description}}
-		  </p>
-	</div>
+      <p class="sec-head">
+        {{data.postedby}} on {{data.datetime | date:'fullDate'}}
+      </p>
+        <div class="row">
+          <div class="col-md-12 content-inner">
+            <!-- <iframe src="+++" style="width:600px; height:500px;"
+              frameborder="0"></iframe> -->
+            <img *ngIf="data.image" id="left-image" src="{{data.image}}" alt="Smiley face" height="60" width="107">
+            <span *ngIf="data.data[0].url" id="left-image"><a href="{{data.data[0].url}}" target="blank"><i id="left-pdf" class="fa fa-file-pdf-o" aria-hidden="true"></i></a></span>
+            <p>
+              {{data.data[0].paper_name}}
+            </p>
+          </div>
+        </div>
     </div>
      <button  *ngIf="hide" class="btn btn-default create" (click)="openPdfModal();hide=false"><i class="fa fa-plus" aria-hidden="true"></i></button>
-  
+
   </div>
 
   <div class="row" *ngIf="questionAnswerView">
-    <div class="alert alert-danger" *ngIf="error">{{error}}</div>
-      <div class="col-md-12 card" *ngFor="let data of Questions">
-        <h6 class="head1">
-          {{data.title}}
-        </h6>
-        <div class="col-md-12 content-inner">
-        <p>
+    <div class="alert alert-danger" *ngIf="errorQue">{{errorQue}}</div>
+    <div class="col-md-12 card" *ngFor="let data of Questions">
+      <h6 class="head">
         {{data.description}}
-        </p>
-    </div>
+      </h6>
+      <p class="sec-head">
+        {{data.postedby}} on {{data.datetime | date:'fullDate'}}
+      </p>
+      <div class="row">
+        <div class="col-md-12 content-inner">
+          <img id="left-image" src="{{data.image}}" alt="Smiley face" height="60" width="107">
+          <p>
+            {{data.title}}
+          </p>
+        </div>
       </div>
-        <button *ngIf="hide" class="btn btn-default create" (click)="openQuestionAnswerModal();hide=false"><i class="fa fa-plus" aria-hidden="true"></i></button>
-      
     </div>
+        <button *ngIf="hide" class="btn btn-default create" (click)="openQuestionAnswerModal();hide=false"><i class="fa fa-plus" aria-hidden="true"></i></button>
+    </div>
+
   <div  class="row" *ngIf="officeBearersView">
     <div *ngFor="let data of Bearers">
       <h3>
@@ -105,13 +126,37 @@
       </p>
     </div>
   </div>
-  
+
+    <div class="row" *ngIf="eventsView">
+      <div class="col-md-12 card" *ngFor="let data of eventdata">
+        <h6 class="head">
+          {{data.eventCreatedBy}}
+        </h6>
+        <p class="sec-head">
+          Start on: {{data.starttime | date:'fullDate'}}  Ends On:{{data.endtime | date:'fullDate'}}
+        </p>
+        <div class="row">
+          <div class="col-md-12 content-inner">
+            <img style="height:100%;" id="left-image" src="{{data.image}}" alt="Smiley face" height="60" width="107">
+            <h6>{{data.title}}</h6>
+            <p>Date:&nbsp;{{data.eventdate | date:'fullDate'}} <br>Venue:&nbsp;{{data.venue}}</p>
+            <p>
+
+              <!-- </div> -->
+              <!-- <div class="col-md-11 content-inner"> -->
+              {{data.content}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div  class="row" *ngIf="partnerView">
         <div class="col-md-12 card" *ngFor="let data of partner">
       <h6 class="head">
         {{data.name}}
       </h6>
- 
+
       <div class="row">
         <div class="col-md-12 content-inner">
             <a href="{{data.web_url}}" target="_blank" ><img id="left-image" src="{{data.logo_url}}" alt="Smiley face" height="60" width="107"></a>
@@ -121,6 +166,12 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="row" *ngIf="registeredVendorView">
+
+    <div class="alert alert-primary" *ngIf="!vendorsdata">Comming Soon</div>
+
   </div>
 
   <div class="row" *ngIf="newsView">
@@ -172,7 +223,7 @@
         </p>
       </div>
     </div>
-	
+
 	 <div  class="row" *ngIf="profileView">
     <div *ngFor="let data of profile">
       <h3>
@@ -189,16 +240,16 @@
       </p>
       <p>
 	  <img src="{{data.visiting_image}}"/>
- 
+
       </p>
-      
+
     </div>
   </div>
-	
+
   </div>
   <div class="modal signupModal" *ngIf="pdfModal" role="dialog">
     <div class="modal-dialog modal-lg modallogin">
-	
+
       <div class="modal-content">
 	  <div class="modal-header"> <h5 class="modal-title">Create New</h5></div>
         <div class="modal-body margin-left-10">
@@ -213,7 +264,7 @@
             <button  type="button" class="btn margin-bootom-20 margin-top-20 login-button hover " (click)="closePdfModal();hide=true">Cancel</button>
             <button   type="button" class="btn btn-primary margin-bootom-20 margin-top-20 login-button hover " (click)="upLoadPdfData();hide=true">Save</button>
           </div>
-       
+
         </div>
       </div>
       <div class="line-button">
@@ -228,21 +279,21 @@
       <div class="modal-content">
 	   <div class="modal-header"> <h5 class="modal-title">Create New</h5></div>
         <div class="modal-body margin-left-10">
-        
+
           <input type="file" class="form-control  margin-top-10" accept="image/*" capture id="filePicker" name="uploader" (change)="handleFileSelect($event)"><br>
           <div class="form-group form-control  margin-top-10 ">
-            <select class="form-control" [(ngModel)]="categoryId" [ngModelOptions]="{standalone: true}">
-              <option  selected="selected"    [value]=data.id *ngFor="let data of Category">{{data.name}}</option>
+            <select class="form-control" (change)="valueChange(categoryId)" [(ngModel)]="categoryId" [ngModelOptions]="{standalone: true}">
+              <option  selected="selected"    [value]=data.name *ngFor="let data of Category">{{data.name}}</option>
             </select>
           </div>
-          <textarea type="text" class="form-control  margin-top-10"  aria-describedby="emailHelp" placeholder="Enter question detail"[ngModelOptions]="{standalone: true}" [(ngModel)]="questionDetail">
+          <textarea type="text" class="form-control  margin-top-10"  aria-describedby="emailHelp" placeholder="Enter question detail" [ngModelOptions]="{standalone: true}" [(ngModel)]="questionDetail">
             </textarea>
           <div class="modal-footer">
             <button   type="button" class="btn margin-bootom-20 margin-top-20  login-button hover " (click)="closePdfModal();hide=true">Cancel</button>
-      
+
             <button   type="button" class="btn btn-primary margin-bootom-20 margin-top-20  login-button hover " (click)="upLoadQuestion();hide=true">Save</button>
           </div>
-         
+
         </div>
       </div>
       <div class="line-button">

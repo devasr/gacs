@@ -1,35 +1,65 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { CarouselComponent } from './../carousel/carousel.component';
-import{HomePageService} from './homepage.service'
+import { HomePageService } from './homepage.service';
 import { AppComponent } from '../app.component';
 import { DomSanitizer } from '@angular/platform-browser';
 declare var bootbox: any;
 @Component({
-  selector: "app-homepage",
-  templateUrl: "./homepage.component.html",
-  styleUrls: ["./homepage.component.css"],
+  selector: 'app-homepage',
+  templateUrl: './homepage.component.html',
+  styleUrls: ['./homepage.component.css'],
   providers: [HomePageService]
 })
-export class HomepageComponent implements OnInit {
+export class HomepageComponent implements OnInit, OnDestroy {
   signupModal: boolean;
   displayTimer: boolean;
   ticks = 0;
   secondsDisplay = 0;
   sub: Subscription;
-  userName:any;
-  userImg:any;
+  mobileNumber: any;
+  user:any;
   email:any;
-  mobileNumber:any
   otp:any;
-  inputOtp:any
-  otpModal=false
-  isLogin=false
+  inputOtp:any;
+  name: any;
+  image: any;
+  comp_name: any;
+  address:any;
+  city: any;
+  state: any;
+  designation: any;
+  dob: any;
+  gender: any;
+  mobile: any;
+  personal_email: any;
+  official_email: any;
+  present_exp: any;
+  past_exp: any;
+  brief_past: any;
+  refer_by: any;
+  referer_mobile: any;
+  remark: any;
+  status: any;
+  emergency_name: any;
+  emergency_number: any;
+  is_update: any;
+  visiting_image: any;
+  country: any;
+  otpModal=false;
+  isLogin=false;
   disableResend=true;
+  profiledata=false;
+  pro = false;
+  activity = false;
   profileModal=false;
-  userEmail:any;
+  proName:any;
+  proEmail: any;
+  activityData:any
+  proMobile: any;
+  proCompany: any;
   base64textString:any;
-  userMobileNumber:any;
+  base64textStringVisit:any;
   emailPattern=/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/;
   checkLoginSession:any;
 
@@ -37,44 +67,93 @@ export class HomepageComponent implements OnInit {
     this.signupModal = false;
     this.displayTimer = false;
     this.isLogin = false;
-    if(localStorage.getItem("is_login")=="true"){
+    if(localStorage.getItem('is_login')=='true'){
       this.isLogin=true
     }
     else{
-      this.isLogin=false
+      this.isLogin= false;
     }
   }
-  
-  handleFileSelect(evt) {
-  
+
+  handleFileSelectVisit(evt) {
+
     var files = evt.target.files;
     var file = files[0];
-
     if (files && file) {
       var reader = new FileReader();
+      reader.onload = this._handleReaderLoadedVisit.bind(this);
+      reader.readAsBinaryString(file);
+    }
+  }
+  _handleReaderLoadedVisit(readerEvt) {
+    var binaryString = readerEvt.target.result;
+    this.base64textStringVisit = btoa(binaryString);
+    var image = 'data:image/png;base64,' + this.base64textStringVisit;
+    this.visiting_image = this.domSanitizer.bypassSecurityTrustUrl(image);
 
+  }
+
+  handleFileSelect(evt) {
+
+    var files = evt.target.files;
+    var file = files[0];
+    if (files && file) {
+      var reader = new FileReader();
       reader.onload = this._handleReaderLoaded.bind(this);
-
       reader.readAsBinaryString(file);
     }
   }
   _handleReaderLoaded(readerEvt) {
     var binaryString = readerEvt.target.result;
    this.base64textString = btoa(binaryString);
-    var image = 'data:image/png;base64,' + this.base64textString;
-    this.userImg = this.domSanitizer.bypassSecurityTrustUrl(image);
+    var img = 'data:image/png;base64,' + this.base64textString;
+    this.image = this.domSanitizer.bypassSecurityTrustUrl(img);
 
   }
   ngOnInit() {
-	  
+
   }
-  
-  userlogged(user){
-	  console.log(user)
-	  this.userName=user.name;
-	  this.userImg=user.image;
-	  this.userMobileNumber=user.mobile;
-	  this.userEmail=user.personal_email;
+  ngOnDestroy() {
+
+  }
+  onreload(){
+    location.reload();
+  }
+  userlogged(user) {
+    console.log(user);
+    this.user = user;
+    this.email = user.email;
+    this.otp = user.otp;
+    this.inputOtp = user.inputOtp;
+    this.name = user.name;
+    this.image = user.image;
+    this.visiting_image = this.visiting_image;
+    this.comp_name = user.comp_name;
+    this.address = user.address;
+    this.city = user.city;
+    this.state = user.state;
+    this.designation = user.designation;
+    this.dob = user.dob;
+    this.gender = user.gender;
+    this.mobile = user.mobile;
+    this.personal_email = user.personal_email;
+    this.official_email = user.official_email;
+    this.present_exp = user.present_exp;
+    this.past_exp = user.past_exp;
+    this.brief_past = user.brief_past;
+    this.refer_by = user.refer_by;
+    this.referer_mobile = user.referer_mobile;
+    this.remark = user.remark;
+    this.status = user.status;
+    this.emergency_name = user.emergency_name;
+    this.emergency_number = user.emergency_number;
+    this.is_update = user.is_update;
+    this.country = user.country;
+
+	  // this.user.name=user.name;
+	  // this.user.image=user.image;
+	  // this.user.mobile=user.mobile;
+	  // this.user.personal_email=user.personal_email;
   }
   public openSignupModal() {
     this.signupModal = true;
@@ -82,69 +161,54 @@ export class HomepageComponent implements OnInit {
 
   public closeModal() {
     this.signupModal = false;
-    this.otpModal=false
-    this.sub.unsubscribe();
-    this.disableResend=false;
-    this.otpModal=false
-    this.displayTimer=false
-    this.disableResend=true;
     this.otpModal = false;
-    this.inputOtp=""
-    this.profileModal=false
+    this.sub.unsubscribe();
+    this.disableResend = false;
+    this.otpModal = false;
+    this.displayTimer = false;
+    this.disableResend = true;
+    this.otpModal = false;
+    this.inputOtp = '';
+    this.profileModal = false;
   }
 
   public onLogin() {
     if (!this.mobileNumber) {
-      bootbox.alert("Please enter mobile number");
+      bootbox.alert('Please enter mobile number');
     } else if (this.mobileNumber.toString().length != 10) {
-      bootbox.alert("Please enter correct mobile number");
+      bootbox.alert('Please enter correct mobile number');
     } else {
       let json = {
         request: {
-          type: "login"
+          type: 'login'
         },
         requestinfo: {
-          userid: "",
-          name: "test",
-          email_id: "test@gmail.com",
+          userid: '',
+          name: 'test',
+          email_id: 'test@gmail.com',
           mobile: this.mobileNumber,
-          type: "manual"
+          type: 'manual'
         }
       };
       this.appComponent.updateshowLoader(true);
-      this.homePageService.login(json).subscribe(
+      this.homePageService.apicall(json).subscribe(
         data => {
           this.appComponent.updateshowLoader(false);
           let response = data.response;
-          if (response.code == 200) {
+          if (response.code == 200 || response.code == 204) {
             this.otpModal = true;
             this.startTimer();
             this.displayTimer = true;
-            localStorage.setItem("userid", response.userid);
-            localStorage.setItem("userName", "test");
-            localStorage.setItem("userEmail", "test@gmail.com");
-            localStorage.setItem("userMobileNumber",this.mobileNumber);
-			console.log(response.profile_status==1)
-			if(response.profile_status==1){
-				localStorage.setItem("profile_status","true");
-			}
-            
+            localStorage.setItem('userid', response.userid);
+            localStorage.setItem('user.name', 'test');
+            localStorage.setItem('user.personal_email', 'test@gmail.com');
+            localStorage.setItem('user.mobile', this.mobileNumber);
+            console.log(response.profile_status == 1);
+            if(response.profile_status == 1){
+              localStorage.setItem('profile_status','true');
+            }
             this.otp = response.otp;
-          } else if (response.code == 204) {
-			  			console.log(response.profile_status==1)
-
-            localStorage.setItem("userid", response.userid);
-            localStorage.setItem("userName", "test");
-            localStorage.setItem("userEmail", "test@gmail.com");
-            localStorage.setItem("userMobileNumber",this.mobileNumber);
-            if(response.profile_status==1){
-				localStorage.setItem("profile_status","true");
-			}
-            this.otpModal = true;
-            this.startTimer();
-            this.displayTimer = true;
-            this.otp = response.otp;
-          } else {
+             } else {
             bootbox.alert(response.message);
           }
         },
@@ -153,30 +217,37 @@ export class HomepageComponent implements OnInit {
     }
   }
 
+  logOut() {
+    if (this.isLogin === true) {
+      localStorage.clear();
+      location.reload();
+    }
+  }
+
   private getSeconds(ticks: number) {
     return this.pad(ticks % 60);
   }
 
   private pad(digit: any) {
-    return digit <= 9 ? "0" + digit : digit;
+    return digit <= 9 ? '0' + digit : digit;
   }
 
   startTimer(){
-    this.secondsDisplay=60;
-    this.disableResend=true;
+    this.secondsDisplay = 60;
+    this.disableResend = true;
     this.displayTimer = true;
     const timer = Observable.timer(1, 1000);
     this.sub = timer.subscribe(t => {
       this.ticks = t;
 
-      let second = this.getSeconds(this.ticks);
+      const second = this.getSeconds(this.ticks);
       this.secondsDisplay--;
-      if (this.secondsDisplay ==0) {
+      if (this.secondsDisplay == 0) {
         this.sub.unsubscribe();
-        this.disableResend=false;
-        this.inputOtp=""
-        this.otpModal=false
-        this.displayTimer=false
+        this.disableResend = false;
+        this.inputOtp = '';
+        this.otpModal = false;
+        this.displayTimer = false;
       }
       else{
 
@@ -186,123 +257,201 @@ export class HomepageComponent implements OnInit {
 
   onOtp() {
     if (!this.inputOtp) {
-      bootbox.alert("Your enter OTP .");
+      bootbox.alert('Your enter OTP .');
     } else if (this.otp == this.inputOtp) {
-      localStorage.setItem("is_login", "true");
-      this.checkLoginSession=true
+      localStorage.setItem('is_login', 'true');
+      this.checkLoginSession = true;
       this.isLogin = true;
       this.closeModal();
- 
+
     } else {
-      bootbox.alert("Your enter OTP is wrong please try again later.");
-      this.isLogin=false
-      localStorage.setItem("is_login", "false");
+      bootbox.alert('Your enter OTP is wrong please try again later.');
+      this.isLogin = false;
+      localStorage.setItem('is_login', 'false');
     }
   }
 
 getProfile(){
     let json = {
-      "request": {
-        "type": "get_profile"
+      'request': {
+        'type': 'get_profile'
       },
-      "requestinfo": {
-        "name":  localStorage.getItem("userName"),
-        "email_id":localStorage.getItem("userEmail"),
-        "mobile": localStorage.getItem("userMobileNumber")
+      'requestinfo': {
+        'name':  localStorage.getItem('user.name'),
+        'email_id':localStorage.getItem('user.personal_email'),
+        'mobile': localStorage.getItem('user.mobile')
       }
-    }
-    console.log(localStorage.getItem("userid"))
+    };
+    console.log(localStorage.getItem('userid'));
     this.appComponent.updateshowLoader(true);
-    this.homePageService.getProfile(json).subscribe(
+    this.homePageService.apicall(json).subscribe(
       data => {
         this.appComponent.updateshowLoader(false);
-        let response = data.response;
+        const response = data.response;
         if (response.code == 200) {
-         this.userName=response.name;
-         if(response.image!=""){
-          this.userImg =response.image
+         this.user.name = response.name;
+         if(response.image != ''){
+          this.user.image = response.image
          }
-        
+
         } else {
           bootbox.alert(response.message);
         }
       },
       err => {}
 
-    )
+    );
   }
 
-  getMyProfile(){
-    this.profileModal=true
-
+  getMyProfile() {
+    this.profiledata = true;
+    this.activity = false;
+    this.pro = false;
   }
+  profession(){
+    this.profiledata = false;
+    this.activity = false;
+    this.pro = true;
+  }
+  actiivtyView(){
+    this.profiledata = false;
+    this.pro = false;
+    this.activity = true;
+    this.activityget();
+  }
+
 
   upDateProfile(){
-    if(!this.userEmail){
-      bootbox.alert("Please enter email")
+    if(!this.user.personal_email){
+      bootbox.alert('Please enter email');
     }
-    else if (!(this.userEmail.toLowerCase().match(this.emailPattern))) {
-      bootbox.alert("Please enter valid email")
+    else if (!(this.user.personal_email.toLowerCase().match(this.emailPattern))) {
+      bootbox.alert('Please enter valid email');
     }
-    else  if (!this.userMobileNumber) {
-      bootbox.alert("Please enter mobile number");
-    } else if (this.userMobileNumber.toString().length != 10) {
-      bootbox.alert("Please enter correct mobile number");
-    } 
+    else  if (!this.user.mobile) {
+      bootbox.alert('Please enter mobile number');
+    } else if (this.user.mobile.toString().length != 10) {
+      bootbox.alert('Please enter correct mobile number');
+    }
     else{
-      let json={
-        "request": {
-          "type": "save_profile"
+      let json ={
+        'request': {
+          'type': 'save_profile'
         },
-        "requestinfo": {
-          "devicetoken": "dxk1gs-EIe0:APA91bGPwGrfMSzx_HgImyio2V7pNPvYJhZqNNLQW9m1Op7DGHnxUpfJFWgYpbgbzf_vy75xBqJNLAReIpJvplAXvZMYPebhCB31FDq4caEQ6pbdoPBGFaoqYxkfPty7ROodaBiJ8AKR",
-          "userid":localStorage.getItem("userid"),
-          "name": this.userName,
-          "image": this.base64textString,
-          "comp_name": "",
-          "address": "",
-          "city": "",
-          "state": "",
-          "designation": "",
-          "dob": "",
-          "gender": "",
-          "mobile":  localStorage.getItem("userMobileNumber"),
-          "personal_email": this.userEmail,
-          "official_email": "",
-          "present_exp": "",
-          "past_exp": "",
-          "brief_past": "",
-          "refer_by": "",
-          "referer_mobile": "",
-          "remark": "",
-          "status": "",
-          "emergency_name": "",
-          "emergency_number": "",
-          "is_update": "1",
-          "country": "",
-          "is_change": "0"
+        'requestinfo': {
+          'devicetoken': 'dxk1gs-EIe0:APA91bGPwGrfMSzx_HgImyio2V7pNPvYJhZqNNLQW9m1Op7DGHnxUpfJFWgYpbgbzf_vy75xBqJNLAReIpJvplAXvZMYPebhCB31FDq4caEQ6pbdoPBGFaoqYxkfPty7ROodaBiJ8AKR',
+          'userid' : localStorage.getItem('userid'),
+          'name': this.user.name,
+          'image': this.base64textString,
+          'visiting_image': this.base64textStringVisit,
+          'comp_name': this.user.comp_name,
+          'address': this.user.address,
+          'city': this.user.city,
+          'state': this.user.state,
+          'designation': this.user.designation,
+          'dob': this.user.dob,
+          'gender': this.user.gender,
+          'mobile':  this.user.mobile,
+          'personal_email': this.user.personal_email,
+          'official_email': this.user.official_email,
+          'present_exp': this.user.present_exp,
+          'past_exp': this.user.past_exp,
+          'brief_past': this.user.brief_past,
+          'refer_by': this.user.refer_by,
+          'referer_mobile': this.user.referer_mobile,
+          'remark': this.user.remark,
+          'status': this.user.status,
+          'emergency_name': this.user.emergency_name,
+          'emergency_number': this.user.emergency_number,
+          'is_update': '1',
+          'country': this.user.country,
+          'is_change': '0'
         }
-      }
-      this.homePageService.updateProfile(json).subscribe(
+      };
+      this.homePageService.apicall(json).subscribe(
         data => {
           this.appComponent.updateshowLoader(false);
-          let response = data.response;
+          const response = data.response;
           if (response.code == 200) {
             bootbox.alert(response.message);
+            location.reload();
           } else {
             bootbox.alert(response.message);
           }
         },
         err => {}
-      )
-      
+      );
+
     }
   }
   closeProfileModal(){
-    this.profileModal=false;
-    //this.userImg="";
-    //this.userMobileNumber="";
-    //this.userEmail="";
-    //this.userImg="./../../assets/profile.png";
+    this.profileModal = false;
   }
+  saveProffesioanl(){
+    if (!this.proMobile) {
+      bootbox.alert('Please enter mobile number');
+    } else if (this.proMobile.toString().length !== 10) {
+      bootbox.alert('Please enter correct mobile number');
+    } if (!this.proEmail) {
+      bootbox.alert('Please enter mobile number');
+    } if (!this.proName) {
+      bootbox.alert('Please enter Name');
+    } if (!this.proCompany) {
+      bootbox.alert('Please enter Company name');
+    } else {
+      let json = {
+        'request': {
+          'type': 'save_professional'
+        },
+        'requestinfo': {
+          'userid': '1600',
+          'name': 'gury',
+          'prof_email': 'guru@gmail.com',
+          'mobile': '9845644646',
+          'comp_name': 'trinity'
+        }
+      };
+
+      this.appComponent.updateshowLoader(true);
+      this.homePageService.apicall(json).subscribe(
+        data => {
+          this.appComponent.updateshowLoader(false);
+          const response = data.response;
+          if (response.code === 200) {
+            bootbox.alert(response.message);
+          } else if (response.code === 204) {
+            bootbox.alert(response.message);
+          } else {
+            bootbox.alert(response.message);
+          }
+        },
+        err => { }
+      );
+    }
+  }
+
+  activityget(){
+    const json = {
+      "request": {
+        "type": "user_log"
+      },
+      "requestinfo": {
+        "userid": "1600"
+      }
+    }
+  this.appComponent.updateshowLoader(true);
+  this.homePageService.apicall(json).subscribe(
+    data => {
+      this.appComponent.updateshowLoader(false);
+      const response = data.response;
+      if (response.code === 200 || response.code === 204) {
+        this.activityData = response.data;
+      } else {
+        bootbox.alert(response.message);
+      }
+    },
+    err => { }
+  );
+
+}
 }

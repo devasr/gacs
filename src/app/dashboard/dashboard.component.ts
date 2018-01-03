@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit {
    registeredVendorView:boolean
    Councils=[];
    error:any;
+   errorQue:any;
    News=[];
    Knowledge=[];
    Jobs=[];
@@ -29,17 +30,21 @@ export class DashboardComponent implements OnInit {
    profile=[];
    pdfModal=false;
    categoryId:any;
+   selectedTab:any;
+   Bearers:any;
    hide=true;
    Category:any;
+   eventdata:any;
    pdfName:any;
    base64PdftextString:any;
    questionAnswerView=false;
    questionModal=false;
    questionDetail:any;
+   uploadedImgeQA:any;
    base64textString:any;
    Questions=[];
    @Output() user: EventEmitter<any> = new EventEmitter<any>();
-   
+
   constructor(public dashboardService:DashboardService,public appComponent:AppComponent) {
     this.concilsView=true;
     this.officeBearersView=false;
@@ -57,12 +62,12 @@ export class DashboardComponent implements OnInit {
 
    getCouncilData(){
 	let json={
-		"request": {
-			"type": "council"
+		'request': {
+			'type': 'council'
 		}
 	}
     this.appComponent.updateshowLoader(true)
-    this.dashboardService.getCouncilData(json).subscribe(
+    this.dashboardService.apicall(json).subscribe(
       data=>{
         this.appComponent.updateshowLoader(false)
             let response=data.response;
@@ -74,11 +79,12 @@ export class DashboardComponent implements OnInit {
             }
 		},
 		err=>{
-		  this.showLoader=false
+		  this.showLoader=false;
 		}
 	)}
-	
+
   ngOnInit() {
+    this.selectedTab = '1';
   }
   showConcilsView(){
     this.concilsView=true;
@@ -94,34 +100,33 @@ export class DashboardComponent implements OnInit {
 
     this.getCouncilData();
   }
-  showOfficeBarearsView(){
+  showOfficeBarearsView() {
     this.concilsView=false;
     this.officeBearersView=false;
     this.carriersView=false;
     this.partnerView=false;
-	this.knowlegeView=false;
+	  this.knowlegeView=false;
     this.eventsView=false;
-  this.profileView=false;
-  this.questionAnswerView=false;
+    this.profileView=false;
+    this.questionAnswerView=false;
     this.newsView=false;
     this.registeredVendorView=false;
-  //  this.getOfficeBearer();
+    this.getOfficeBearer();
   }
-  getOfficeBearer(){
+  getOfficeBearer() {
     let json={
-              "request": {
-                  "type": "council"
+              'request': {
+                'type': 'advisory'
                   }
             }
     this.appComponent.updateshowLoader(true)
-    this.dashboardService.getOfficeBearer(json).subscribe(
+    this.dashboardService.apicall(json).subscribe(
         data=>{
           this.appComponent.updateshowLoader(false)
             let response=data.response;
-            if(response.code==200){
-              this.Councils=response.COUNCIL
-            }
-            else{
+            if (response.code == 200 || response.code == 204){
+              this.Bearers=response.message;
+            } else {
                 bootbox.alert(response.message);
             }
         },
@@ -146,16 +151,16 @@ export class DashboardComponent implements OnInit {
 
   getNews(){
           let json={
-                  "request": {
-                   "type": "news"
+                  'request': {
+                   'type': 'news'
                  },
-                "requestinfo": {
-                "userid": "1600"
+                'requestinfo': {
+                'userid': '1600'
                 }
           }
 
       this.appComponent.updateshowLoader(true)
-      this.dashboardService.getNews(json).subscribe(
+      this.dashboardService.apicall(json).subscribe(
       data=>{
         this.appComponent.updateshowLoader(false)
           let response=data.response;
@@ -187,13 +192,13 @@ export class DashboardComponent implements OnInit {
 
   getJobs(){
     let json={
-      "request": {
-        "type": "job"
+      'request': {
+        'type': 'job'
       }
     }
 
     this.appComponent.updateshowLoader(true)
-    this.dashboardService.getJobs(json).subscribe(
+    this.dashboardService.apicall(json).subscribe(
     data=>{
       this.appComponent.updateshowLoader(false)
         let response=data.response;
@@ -209,7 +214,7 @@ export class DashboardComponent implements OnInit {
     }
     )
   }
-  
+
   showprofile(){
     this.concilsView=false;
     this.officeBearersView=false;
@@ -225,18 +230,18 @@ export class DashboardComponent implements OnInit {
   }
   getShowprofile(){
     let json={
-		"request": {
-			"type": "profile_data"
+		'request': {
+			'type': 'profile_data'
 		},
-		"requestinfo": {
-			"userid": localStorage.getItem("userid")
+		'requestinfo': {
+			'userid': localStorage.getItem('userid')
 		}
 	}
-	console.log(localStorage.getItem("profile_status"))
-	if(localStorage.getItem("profile_status")){
+	console.log(localStorage.getItem('profile_status'))
+	if(localStorage.getItem('profile_status')){
     this.appComponent.updateshowLoader(true)
-	
-    this.dashboardService.getOfficeBearer(json).subscribe(
+
+    this.dashboardService.apicall(json).subscribe(
         data=>{
           this.appComponent.updateshowLoader(false)
             let response=data.response;
@@ -245,7 +250,7 @@ export class DashboardComponent implements OnInit {
 			  this.user.emit(response.data);
             }
             else{
-				
+
                 bootbox.alert(response.message);
             }
         },
@@ -254,10 +259,10 @@ export class DashboardComponent implements OnInit {
         }
         )
 	}else{
-		this.user.emit({"name":"New User","image":"./../../assets/profile.png"});
+		this.user.emit({'name':'New User','image':'./../../assets/profile.png'});
 	}
   }
-  
+
    showpartner(){
     this.concilsView=false;
     this.officeBearersView=false;
@@ -272,13 +277,13 @@ export class DashboardComponent implements OnInit {
   }
   getShowpartner(){
     let json={
-		"request": {
-			"type": "partners_list"
+		'request': {
+			'type': 'partners_list'
 		}
 	}
 
     this.appComponent.updateshowLoader(true)
-    this.dashboardService.getOfficeBearer(json).subscribe(
+    this.dashboardService.apicall(json).subscribe(
         data=>{
           this.appComponent.updateshowLoader(false)
             let response=data.response;
@@ -294,41 +299,46 @@ export class DashboardComponent implements OnInit {
         }
         )
   }
-  
-	knowBank(){
-		this.concilsView=false;
-		this.officeBearersView=false;
-		this.carriersView=false;
-		this.partnerView=false;
+
+  knowBank() {
+    this.concilsView=false;
+    this.officeBearersView=false;
+    this.carriersView=false;
+    this.partnerView=false;
     this.eventsView=false;
     this.questionAnswerView=false;
-		this.newsView=false;
-		this.registeredVendorView=false;
-		this.knowlegeView=true;
-		this.getknowBank();
-	}
-  getknowBank(){
-    let json={
-		"request": {
-			"type": "question"
-		}
-	}
+    this.newsView=false;
+    this.registeredVendorView=false;
+    this.knowlegeView=true;
+    this.getknowBank();
+  }
+  getknowBank() {
+    let json = {
+      'request': {
+        'type': 'paper_bank_list'
+      },
+      'requestinfo': {
+        'userid': '1605'
+      }
+    };
+
 
     this.appComponent.updateshowLoader(true)
-    this.dashboardService.getOfficeBearer(json).subscribe(
+    this.dashboardService.apicall(json).subscribe(
         data=>{
           this.appComponent.updateshowLoader(false)
             let response=data.response;
-            if(response.code==204){
-			if(response.data){
-              this.Knowledge=response.data;
-			}
-			  if(response.data===undefined){
-				this.error=response.message;
-			  }
-            }
-            else{				
-                bootbox.alert(response.message);
+            if (response.code == 204 || response.code == 200) {
+              if (response.data) {
+                this.Knowledge = response.data;
+              }
+              if (response.data === undefined) {
+                this.Knowledge = response.message;
+              }
+              console.log(response);
+            } else {
+              bootbox.alert(response.message);
+              console.log(response);
             }
         },
         err=>{
@@ -339,21 +349,21 @@ export class DashboardComponent implements OnInit {
 
   openPdfModal(){
     this.pdfModal=true;
-    this.getCateogory(); 
+    this.getCateogory();
   }
 
   getCateogory(){
-    this.categoryId="0"
+    this.categoryId='0'
     let json={
-      "request": {
-        "type": "qna_cat"
+      'request': {
+        'type': 'qna_cat'
       },
-      "requestinfo": {
-        "userid": localStorage.getItem("userid")
+      'requestinfo': {
+        'userid': localStorage.getItem('userid')
       }
     }
     this.appComponent.updateshowLoader(true)
-    this.dashboardService.getOfficeBearer(json).subscribe(
+    this.dashboardService.apicall(json).subscribe(
         data=>{
           this.appComponent.updateshowLoader(false)
             let response=data.response;
@@ -391,37 +401,40 @@ export class DashboardComponent implements OnInit {
   _handlePdfReaderLoaded(readerEvt) {
     var binaryString = readerEvt.target.result;
    this.base64PdftextString = btoa(binaryString);
- 
+
+
 
   }
 
   handleFileSelect(evt) {
-    
+
       var files = evt.target.files;
       var file = files[0];
-  
+
       if (files && file) {
         var reader = new FileReader();
-  
+
         reader.onload = this._handleReaderLoaded.bind(this);
-  
+
         reader.readAsBinaryString(file);
       }
+    console.log(file);
+
     }
     _handleReaderLoaded(readerEvt) {
       var binaryString = readerEvt.target.result;
      this.base64textString = btoa(binaryString);
-  
+
     }
   upLoadPdfData(){
     if(!this.pdfName){
-      bootbox.alert("Please enter paper name")
+      bootbox.alert('Please enter paper name')
     }
-    else if(this.categoryId=="0") {
-      bootbox.alert("Please select category")
+    else if(this.categoryId=='0') {
+      bootbox.alert('Please select category')
     }
     else if(!this.base64PdftextString) {
-      bootbox.alert("Please upload Pdf file")
+      bootbox.alert('Please upload Pdf file')
     }
     else{
 
@@ -431,22 +444,22 @@ export class DashboardComponent implements OnInit {
 
   getQuestions(){
     let json={
-      "request": {
-        "type": "question"
+      'request': {
+        'type': 'question'
       }
     }
-    
-    
+
+
     this.appComponent.updateshowLoader(true)
-    this.dashboardService.getOfficeBearer(json).subscribe(
+    this.dashboardService.apicall(json).subscribe(
         data=>{
           this.appComponent.updateshowLoader(false)
             let response=data.response;
             if(response.code==200){
-              this.Questions=response.qna_cat;
+              this.Questions=response.data;
 			      }
             else{
-                this.error=true
+                this.errorQue = response.message;
                 bootbox.alert(response.message);
             }
         },
@@ -470,18 +483,108 @@ export class DashboardComponent implements OnInit {
 
   openQuestionAnswerModal(){
     this.questionModal=true
-    this.getCateogory(); 
+    this.getCateogory();
   }
 
   upLoadQuestion(){
-    if(this.categoryId=="0") {
-      bootbox.alert("Please select category")
+    if(this.categoryId=='0') {
+      bootbox.alert('Please select category')
     }
     else if(!this.questionDetail) {
-      bootbox.alert("Please enter question detail")
+      bootbox.alert('Please enter question detail')
     }
     else{
-
+      console.log(this.categoryId);
+      this.createQuestion()
     }
+  };
+
+  valueChange(event){
+    console.log(event);
+    this.uploadedImgeQA=event;
+
   }
+
+  createQuestion() {
+    let json = {
+      'request': {
+        'type': 'save_menu_data'
+      },
+      'requestinfo': {
+        'key': 'question',
+        'userid': localStorage.getItem('userid'),
+        'title': this.questionDetail,
+        'description': this.uploadedImgeQA,
+        'image': '',
+        'question_image': this.base64textString,
+      }
+    };
+
+    this.appComponent.updateshowLoader(true);
+    this.dashboardService.apicall(json).subscribe(data => {
+        this.appComponent.updateshowLoader(false);
+        let response = data.response;
+        if (response.code == 200) {
+           this.questionModal = false;
+
+          bootbox.alert(response.message);
+        } else {
+          bootbox.alert(response.message);
+        }
+      }, err => {
+        this.showLoader = false;
+      });
+  }
+
+  vendors() {
+    this.concilsView = false;
+    this.officeBearersView = false;
+    this.carriersView = false;
+    this.partnerView = false;
+    this.eventsView = false;
+    this.questionAnswerView = false;
+    this.newsView = false;
+    this.registeredVendorView = true;
+    this.knowlegeView = false;
+  }
+
+  eventView() {
+    this.concilsView = false;
+    this.officeBearersView = false;
+    this.carriersView = false;
+    this.partnerView = false;
+    this.knowlegeView = false;
+    this.eventsView = true;
+    this.profileView = false;
+    this.questionAnswerView = false;
+    this.newsView = false;
+    this.registeredVendorView = false;
+    this.event();
+  }
+
+  event() {
+    let json = {
+      'request': {
+        'type': 'event'
+      },
+      'requestinfo': {
+        'userid': localStorage.getItem('userid')
+      }
+    };
+
+    this.appComponent.updateshowLoader(true);
+    this.dashboardService.apicall(json).subscribe(data => {
+      this.appComponent.updateshowLoader(false);
+      let response = data.response;
+      if (response.code == 200 || response.code == 204) {
+        this.eventdata = response.data;
+      } else {
+        bootbox.alert(response.message);
+      }
+    }, err => {
+      this.showLoader = false;
+    });
+
+  }
+
 }
