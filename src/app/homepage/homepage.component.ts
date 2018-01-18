@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/timer';
+import { Observable } from 'rxjs/Observable';
 import { CarouselComponent } from './../carousel/carousel.component';
 import { HomePageService } from './homepage.service';
 import { AppComponent } from '../app.component';
