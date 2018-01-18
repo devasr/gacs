@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css?family=Judson|Rasa:500');
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-body{
+body,.body{
   width: 100%;
   /* height: 686px; */
   background-image: url('./assets/home.png');

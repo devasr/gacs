@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { Helper} from '../helper'
-import { Observable } from 'rxjs/Rx';
+import { environment} from '../../environments/environment';
+import { Observable } from 'rxjs/Observable';
 import { Headers, RequestOptions } from '@angular/http';
 @Injectable()
 export class HomePageService {
-    baseUrl = Helper.baseURL
+    baseUrl = environment.baseURL;
     headers:any;
     options:any
     constructor(private http: Http) {
@@ -14,15 +14,8 @@ export class HomePageService {
      this.options = new RequestOptions({ headers: this.headers });
 
     }
-    // login(jasonData) {
-    //     return this.http.post(this.baseUrl, jasonData, this.options).map((res: Response) => res.json());
-    // }
-
     apicall(jasonData) {
         return this.http.post(this.baseUrl, jasonData, this.options).map((res: Response) => res.json());
     }
 
-    // updateProfile(jasonData) {
-    //     return this.http.post(this.baseUrl, jasonData, this.options).map((res: Response) => res.json());
-    // }
 }
